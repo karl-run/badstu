@@ -1,0 +1,12 @@
+{
+  "extends": "next/core-web-vitals",
+  "plugins": ["import"],
+  "rules": {
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always"
+      }
+    ]
+  }
+}
