@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 
 const inter = Inter({ subsets: ['latin'] });
 
-let cache: { dayInMonth: number; weekday: string; times: Record<string, number> }[] | null = null;
+// let cache: { dayInMonth: number; weekday: string; times: Record<string, number> }[] | null = null;
 
 export const revalidate = 60;
 
