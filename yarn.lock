@@ -695,6 +695,7 @@ __metadata:
     "@types/react-dom": 18.0.11
     autoprefixer: 10.4.14
     clsx: ^1.2.1
+    date-fns: ^2.29.3
     eslint: 8.36.0
     eslint-config-next: 13.2.4
     eslint-plugin-import: ^2.27.5
@@ -981,6 +982,13 @@ __metadata:
     whatwg-mimetype: ^3.0.0
     whatwg-url: ^12.0.0
   checksum: 006e869b5bf079647949a3e9b1dd69d84b2d5d26e6b01c265485699bc96e83817d4b5aae758b2910a4c58c0601913f3a0034121c1ca2da268e9a244c57515b15
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^2.29.3":
+  version: 2.29.3
+  resolution: "date-fns@npm:2.29.3"
+  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
   languageName: node
   linkType: hard
 

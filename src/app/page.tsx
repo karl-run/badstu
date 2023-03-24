@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 
 import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
+import LastUpdated from '@/components/LastUpdated';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +26,10 @@ export default async function Home() {
 
   return (
     <main className={cn(inter.className, 'p-4 sm:p-16')}>
-      <h1 className="mb-4 text-2xl font-bold">Hemmelig Kroloftet Booking Oversikt</h1>
+      <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <h1 className="text-2xl font-bold">Hemmelig Kroloftet Booking Oversikt</h1>
+        <LastUpdated generatedAt={new Date().toISOString()} />
+      </div>
       <div className="flex flex-wrap gap-4 ">
         {times.map((it) => (
           <div key={it.dayInMonth} className="min-w-[12rem] flex-grow bg-slate-100 p-4 sm:flex-grow-0">
