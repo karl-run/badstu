@@ -8,6 +8,8 @@ import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
 import HouseIcon from '@/components/HouseIcon';
+import Time from '@/components/Time';
+import CrossIcon from '@/components/CrossIcon';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -27,42 +29,60 @@ export default async function Home() {
         <h1 className="text-2xl font-bold">Hemmelig Kroloftet Booking Oversikt</h1>
         <LastUpdated generatedAt={new Date().toISOString()} />
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {times.map(([date, times]) => (
-          <div key={date} className="highlight-white/5 rounded-lg bg-slate-800/70 shadow-highlight-white">
-            <h2 className="text-md mx-4 my-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
-            <ul className="grid grid-cols-1 divide-y">
-              {Object.entries(times).map(([time, { available, isFullyBookable }]) => (
-                <li
-                  key={time}
-                  className={cn('', {
-                    'bg-emerald-600/20 hover:bg-emerald-600/50': available > 0,
-                    'bg-yellow-600/20': isFullyBookable,
-                  })}
-                >
-                  {available > 0 ? (
-                    <a
-                      href={createClickableBookingLink(date, time)}
-                      className="relative block flex h-full w-full justify-between p-2 px-4"
-                    >
-                      <span>
-                        {time}: ({available})
-                      </span>
-                      <span className="absolute right-2 top-0 px-4 text-3xl">›</span>
-                    </a>
-                  ) : (
-                    <div
-                      className="flex items-center justify-between px-4 py-2"
-                      title={isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined}
-                    >
-                      {time}: ({available}){isFullyBookable && <HouseIcon />}
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {times.map(([date, times]) => {
+          const timesList = Object.entries(times);
+          const anythingAvailable = timesList.some(
+            ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
+          );
+
+          return (
+            <div key={date} className="highlight-white/5 rounded-lg bg-slate-800/70 shadow-highlight-white">
+              <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
+                <span>{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</span>
+                {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
+              </h2>
+              <ul className="grid grid-cols-1 divide-y">
+                {timesList.map(([time, { available, isFullyBookable }]) => (
+                  <li
+                    key={time}
+                    className={cn('', {
+                      'bg-emerald-600/20 hover:bg-emerald-600/50': available > 0,
+                    })}
+                  >
+                    {available > 0 ? (
+                      <a
+                        href={createClickableBookingLink(date, time)}
+                        className="relative block flex h-full w-full justify-between p-2 px-4"
+                      >
+                        <span className="flex">
+                          <Time>{time}</Time>
+                          <div>{available} ledige</div>
+                        </span>
+                        <span className="absolute right-2 top-0 px-4 text-3xl">›</span>
+                      </a>
+                    ) : (
+                      <div
+                        className="flex items-center justify-between px-4 py-2"
+                        title={isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined}
+                      >
+                        <div className="flex items-center">
+                          <Time>{time}</Time>
+                          {isFullyBookable ? (
+                            <div className="text-sm">Åpen for privat booking</div>
+                          ) : (
+                            <div className="flex items-center">{available || <CrossIcon />}</div>
+                          )}
+                        </div>
+                        {isFullyBookable && <HouseIcon />}
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </main>
   );
