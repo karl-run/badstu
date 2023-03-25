@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
-import bgImage from '@/images/bg-sauna-2.jpg';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -23,21 +22,20 @@ export default async function Home() {
 
   return (
     <main className={cn(inter.className, 'container mx-auto p-4 sm:p-16')}>
-      <Image src={bgImage} alt="" className="absolute top-0 left-0 -z-10 w-full bg-cover" />
       <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <h1 className="text-2xl font-bold">Hemmelig Kroloftet Booking Oversikt</h1>
         <LastUpdated generatedAt={new Date().toISOString()} />
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {times.map(([date, times]) => (
-          <div key={date} className="min-w-[12rem] flex-grow rounded bg-black/30 backdrop-blur-sm">
+          <div key={date} className="highlight-white/5 rounded-lg bg-slate-800 shadow-highlight-white">
             <h2 className="text-md mx-4 my-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
             <ul className="grid grid-cols-1 divide-y">
               {Object.entries(times).map(([time, available]) => (
                 <li
                   key={time}
                   className={cn('', {
-                    'bg-green-500/25': available > 0,
+                    'bg-green-800/40': available > 0,
                   })}
                 >
                   {available > 0 ? (
