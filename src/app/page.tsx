@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
 import { nb } from 'date-fns/locale';
+import { createClickableBookingLink } from '@/utils/planyo-utils';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -26,18 +27,31 @@ export default async function Home() {
       </div>
       <div className="flex flex-wrap justify-between gap-4">
         {times.map(([date, times]) => (
-          <div key={date} className="min-w-[12rem] flex-grow bg-slate-100 p-4">
-            <h2 className="text-md mb-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
-            <ul className="flex flex-col gap-2">
+          <div key={date} className="min-w-[12rem] flex-grow bg-slate-50 rounded">
+            <h2 className="text-md mx-4 my-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
+            <ul className="grid grid-cols-1 divide-y">
               {Object.entries(times).map(([time, available]) => (
                 <li
                   key={time}
-                  className={cn('bg-slate-300 p-2', {
-                    'bg-red-200': available === 0,
+                  className={cn('', {
                     'bg-green-200': available > 0,
                   })}
                 >
-                  {time}: ({available})
+                  {available > 0 ? (
+                    <a
+                      href={createClickableBookingLink(date, time)}
+                      className="relative block flex h-full w-full justify-between p-2 px-4"
+                    >
+                      <span>
+                        {time}: ({available})
+                      </span>
+                      <span className="absolute px-4 right-2 top-0 text-3xl">›</span>
+                    </a>
+                  ) : (
+                    <div className="px-4 py-2">
+                      {time}: ({available})
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
