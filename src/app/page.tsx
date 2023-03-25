@@ -28,14 +28,14 @@ export default async function Home() {
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {times.map(([date, times]) => (
-          <div key={date} className="highlight-white/5 rounded-lg bg-slate-800 shadow-highlight-white">
+          <div key={date} className="highlight-white/5 rounded-lg bg-slate-800/70 shadow-highlight-white">
             <h2 className="text-md mx-4 my-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
             <ul className="grid grid-cols-1 divide-y">
               {Object.entries(times).map(([time, available]) => (
                 <li
                   key={time}
                   className={cn('', {
-                    'bg-green-800/40': available > 0,
+                    'bg-emerald-600/20 hover:bg-emerald-600/50': available > 0,
                   })}
                 >
                   {available > 0 ? (
