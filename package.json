@@ -16,7 +16,7 @@
     "next": "canary",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "remeda": "^1.9.1",
+    "remeda": "^1.9.4",
     "tailwind-merge": "^1.10.0"
   },
   "devDependencies": {

@@ -706,7 +706,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.2.5
     react: 18.2.0
     react-dom: 18.2.0
-    remeda: ^1.9.1
+    remeda: ^1.9.4
     tailwind-merge: ^1.10.0
     tailwindcss: 3.2.7
     typescript: 5.0.2
@@ -3497,10 +3497,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^1.9.1":
-  version: 1.9.1
-  resolution: "remeda@npm:1.9.1"
-  checksum: 8d4813bda35c9e1aa2479c9271d9a3e88853e9590aa33bc453a47a6bd786c0e461db4a82466e3adec0605e0c8b4e977f2c2b8431e1847fc1dc29d203a8b59c74
+"remeda@npm:^1.9.4":
+  version: 1.9.4
+  resolution: "remeda@npm:1.9.4"
+  checksum: e8e9377ad0e8f54e40ad65c3e4ff14d1ef6ee922d99d08880056a4c899ac4d770bca7600afbb33efbfabb5018386c69aa8d8a3c5026264a9850772cbfc8896b6
   languageName: node
   linkType: hard
 

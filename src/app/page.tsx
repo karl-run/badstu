@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
+import HouseIcon from '@/components/HouseIcon';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -31,11 +32,12 @@ export default async function Home() {
           <div key={date} className="highlight-white/5 rounded-lg bg-slate-800/70 shadow-highlight-white">
             <h2 className="text-md mx-4 my-2 font-bold">{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</h2>
             <ul className="grid grid-cols-1 divide-y">
-              {Object.entries(times).map(([time, available]) => (
+              {Object.entries(times).map(([time, { available, isFullyBookable }]) => (
                 <li
                   key={time}
                   className={cn('', {
                     'bg-emerald-600/20 hover:bg-emerald-600/50': available > 0,
+                    'bg-yellow-600/20': isFullyBookable,
                   })}
                 >
                   {available > 0 ? (
@@ -49,8 +51,11 @@ export default async function Home() {
                       <span className="absolute right-2 top-0 px-4 text-3xl">›</span>
                     </a>
                   ) : (
-                    <div className="px-4 py-2">
-                      {time}: ({available})
+                    <div
+                      className="flex items-center justify-between px-4 py-2"
+                      title={isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined}
+                    >
+                      {time}: ({available}){isFullyBookable && <HouseIcon />}
                     </div>
                   )}
                 </li>
