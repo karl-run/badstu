@@ -2,7 +2,6 @@ import { Inter } from 'next/font/google';
 import dynamic from 'next/dynamic';
 import { format } from 'date-fns';
 import { nb } from 'date-fns/locale';
-import Image from 'next/image';
 
 import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
@@ -18,7 +17,7 @@ const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const revalidate = 60;
+export const revalidate = 30;
 
 export default async function Home() {
   const times = await getTimes();
