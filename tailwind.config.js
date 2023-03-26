@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
+        'highlight': 'inset 0 0 0 1px hsla(0,0%,100%,.1)',
         'highlight-white': 'inset 0 0 0 1px hsla(0,0%,100%,.1)',
       },
     },

@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <main className={cn(inter.className, 'container mx-auto p-4 sm:p-16')}>
       <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <h1 className="text-2xl font-bold">Hemmelig Kroloftet Booking Oversikt</h1>
+        <h1 className="text-2xl font-bold">Kroloftet Drop-in</h1>
         <LastUpdated generatedAt={new Date().toISOString()} />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -36,7 +36,12 @@ export default async function Home() {
           );
 
           return (
-            <div key={date} className="highlight-white/5 rounded-lg bg-slate-800/70 shadow-highlight-white">
+            <div
+              key={date}
+              className={cn(
+                'dark:highlight-white rounded-lg border dark:border-none dark:bg-slate-800/70 dark:shadow-highlight-white',
+              )}
+            >
               <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
                 <span>{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</span>
                 {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}

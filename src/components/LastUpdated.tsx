@@ -21,7 +21,7 @@ function LastUpdated({ generatedAt }: Props): JSX.Element | null {
   const distance = formatDistanceStrict(generatedAtDate, now, { unit: 'second', locale: nb });
 
   useEffect(() => {
-    if ((secondsSince + 1) % 60 === 0) {
+    if ((secondsSince + 1) % 15 === 0) {
       router.refresh();
     }
   }, [router, secondsSince]);
