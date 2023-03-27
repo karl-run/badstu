@@ -18,7 +18,7 @@ function LastUpdated({ generatedAt }: Props): JSX.Element | null {
   const now = new Date();
   const generatedAtDate = parseISO(generatedAt);
   const secondsSince = differenceInSeconds(now, generatedAtDate);
-  const distance = formatDistanceStrict(generatedAtDate, now, { unit: 'second', locale: nb });
+  const distance = formatDistanceStrict(generatedAtDate, now, { locale: nb });
 
   useEffect(() => {
     if ((secondsSince + 1) % 15 === 0) {
