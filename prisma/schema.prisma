@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Location {
+  id                Int       @id @default(autoincrement())
+  name              String    @unique
+  dropins_polled_at DateTime?
+  dropins           Json?
+  private_polled_at DateTime?
+  private           Json?
+}
+
+model ScrapeLock {
+  id        Int       @id @default(autoincrement())
+  locked_at DateTime?
+  locked_by String?
+  location  String    @unique
+}

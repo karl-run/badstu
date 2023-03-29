@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { parseISO, differenceInSeconds, formatDistanceStrict } from 'date-fns';
 import { nb } from 'date-fns/locale';
 import { useRouter } from 'next/navigation';
@@ -14,16 +14,19 @@ interface Props {
 function LastUpdated({ generatedAt }: Props): JSX.Element | null {
   const router = useRouter();
 
-  useRerender(1);
   const now = new Date();
   const generatedAtDate = parseISO(generatedAt);
   const secondsSince = differenceInSeconds(now, generatedAtDate);
   const distance = formatDistanceStrict(generatedAtDate, now, { locale: nb });
 
+  useRerender(1);
+
   useEffect(() => {
-    if ((secondsSince + 1) % 15 === 0) {
+    if ((secondsSince + 1) % 15 !== 0) return;
+
+    fetch('/api/scrape', { method: 'POST' }).then(() => {
       router.refresh();
-    }
+    });
   }, [router, secondsSince]);
 
   if (secondsSince < 2) {

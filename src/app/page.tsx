@@ -3,12 +3,12 @@ import dynamic from 'next/dynamic';
 import { format } from 'date-fns';
 import { nb } from 'date-fns/locale';
 
-import { getTimes } from '@/scraping/obf';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
 import HouseIcon from '@/components/HouseIcon';
 import Time from '@/components/Time';
 import CrossIcon from '@/components/CrossIcon';
+import { getDropins } from '@/service/booking-service';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -17,19 +17,19 @@ const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const revalidate = 30;
+export const revalidate = 10;
 
 export default async function Home() {
-  const times = await getTimes();
+  const { result, timestamp } = await getDropins('kroloftet');
 
   return (
     <main className={cn(inter.className, 'container mx-auto p-4 sm:p-16')}>
       <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <h1 className="text-2xl font-bold">Kroloftet Drop-in</h1>
-        <LastUpdated generatedAt={new Date().toISOString()} />
+        {timestamp && <LastUpdated generatedAt={timestamp} />}
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {times.map(([date, times]) => {
+        {result.map(([date, times]) => {
           const timesList = Object.entries(times);
           const anythingAvailable = timesList.some(
             ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
@@ -68,7 +68,9 @@ export default async function Home() {
                     ) : (
                       <div
                         className="flex items-center justify-between px-4 py-2"
-                        title={isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined}
+                        title={
+                          isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined
+                        }
                       >
                         <div className="flex items-center">
                           <Time>{time}</Time>
@@ -88,6 +90,7 @@ export default async function Home() {
           );
         })}
       </div>
+      <p className="mt-8 text-right text-slate-100/30">Generert {new Date().toISOString()}</p>
     </main>
   );
 }

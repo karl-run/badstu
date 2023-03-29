@@ -1,40 +1,16 @@
 import { JSDOM } from 'jsdom';
 import * as R from 'remeda';
-import { formatISOWithOptions, parse, addDays } from 'date-fns/fp';
+import { formatISOWithOptions, parse } from 'date-fns/fp';
 
-import { Availability, AvailabilityMap, DateResultTuple, DateTimesTuple, ExtractedDay } from '@/scraping/types';
+import { ExtractedDay } from '@/scraping/types';
 import { waitFor } from '@/scraping/utils';
-import { doesBookableCollideWithDropin, toDateString } from '@/utils/date';
-import { debugF } from '@/utils/R';
+import { upsertLocation } from '@/db/location';
+import { emptyDropinDay } from '@/utils/days';
 
 const KROLOFTET_URL =
   'https://www.planyo.com/embed-calendar.php?resource_id=189283&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_3204143258&usage=resform&clk=r&no_range=1&show_count=1&visible_items_per_column=100';
 const KROLOFTET_HELBOOKING_URL =
   'https://www.planyo.com/embed-calendar.php?resource_id=189244&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_902085535&usage=resform&no_range=1&visible_items_per_column=100';
-
-const slots = ['08:30', '10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00', '20:30', '22:00'];
-const emptyDay: AvailabilityMap = R.pipe(
-  slots,
-  R.map((it): [string, number] => [it, 0]),
-  (it) => R.fromPairs(it),
-);
-
-function addEmptyDays(days: ExtractedDay[]): DateTimesTuple[] {
-  const today = new Date();
-  const emptyDays: Record<string, AvailabilityMap> = R.pipe(
-    R.range(0, 10).map((it) => addDays(it, today)),
-    R.map((it): DateTimesTuple => [toDateString(it), emptyDay]),
-    (it) => R.fromPairs(it),
-  );
-
-  return R.pipe(
-    days,
-    R.map((it): DateTimesTuple => [it.date, it.times]),
-    (it) => R.fromPairs(it),
-    (it) => R.merge(emptyDays, it),
-    R.toPairs,
-  );
-}
 
 async function fullyLoadDom(url: string): Promise<JSDOM> {
   const dom = await getDom(url);
@@ -42,7 +18,10 @@ async function fullyLoadDom(url: string): Promise<JSDOM> {
   return dom;
 }
 
-export async function getDaysFromDom(dom: JSDOM, isEntireSaunaBooking: boolean): Promise<ExtractedDay[]> {
+export async function getDaysFromDom(
+  dom: JSDOM,
+  isEntireSaunaBooking: boolean,
+): Promise<ExtractedDay[]> {
   return R.pipe(
     dom.window.document.getElementsByClassName('upcoming-day-group'),
     Array.from,
@@ -51,7 +30,7 @@ export async function getDaysFromDom(dom: JSDOM, isEntireSaunaBooking: boolean):
   );
 }
 
-export async function getTimes(): Promise<DateResultTuple[]> {
+export async function scrapeKroloftetTimes(): Promise<void> {
   console.info('Getting times for Kroloftet');
 
   const [kroloftetDom, kroloftetFullDom] = await Promise.all([
@@ -64,38 +43,7 @@ export async function getTimes(): Promise<DateResultTuple[]> {
     getDaysFromDom(kroloftetFullDom, true),
   ]);
 
-  const lookUpFullyBookability = (date: string, time: string): boolean => {
-    return (
-      kroloftetFullDays.find((fullbookableDay) => {
-        if (fullbookableDay.date !== date) return false;
-
-        return R.keys(fullbookableDay.times).some((fullbookableTime) =>
-          doesBookableCollideWithDropin(date, time, fullbookableTime),
-        );
-      }) != null
-    );
-  };
-
-  console.info(`Got times for Kroloftet (${kroloftetDays.length} days)`);
-
-  return R.pipe(
-    kroloftetDays,
-    addEmptyDays,
-    R.map(
-      ([date, times]): DateResultTuple => [
-        date,
-        R.pipe(
-          times,
-          (it) => R.toPairs(it),
-          R.map(([time, available]): [string, Availability] => [
-            time,
-            { available, isFullyBookable: lookUpFullyBookability(date, time) },
-          ]),
-          (it) => R.fromPairs(it),
-        ),
-      ],
-    ),
-  );
+  await upsertLocation(kroloftetDays, kroloftetFullDays);
 }
 
 function dayGroupToDay(isEntireSaunaBooking: boolean) {
@@ -109,12 +57,16 @@ function dayGroupToDay(isEntireSaunaBooking: boolean) {
     }
 
     const times = R.pipe(dayGroup, getTimesFromDayGroup(isEntireSaunaBooking), (it) =>
-      isEntireSaunaBooking ? it : R.merge(emptyDay, it),
+      isEntireSaunaBooking ? it : R.merge(emptyDropinDay, it),
     );
 
     return {
       times,
-      date: R.pipe(dateFromLink, parse(new Date(), 'dd.MM.yyyy'), formatISOWithOptions({ representation: 'date' })),
+      date: R.pipe(
+        dateFromLink,
+        parse(new Date(), 'dd.MM.yyyy'),
+        formatISOWithOptions({ representation: 'date' }),
+      ),
     };
   };
 }
@@ -129,7 +81,10 @@ function getTimesFromDayGroup(isEntireSaunaBooking: boolean) {
         R.map((it): [string, number] => {
           const [time, available] = it?.split('  ');
 
-          return [time.trim(), isEntireSaunaBooking ? 1 : parseInt(available.replace('(', '').replace(')', ''))];
+          return [
+            time.trim(),
+            isEntireSaunaBooking ? 1 : parseInt(available.replace('(', '').replace(')', '')),
+          ];
         }),
       ),
     );
