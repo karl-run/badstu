@@ -1,46 +1,10 @@
 import { differenceInSeconds } from 'date-fns';
 
 import { scrapeKroloftetTimes } from '@/scraping/obf';
-import prisma from '@/db/prisma';
-
-async function openLock() {
-  await prisma.scrapeLock.upsert({
-    create: {
-      location: 'kroloftet',
-      locked_at: null,
-      locked_by: null,
-    },
-    update: {
-      locked_at: null,
-      locked_by: null,
-    },
-    where: {
-      location: 'kroloftet',
-    },
-  });
-}
-
-async function lock() {
-  await prisma.scrapeLock.upsert({
-    create: {
-      location: 'kroloftet',
-      locked_at: new Date(),
-      locked_by: 'scraper',
-    },
-    update: {
-      locked_at: new Date(),
-      locked_by: 'scraper',
-    },
-    where: {
-      location: 'kroloftet',
-    },
-  });
-}
+import { getLock, lock, openLock } from '@/db/lock';
 
 export async function POST(request: Request) {
-  const currentLock = await prisma.scrapeLock.findUnique({
-    where: { location: 'kroloftet' },
-  });
+  const currentLock = await getLock('kroloftet');
 
   if (currentLock?.locked_at && differenceInSeconds(new Date(), currentLock.locked_at) < 60) {
     console.info(
@@ -54,13 +18,13 @@ export async function POST(request: Request) {
 
   console.log('Not scraping, starting now...');
   try {
-    await lock();
+    await lock('kroloftet', 'scraper');
     await scrapeKroloftetTimes();
-    await openLock();
+    await openLock('kroloftet');
     return new Response('OK', { status: 200 });
   } catch (e) {
     console.error(e);
-    await openLock();
+    await openLock('kroloftet');
     return new Response('Error', { status: 500 });
   }
 }

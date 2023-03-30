@@ -13,7 +13,7 @@ export const GET = async (request: Request): Promise<Response> =>
     TE.toUnion,
   )();
 
-export const eitherFetch = (...args: Parameters<typeof fetch>): TE.TaskEither<Error, Response> =>
+const eitherFetch = (...args: Parameters<typeof fetch>): TE.TaskEither<Error, Response> =>
   TE.tryCatch(async () => {
     console.log('Fetching', args[0]);
     const response = await fetch(...args);

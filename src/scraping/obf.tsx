@@ -3,19 +3,34 @@ import * as R from 'remeda';
 import { formatISOWithOptions, parse } from 'date-fns/fp';
 
 import { ExtractedDay } from '@/scraping/types';
-import { waitFor } from '@/scraping/utils';
 import { upsertLocation } from '@/db/location';
 import { emptyDropinDay } from '@/utils/days';
+import { fullyLoadDom } from '@/utils/jsdom-utils';
 
 const KROLOFTET_URL =
   'https://www.planyo.com/embed-calendar.php?resource_id=189283&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_3204143258&usage=resform&clk=r&no_range=1&show_count=1&visible_items_per_column=100';
 const KROLOFTET_HELBOOKING_URL =
   'https://www.planyo.com/embed-calendar.php?resource_id=189244&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_902085535&usage=resform&no_range=1&visible_items_per_column=100';
 
-async function fullyLoadDom(url: string): Promise<JSDOM> {
-  const dom = await getDom(url);
-  await waitFor(() => dom.window.document.getElementsByClassName('upcoming-day-group').length > 0);
-  return dom;
+export async function scrapeKroloftetTimes(): Promise<void> {
+  console.time('Scraping kroloftet');
+  console.info('Scraping both dropin and complete booking from kroloftet');
+
+  const [kroloftetDom, kroloftetFullDom] = await Promise.all([
+    fullyLoadDom(KROLOFTET_URL, 'upcoming-day-group'),
+    fullyLoadDom(KROLOFTET_HELBOOKING_URL, 'upcoming-day-group'),
+  ]);
+
+  const [kroloftetDays, kroloftetFullDays] = await Promise.all([
+    getDaysFromDom(kroloftetDom, false),
+    getDaysFromDom(kroloftetFullDom, true),
+  ]);
+
+  console.timeEnd('Scraping kroloftet');
+
+  console.time('Updating scrape time in db');
+  await upsertLocation(kroloftetDays, kroloftetFullDays);
+  console.timeEnd('Updating scrape time in db');
 }
 
 export async function getDaysFromDom(
@@ -28,22 +43,6 @@ export async function getDaysFromDom(
     R.map(dayGroupToDay(isEntireSaunaBooking)),
     R.compact,
   );
-}
-
-export async function scrapeKroloftetTimes(): Promise<void> {
-  console.info('Getting times for Kroloftet');
-
-  const [kroloftetDom, kroloftetFullDom] = await Promise.all([
-    fullyLoadDom(KROLOFTET_URL),
-    fullyLoadDom(KROLOFTET_HELBOOKING_URL),
-  ]);
-
-  const [kroloftetDays, kroloftetFullDays] = await Promise.all([
-    getDaysFromDom(kroloftetDom, false),
-    getDaysFromDom(kroloftetFullDom, true),
-  ]);
-
-  await upsertLocation(kroloftetDays, kroloftetFullDays);
 }
 
 function dayGroupToDay(isEntireSaunaBooking: boolean) {
@@ -88,24 +87,4 @@ function getTimesFromDayGroup(isEntireSaunaBooking: boolean) {
         }),
       ),
     );
-}
-
-async function getDom(url: string): Promise<JSDOM> {
-  if (process.env.NODE_ENV === 'development' && (global as any).cache?.[url]) {
-    console.info(`Using cached times for ${url}`);
-    return (global as any).cache[url];
-  }
-
-  const jsdom = await JSDOM.fromURL(url, {
-    runScripts: 'dangerously',
-    pretendToBeVisual: true,
-    resources: 'usable',
-  });
-
-  if (process.env.NODE_ENV === 'development') {
-    if ((global as any).cache == undefined) (global as any).cache = {};
-    (global as any).cache[url] = jsdom;
-  }
-
-  return jsdom;
 }

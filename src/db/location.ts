@@ -8,7 +8,7 @@ export async function upsertLocation(
   privateDays?: ExtractedDay[],
 ): Promise<void> {
   const now = new Date();
-  const result = await prisma.location.upsert({
+  await prisma.location.upsert({
     create: {
       name: 'kroloftet',
       dropins_polled_at: days ? now : undefined,
@@ -26,8 +26,6 @@ export async function upsertLocation(
       name: 'kroloftet',
     },
   });
-
-  console.log('create', result);
 }
 
 export async function getLocation(name: string) {
