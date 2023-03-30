@@ -44,7 +44,10 @@ export async function POST(request: Request) {
 
   if (currentLock?.locked_at && differenceInSeconds(currentLock.locked_at, new Date()) < 60) {
     console.info(
-      `Already scraping, started at ${currentLock.locked_at} by ${currentLock.locked_by}`,
+      `Already scraping (${differenceInSeconds(
+        currentLock.locked_at,
+        new Date(),
+      )} seconds ago), started at ${currentLock.locked_at} by ${currentLock.locked_by}`,
     );
     return new Response('Already scraping', { status: 208 });
   }
