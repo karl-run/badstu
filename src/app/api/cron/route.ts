@@ -2,7 +2,7 @@ import * as E from 'fp-ts/Either';
 import * as TE from 'fp-ts/TaskEither';
 import { pipe } from 'fp-ts/function';
 
-const HOST = process.env.VERCEL_URL ?? 'http://localhost:3000';
+const HOST = `https://${process.env.VERCEL_URL}` ?? 'http://localhost:3000';
 
 export const GET = async (request: Request): Promise<Response> =>
   pipe(
