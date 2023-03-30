@@ -6,7 +6,7 @@ const HOST = `https://${process.env.VERCEL_URL}` ?? 'http://localhost:3000';
 
 export const GET = async (request: Request): Promise<Response> =>
   pipe(
-    eitherFetch(HOST + '/api/scrape', { method: 'POST' }),
+    eitherFetch(HOST + '/api/scrape?source=cron', { method: 'POST' }),
     TE.chain(() => eitherFetch(HOST + '/api/revalidate', { method: 'POST' })),
     TE.mapLeft(toErrorResponse),
     TE.map(toSuccessResponse),
