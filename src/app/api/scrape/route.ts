@@ -42,11 +42,11 @@ export async function POST(request: Request) {
     where: { location: 'kroloftet' },
   });
 
-  if (currentLock?.locked_at && differenceInSeconds(currentLock.locked_at, new Date()) < 60) {
+  if (currentLock?.locked_at && differenceInSeconds(new Date(), currentLock.locked_at) < 60) {
     console.info(
       `Already scraping (${differenceInSeconds(
-        currentLock.locked_at,
         new Date(),
+        currentLock.locked_at,
       )} seconds ago), started at ${currentLock.locked_at} by ${currentLock.locked_by}`,
     );
     return new Response('Already scraping', { status: 208 });
