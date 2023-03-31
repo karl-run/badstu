@@ -1,8 +1,10 @@
 const HOST = `https://${process.env.VERCEL_URL}` ?? 'http://localhost:3000';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export const GET = async (request: Request): Promise<Response> => {
+  console.log('Running cron job...');
+
   try {
     await throwFetch(HOST + '/api/scrape?source=cron', { method: 'POST' });
     await throwFetch(HOST + '/api/revalidate', { method: 'POST' });
@@ -14,11 +16,15 @@ export const GET = async (request: Request): Promise<Response> => {
   }
 };
 
-const throwFetch = (...args: Parameters<typeof fetch>): Promise<Response> =>
-  fetch(...args).then((response) => {
+const throwFetch = (...args: Parameters<typeof fetch>): Promise<Response> => {
+  console.log(`Fetching ${args[0]}...`);
+  return fetch(...args).then((response) => {
     if (response.ok) {
+      console.log(`${args[0]} OK ${response.status}`);
       return response;
     } else {
+      console.error(`${args[0]} ${response.status} ${response.statusText}`);
       throw new Error(`Request failed with status ${response.status}`);
     }
   });
+};
