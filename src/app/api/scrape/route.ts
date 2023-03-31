@@ -5,6 +5,7 @@ import { getLock, lock, openLock } from '@/db/lock';
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
+  const source = searchParams.get('source') ?? 'unknown';
   const currentLock = await getLock('kroloftet');
 
   if (currentLock?.locked_at && differenceInSeconds(new Date(), currentLock.locked_at) < 60) {
@@ -17,9 +18,9 @@ export async function POST(request: Request) {
     return new Response('Already scraping', { status: 208 });
   }
 
-  console.log('Not scraping, starting now...');
+  console.log(`Not scraping, starting now... (triggered by ${source})`);
   try {
-    await lock('kroloftet', searchParams.get('source') ?? 'unknown');
+    await lock('kroloftet', source);
     await scrapeKroloftetTimes();
     await openLock('kroloftet');
     return new Response('OK', { status: 200 });
