@@ -6,43 +6,43 @@ import { ExtractedDay } from '@/scraping/types';
 import { upsertLocation } from '@/db/location';
 import { emptyDropinDay } from '@/utils/days';
 import { fullyLoadDom } from '@/utils/jsdom-utils';
+import { createUrl, locations, Locations } from "@/scraping/metadata";
 
-const KROLOFTET_URL =
-  'https://www.planyo.com/embed-calendar.php?resource_id=189283&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_3204143258&usage=resform&clk=r&no_range=1&show_count=1&visible_items_per_column=100';
-const KROLOFTET_HELBOOKING_URL =
-  'https://www.planyo.com/embed-calendar.php?resource_id=189244&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_902085535&usage=resform&no_range=1&visible_items_per_column=100';
+export async function scrapeTimes(name: Locations): Promise<void> {
+  const location = locations[name];
 
-export async function scrapeKroloftetTimes(): Promise<void> {
-  console.time('Scraping kroloftet');
-  console.info('Scraping both dropin and complete booking from kroloftet');
+  console.time(`Scraping ${name}`);
+  console.info(
+    `Scraping ${name}, dropin: ${locations[name].dropin ?? 'true'}, private: ${
+      locations[name].privat ?? 'true'
+    }`,
+  );
 
-  const [kroloftetDom, kroloftetFullDom] = await Promise.all([
-    fullyLoadDom(KROLOFTET_URL, 'upcoming-day-group'),
-    fullyLoadDom(KROLOFTET_HELBOOKING_URL, 'upcoming-day-group'),
+  const [dropinDays, privateDays] = await Promise.all([
+    fullyLoadDom(createUrl(location.dropin, true), 'upcoming-day-group').then(
+      getDaysFromDom(false),
+    ),
+    location.privat != null
+      ? fullyLoadDom(createUrl(location.privat, false), 'upcoming-day-group').then(
+          getDaysFromDom(true),
+        )
+      : undefined,
   ]);
-
-  const [kroloftetDays, kroloftetFullDays] = await Promise.all([
-    getDaysFromDom(kroloftetDom, false),
-    getDaysFromDom(kroloftetFullDom, true),
-  ]);
-
-  console.timeEnd('Scraping kroloftet');
+  console.timeEnd(`Scraping ${name}`);
 
   console.time('Updating scrape time in db');
-  await upsertLocation(kroloftetDays, kroloftetFullDays);
+  await upsertLocation(name, dropinDays, privateDays);
   console.timeEnd('Updating scrape time in db');
 }
 
-export async function getDaysFromDom(
-  dom: JSDOM,
-  isEntireSaunaBooking: boolean,
-): Promise<ExtractedDay[]> {
-  return R.pipe(
-    dom.window.document.getElementsByClassName('upcoming-day-group'),
-    Array.from,
-    R.map(dayGroupToDay(isEntireSaunaBooking)),
-    R.compact,
-  );
+export function getDaysFromDom(isEntireSaunaBooking: boolean) {
+  return (dom: JSDOM): ExtractedDay[] =>
+    R.pipe(
+      dom.window.document.getElementsByClassName('upcoming-day-group'),
+      Array.from,
+      R.map(dayGroupToDay(isEntireSaunaBooking)),
+      R.compact,
+    );
 }
 
 function dayGroupToDay(isEntireSaunaBooking: boolean) {

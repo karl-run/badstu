@@ -3,7 +3,13 @@ import { addDays, differenceInDays, formatISO, min } from 'date-fns/fp';
 import { flow } from 'fp-ts/function';
 import * as O from 'fp-ts/Option';
 
-import { Availability, AvailabilityMap, DateResultTuple, DateTimesTuple, ExtractedDay, } from '@/scraping/types';
+import {
+  Availability,
+  AvailabilityMap,
+  DateResultTuple,
+  DateTimesTuple,
+  ExtractedDay,
+} from '@/scraping/types';
 import { toDateString } from '@/utils/date';
 import { getLocation, jsonToExtractedDays } from '@/db/location';
 import { emptyDropinDay } from '@/utils/days';
@@ -32,7 +38,7 @@ export async function getDropins(name: string): Promise<LocationResult> {
   const privates = location.private ? jsonToExtractedDays(location.private) : [];
   const isBookable = privateToDropInCollissions(privates);
 
-  console.info(`Got times for ${name} (from db) (${dropins.length} days)`);
+  console.info(`Getting booking data for ${name} (${dropins.length} days)`);
 
   const differenceFromNow: (date: Date) => number = differenceInDays(new Date());
   const diffInDaysToNow = flow(daysToLatestDate, O.map(differenceFromNow), O.toNullable)(dropins);
@@ -83,4 +89,3 @@ function addEmptyDays(daysToAdd: number) {
     );
   };
 }
-

@@ -8,49 +8,51 @@ import { useRouter } from 'next/navigation';
 
 import { useRerender } from '@/hooks/useRerender';
 import { triggerScrape } from '@/data/fetching';
+import { Locations } from '@/scraping/metadata';
 
-interface Props {
-  generatedAt: string;
-}
-
-function useScrapeEvery15thSeconds(now: Date, generatedAtDate: Date) {
+function useScrapeEvery15thSeconds(location: Locations, now: Date, generatedAtDate: Date) {
   const router = useRouter();
   const secondsSince = differenceInSeconds(now, generatedAtDate);
 
   useEffect(() => {
     if ((secondsSince + 1) % 15 !== 0) return;
 
-    triggerScrape().then((result) => {
+    triggerScrape(location).then((result) => {
       if (E.isRight(result)) {
         router.refresh();
       }
     });
-  }, [router, secondsSince]);
+  }, [location, router, secondsSince]);
 
   return secondsSince;
 }
 
-function useScrapeOnMount() {
+function useScrapeOnMount(location: Locations) {
   const router = useRouter();
 
   useEffect(() => {
-    triggerScrape().then((result) => {
+    triggerScrape(location).then((result) => {
       if (E.isRight(result)) {
         router.refresh();
       }
     });
-  }, [router]);
+  }, [location, router]);
 }
 
-function LastUpdated({ generatedAt }: Props): JSX.Element | null {
-  useScrapeOnMount();
+interface Props {
+  location: Locations;
+  generatedAt: string;
+}
+
+function LastUpdated({ location, generatedAt }: Props): JSX.Element | null {
+  useScrapeOnMount(location);
   useRerender(1);
 
   const now = new Date();
   const generatedAtDate = parseISO(generatedAt);
   const distance = formatDistanceStrict(generatedAtDate, now, { locale: nb });
 
-  const secondsSince = useScrapeEvery15thSeconds(now, generatedAtDate);
+  const secondsSince = useScrapeEvery15thSeconds(location, now, generatedAtDate);
 
   if (secondsSince < 2) {
     return <p>Klokkeslettene er ferske</p>;

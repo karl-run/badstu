@@ -1,12 +1,14 @@
 import { differenceInSeconds } from 'date-fns';
 
-import { scrapeKroloftetTimes } from '@/scraping/obf';
+import { scrapeTimes } from '@/scraping/obf';
 import { getLock, lock, openLock } from '@/db/lock';
+import { validateLocation } from '@/scraping/metadata';
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
+  const location = validateLocation(searchParams.get('location') ?? null);
   const source = searchParams.get('source') ?? 'unknown';
-  const currentLock = await getLock('kroloftet');
+  const currentLock = await getLock(location);
 
   if (currentLock?.locked_at && differenceInSeconds(new Date(), currentLock.locked_at) < 60) {
     console.info(
@@ -20,13 +22,13 @@ export async function POST(request: Request) {
 
   console.log(`Not scraping, starting now... (triggered by ${source})`);
   try {
-    await lock('kroloftet', source);
-    await scrapeKroloftetTimes();
-    await openLock('kroloftet');
+    await lock(location, source);
+    await scrapeTimes(location);
+    await openLock(location);
     return new Response('OK', { status: 200 });
   } catch (e) {
     console.error(e);
-    await openLock('kroloftet');
+    await openLock(location);
     return new Response('Error', { status: 500 });
   }
 }

@@ -1,16 +1,18 @@
-import { Prisma, Location } from '.prisma/client';
+import { Prisma } from '.prisma/client';
 
 import prisma from '@/db/prisma';
 import { ExtractedDay } from '@/scraping/types';
+import { Locations } from '@/scraping/metadata';
 
 export async function upsertLocation(
+  name: Locations,
   days?: ExtractedDay[],
   privateDays?: ExtractedDay[],
 ): Promise<void> {
   const now = new Date();
   await prisma.location.upsert({
     create: {
-      name: 'kroloftet',
+      name,
       dropins_polled_at: days ? now : undefined,
       dropins: days ? extractedDaysToJson(days) : undefined,
       private: privateDays ? extractedDaysToJson(privateDays) : undefined,
@@ -23,7 +25,7 @@ export async function upsertLocation(
       private_polled_at: privateDays ? now : undefined,
     },
     where: {
-      name: 'kroloftet',
+      name,
     },
   });
 }

@@ -1,7 +1,9 @@
 import * as E from 'fp-ts/Either';
 
-export const triggerScrape = async (): Promise<E.Either<string, string>> => {
-  const response = await fetch('/api/scrape?source=app', {
+import { Locations } from '@/scraping/metadata';
+
+export const triggerScrape = async (location: Locations): Promise<E.Either<string, string>> => {
+  const response = await fetch(`/api/scrape?source=app&location=${location}`, {
     method: 'POST',
   });
 

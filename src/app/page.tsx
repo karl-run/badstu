@@ -1,34 +1,43 @@
-import dynamic from 'next/dynamic';
+// import images
+import Link from 'next/link';
+import Image from 'next/image';
+import * as R from 'remeda';
+import React from 'react';
 
-import { getDropins } from '@/service/booking-service';
-import { BadstuDay } from "@/components/BadstuDay";
+import kroloftet from '../images/kroloftet.jpeg';
+import sukkerbiten from '../images/sukkerbiten.jpg';
+import langkaia from '../images/langkaia.jpeg';
 
-const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
-  ssr: false,
-  loading: () => <p>Klokkeslettene</p>,
-});
+import { Locations, locations } from '@/scraping/metadata';
 
-export const revalidate = 10;
+const images: Record<Locations, typeof kroloftet> = {
+  kroloftet: kroloftet,
+  sukkerbiten: sukkerbiten,
+  langkaia: langkaia,
+};
 
 export default async function Home() {
-  const { result, timestamp } = await getDropins('kroloftet');
-
   return (
-    <main className="container mx-auto p-4 sm:p-16">
-      <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
-        <h1 className="text-2xl font-bold">Kroloftet Drop-in</h1>
-        {timestamp && <LastUpdated generatedAt={timestamp} />}
-      </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {result.map(([date, times]) => (
-          <BadstuDay key={date} date={date} times={times} />
-        ))}
-      </div>
-      <GeneratedAt />
+    <main className="container mx-auto grid grid-cols-1 gap-8 p-4 sm:p-16 md:grid-cols-3">
+      {R.pipe(
+        locations,
+        R.keys,
+        (it) => it as Locations[],
+        R.map((location: Locations) => (
+          <Link
+            key={location}
+            href={`/${location}`}
+            className="max-w-3xl overflow-hidden transition-transform hover:scale-105"
+          >
+            <span className="ml-4 font-bold uppercase">{location}</span>
+            <Image
+              src={images[location]}
+              alt={location}
+              className="max-h-96 w-full rounded-2xl object-cover"
+            />
+          </Link>
+        )),
+      )}
     </main>
   );
 }
-
-const GeneratedAt = () => (
-  <p className="mt-8 text-right text-slate-100/30">Generert {new Date().toISOString()}</p>
-);

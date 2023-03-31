@@ -20,7 +20,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         'bg-white text-slate-600 dark:bg-slate-900 dark:text-slate-400',
       )}
     >
-      <body className="bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
+      <body className="bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 min-h-screen">
         {children}
       </body>
     </html>
