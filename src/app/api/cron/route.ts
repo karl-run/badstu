@@ -1,5 +1,7 @@
 const HOST = `https://${process.env.VERCEL_URL}` ?? 'http://localhost:3000';
 
+export const dynamic = 'force-dynamic'
+
 export const GET = async (request: Request): Promise<Response> => {
   try {
     await throwFetch(HOST + '/api/scrape?source=cron', { method: 'POST' });
