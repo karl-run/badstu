@@ -12,7 +12,7 @@ export const GET = async (request: Request): Promise<Response> => {
   try {
     await Promise.all(
       R.keys(locations).map((location) =>
-        throwFetch(HOST + `/api/scrape?source=cron&location=${location}`),
+        throwFetch(HOST + `/api/scrape?source=cron&location=${location}`, { method: 'POST' }),
       ),
     );
     await throwFetch(HOST + '/api/revalidate', { method: 'POST' });
