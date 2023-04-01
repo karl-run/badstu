@@ -14,14 +14,14 @@ import { toDateString } from '@/utils/date';
 import { getLocation, jsonToExtractedDays } from '@/db/location';
 import { createEmptyDropinDay } from '@/utils/days';
 import { daysToLatestDate, privateToDropInCollissions } from '@/service/booking-utils';
-import { Locations, locations } from '@/scraping/metadata';
+import { Location, locations } from '@/scraping/metadata';
 
 interface LocationResult {
   timestamp: string | null;
   result: DateResultTuple[];
 }
 
-export async function getDropins(name: Locations): Promise<LocationResult> {
+export async function getDropins(name: Location): Promise<LocationResult> {
   const location = await getLocation(name);
 
   if (

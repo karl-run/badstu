@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
-import { locations, Locations } from '@/scraping/metadata';
+import { locations, Location } from '@/scraping/metadata';
 
 const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -12,7 +12,7 @@ const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
 
 export const revalidate = 1;
 
-type LocationPageMetadata = { slug: Locations };
+type LocationPageMetadata = { slug: Location };
 
 export default async function LocationPage({ params }: { params: LocationPageMetadata }) {
   const { result, timestamp } = await getDropins(params.slug);
@@ -33,7 +33,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {result.map(([date, times]) => (
-          <BadstuDay key={date} date={date} times={times} />
+          <BadstuDay key={date} location={locations[params.slug]} date={date} times={times} />
         ))}
         {result.length === 0 && (
           <div>Fant ingen tider. Virker som noe er ødelagt! Kom tilbake senere.</div>

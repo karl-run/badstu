@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation';
 
 import { useRerender } from '@/hooks/useRerender';
 import { triggerScrape } from '@/data/fetching';
-import { Locations } from '@/scraping/metadata';
+import { Location } from '@/scraping/metadata';
 
-function useScrapeEvery15thSeconds(location: Locations, now: Date, generatedAtDate: Date) {
+function useScrapeEvery15thSeconds(location: Location, now: Date, generatedAtDate: Date) {
   const router = useRouter();
   const secondsSince = differenceInSeconds(now, generatedAtDate);
 
@@ -27,7 +27,7 @@ function useScrapeEvery15thSeconds(location: Locations, now: Date, generatedAtDa
   return secondsSince;
 }
 
-function useScrapeOnMount(location: Locations) {
+function useScrapeOnMount(location: Location) {
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function useScrapeOnMount(location: Locations) {
 }
 
 interface Props {
-  location: Locations;
+  location: Location;
   generatedAt: string;
 }
 

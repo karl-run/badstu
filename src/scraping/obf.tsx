@@ -6,9 +6,9 @@ import { ExtractedDay } from '@/scraping/types';
 import { upsertLocation } from '@/db/location';
 import { createEmptyDropinDay } from '@/utils/days';
 import { fullyLoadDom } from '@/utils/jsdom-utils';
-import { createUrl, locations, Locations } from '@/scraping/metadata';
+import { createUrl, locations, Location } from '@/scraping/metadata';
 
-export async function scrapeTimes(name: Locations): Promise<void> {
+export async function scrapeTimes(name: Location): Promise<void> {
   const location = locations[name];
 
   console.time(`Scraping ${name}`);

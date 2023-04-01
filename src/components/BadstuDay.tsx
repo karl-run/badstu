@@ -8,8 +8,15 @@ import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
 import CrossIcon from '@/components/CrossIcon';
 import HouseIcon from '@/components/HouseIcon';
+import { Location, LocationDetails, locations } from '@/scraping/metadata';
 
-export const BadstuDay = ({ date, times }: { date: string; times: AvailabilityResult }) => {
+interface BadstuDayProps {
+  location: LocationDetails;
+  date: string;
+  times: AvailabilityResult;
+}
+
+export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
   const timesList = R.toPairs(times);
   const anythingAvailable = timesList.some(
     ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
@@ -28,7 +35,13 @@ export const BadstuDay = ({ date, times }: { date: string; times: AvailabilityRe
       </h2>
       <ul className="grid grid-cols-1 divide-y">
         {timesList.map(([time, availability]) => (
-          <BookingListItem key={time} availability={availability} date={date} time={time} />
+          <BookingListItem
+            key={time}
+            locationId={location.dropin}
+            availability={availability}
+            date={date}
+            time={time}
+          />
         ))}
       </ul>
     </div>
@@ -36,12 +49,14 @@ export const BadstuDay = ({ date, times }: { date: string; times: AvailabilityRe
 };
 
 interface BookingListItemProps {
+  locationId: number;
   time: string;
   availability: Availability;
   date: string;
 }
 
 function BookingListItem({
+  locationId,
   time,
   date,
   availability: { available, isFullyBookable },
@@ -55,7 +70,7 @@ function BookingListItem({
     >
       {hasAvailableSlots ? (
         <a
-          href={createClickableBookingLink(date, time)}
+          href={createClickableBookingLink(locationId, date, time)}
           className="relative block flex h-full w-full justify-between p-2 px-4"
         >
           <span className="flex">

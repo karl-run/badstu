@@ -7,9 +7,9 @@ import kroloftet from '../images/kroloftet.jpeg';
 import sukkerbiten from '../images/sukkerbiten.jpg';
 import langkaia from '../images/langkaia.jpeg';
 
-import { locationNames, Locations } from '@/scraping/metadata';
+import { locationNames, Location } from '@/scraping/metadata';
 
-const images: Record<Locations, typeof kroloftet> = {
+const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,
   sukkerbiten: sukkerbiten,
   langkaia: langkaia,
@@ -20,7 +20,7 @@ export default async function Home() {
     <main className="container mx-auto grid grid-cols-1 gap-8 p-4 sm:p-16 md:grid-cols-3">
       {R.pipe(
         locationNames,
-        R.map((location: Locations) => (
+        R.map((location: Location) => (
           <Link
             key={location}
             href={`/${location}`}

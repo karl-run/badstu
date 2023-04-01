@@ -1,11 +1,11 @@
 export const locationNames = ['kroloftet', 'sukkerbiten', 'langkaia'] as const;
 
-export type Locations = (typeof locationNames)[number];
+export type Location = (typeof locationNames)[number];
 
-export const locations: Record<
-  Locations,
-  { dropinSlots: string[]; dropin: number; privat?: number }
-> = {
+export type LocationDetails = { dropinSlots: string[]; dropin: number; privat?: number };
+export type Locations = Record<Location, LocationDetails>;
+
+export const locations: Locations = {
   kroloftet: {
     dropinSlots: [
       '08:30',
@@ -64,10 +64,10 @@ export const createUrl = (locationId: number, showCount: boolean) =>
     '&visible_items_per_column=100',
   ].join('');
 
-export function validateLocation(param: string | null): Locations {
+export function validateLocation(param: string | null): Location {
   if (param == null || locationNames.find((it) => param === it) == null) {
     throw new Error(`Invalid location: ${param}`);
   }
 
-  return param as Locations;
+  return param as Location;
 }

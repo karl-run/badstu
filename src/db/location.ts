@@ -2,10 +2,10 @@ import { Prisma } from '.prisma/client';
 
 import prisma from '@/db/prisma';
 import { ExtractedDay } from '@/scraping/types';
-import { Locations } from '@/scraping/metadata';
+import { Location } from '@/scraping/metadata';
 
 export async function upsertLocation(
-  name: Locations,
+  name: Location,
   days?: ExtractedDay[],
   privateDays?: ExtractedDay[],
 ): Promise<void> {
