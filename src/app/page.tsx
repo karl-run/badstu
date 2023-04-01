@@ -1,4 +1,3 @@
-// import images
 import Link from 'next/link';
 import Image from 'next/image';
 import * as R from 'remeda';
@@ -8,7 +7,7 @@ import kroloftet from '../images/kroloftet.jpeg';
 import sukkerbiten from '../images/sukkerbiten.jpg';
 import langkaia from '../images/langkaia.jpeg';
 
-import { Locations, locations } from '@/scraping/metadata';
+import { locationNames, Locations } from '@/scraping/metadata';
 
 const images: Record<Locations, typeof kroloftet> = {
   kroloftet: kroloftet,
@@ -20,9 +19,7 @@ export default async function Home() {
   return (
     <main className="container mx-auto grid grid-cols-1 gap-8 p-4 sm:p-16 md:grid-cols-3">
       {R.pipe(
-        locations,
-        R.keys,
-        (it) => it as Locations[],
+        locationNames,
         R.map((location: Locations) => (
           <Link
             key={location}

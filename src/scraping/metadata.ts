@@ -1,6 +1,6 @@
-import * as R from 'remeda';
+export const locationNames = ['kroloftet', 'sukkerbiten', 'langkaia'] as const;
 
-export type Locations = 'kroloftet' | 'sukkerbiten' | 'langkaia';
+export type Locations = (typeof locationNames)[number];
 
 export const locations: Record<
   Locations,
@@ -65,7 +65,7 @@ export const createUrl = (locationId: number, showCount: boolean) =>
   ].join('');
 
 export function validateLocation(param: string | null): Locations {
-  if (param == null || !R.keys(locations).includes(param)) {
+  if (param == null || locationNames.find((it) => param === it) == null) {
     throw new Error(`Invalid location: ${param}`);
   }
 

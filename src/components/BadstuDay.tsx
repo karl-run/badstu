@@ -1,3 +1,4 @@
+import * as R from 'remeda';
 import { format } from 'date-fns';
 import { nb } from 'date-fns/locale';
 
@@ -9,7 +10,7 @@ import CrossIcon from '@/components/CrossIcon';
 import HouseIcon from '@/components/HouseIcon';
 
 export const BadstuDay = ({ date, times }: { date: string; times: AvailabilityResult }) => {
-  const timesList = Object.entries(times);
+  const timesList = R.toPairs(times);
   const anythingAvailable = timesList.some(
     ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
   );

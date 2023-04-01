@@ -1,16 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import * as R from 'remeda';
 
-import { locations, validateLocation } from '@/scraping/metadata';
+import { locationNames, validateLocation } from '@/scraping/metadata';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const location = req.query.location;
 
   try {
     if (!location) {
-      await Promise.all(R.keys(locations).map((location) => res.revalidate(`/${location}`)));
+      console.log('Revalidating all locations');
+      await Promise.all(locationNames.map((location) => res.revalidate(`/${location}`)));
     } else {
       const validatedLocation = validateLocation((location as string | null) ?? null);
+      console.log(`Revalidating ${validatedLocation}`);
       await res.revalidate(`/${validatedLocation}`);
     }
 

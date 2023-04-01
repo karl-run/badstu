@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     return new Response('Already scraping', { status: 208 });
   }
 
-  console.log(`Not scraping, starting now... (triggered by ${source})`);
+  console.log(`Not currently scraping ${location}, starting now... (triggered by ${source})`);
   try {
     await lock(location, source);
     await scrapeTimes(location);
