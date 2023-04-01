@@ -45,7 +45,9 @@ export default async function LocationPage({ params }: { params: LocationPageMet
 }
 
 const GeneratedAt = () => (
-  <p className="mt-8 text-right text-slate-700/30 dark:text-slate-100/30">Generert {new Date().toISOString()}</p>
+  <p className="mt-8 text-right text-slate-700/30 dark:text-slate-100/30">
+    Generert {new Date().toISOString()}
+  </p>
 );
 
 export function generateStaticParams(): LocationPageMetadata[] {

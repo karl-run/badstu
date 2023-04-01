@@ -88,10 +88,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/env@npm:13.2.5-canary.20"
-  checksum: 504c38a745a1f49ee38f571795293340c3dfb4218c1f830a3c011b16abc55b7cd401c3b1d3e44deb972646f7f9132eadd76b40b81f42679c9e82e8a0fcacb11c
+"@next/env@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/env@npm:13.2.5-canary.25"
+  checksum: 3b69b35597222c6a43b48b0ea69fb995fb7e8e8a0d1ba091adf671802d27d69baeb78a6584537689bcfd1efc1d2d13a946d80ce2b7771b4e1928dbddcfe1070d
   languageName: node
   linkType: hard
 
@@ -104,65 +104,65 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-darwin-arm64@npm:13.2.5-canary.20"
+"@next/swc-darwin-arm64@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-darwin-arm64@npm:13.2.5-canary.25"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-darwin-x64@npm:13.2.5-canary.20"
+"@next/swc-darwin-x64@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-darwin-x64@npm:13.2.5-canary.25"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.2.5-canary.20"
+"@next/swc-linux-arm64-gnu@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.2.5-canary.25"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-linux-arm64-musl@npm:13.2.5-canary.20"
+"@next/swc-linux-arm64-musl@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-linux-arm64-musl@npm:13.2.5-canary.25"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-linux-x64-gnu@npm:13.2.5-canary.20"
+"@next/swc-linux-x64-gnu@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-linux-x64-gnu@npm:13.2.5-canary.25"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-linux-x64-musl@npm:13.2.5-canary.20"
+"@next/swc-linux-x64-musl@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-linux-x64-musl@npm:13.2.5-canary.25"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.2.5-canary.20"
+"@next/swc-win32-arm64-msvc@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.2.5-canary.25"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.2.5-canary.20"
+"@next/swc-win32-ia32-msvc@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.2.5-canary.25"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "@next/swc-win32-x64-msvc@npm:13.2.5-canary.20"
+"@next/swc-win32-x64-msvc@npm:13.2.5-canary.25":
+  version: 13.2.5-canary.25
+  resolution: "@next/swc-win32-x64-msvc@npm:13.2.5-canary.25"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -256,10 +256,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/prisma-fmt-wasm@npm:4.10.0-85.d02666423b9d2b618381d5bee85532527a012123":
-  version: 4.10.0-85.d02666423b9d2b618381d5bee85532527a012123
-  resolution: "@prisma/prisma-fmt-wasm@npm:4.10.0-85.d02666423b9d2b618381d5bee85532527a012123"
-  checksum: 7e505aab210ad96595d253404b492b167fcea7ed61e05d449c840b50279ffb55e2de01ffe6c982532b3be193ca6cbd16a244565ba13ff8a33dcabf59373a8efc
+"@prisma/prisma-fmt-wasm@npm:4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7":
+  version: 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
+  resolution: "@prisma/prisma-fmt-wasm@npm:4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7"
+  checksum: 8afdf29fcab2313a0952c2c2931e67ded5f60c50d4b4da80c2858f99ae97c95fd8f781e0c96eb99d34c9a0b5b68796b658b873ee9bbb515e8d81afa1490829f8
   languageName: node
   linkType: hard
 
@@ -735,18 +735,18 @@ __metadata:
     eslint-plugin-import: ^2.27.5
     fp-ts: ^2.13.1
     jsdom: ^21.1.1
-    next: ^13.2.5-canary.20
+    next: canary
     postcss: 8.4.21
     prettier: ^2.8.7
-    prettier-plugin-prisma: ^4.10.0
+    prettier-plugin-prisma: ^4.12.0
     prettier-plugin-tailwindcss: ^0.2.6
     prisma: ^4.12.0
     react: 18.2.0
     react-dom: 18.2.0
     remeda: ^1.9.4
     tailwind-merge: ^1.11.0
-    tailwindcss: 3.3.0
-    typescript: 5.0.2
+    tailwindcss: 3.3.1
+    typescript: 5.0.3
   languageName: unknown
   linkType: soft
 
@@ -2905,20 +2905,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^13.2.5-canary.20":
-  version: 13.2.5-canary.20
-  resolution: "next@npm:13.2.5-canary.20"
+"next@npm:canary":
+  version: 13.2.5-canary.25
+  resolution: "next@npm:13.2.5-canary.25"
   dependencies:
-    "@next/env": 13.2.5-canary.20
-    "@next/swc-darwin-arm64": 13.2.5-canary.20
-    "@next/swc-darwin-x64": 13.2.5-canary.20
-    "@next/swc-linux-arm64-gnu": 13.2.5-canary.20
-    "@next/swc-linux-arm64-musl": 13.2.5-canary.20
-    "@next/swc-linux-x64-gnu": 13.2.5-canary.20
-    "@next/swc-linux-x64-musl": 13.2.5-canary.20
-    "@next/swc-win32-arm64-msvc": 13.2.5-canary.20
-    "@next/swc-win32-ia32-msvc": 13.2.5-canary.20
-    "@next/swc-win32-x64-msvc": 13.2.5-canary.20
+    "@next/env": 13.2.5-canary.25
+    "@next/swc-darwin-arm64": 13.2.5-canary.25
+    "@next/swc-darwin-x64": 13.2.5-canary.25
+    "@next/swc-linux-arm64-gnu": 13.2.5-canary.25
+    "@next/swc-linux-arm64-musl": 13.2.5-canary.25
+    "@next/swc-linux-x64-gnu": 13.2.5-canary.25
+    "@next/swc-linux-x64-musl": 13.2.5-canary.25
+    "@next/swc-win32-arm64-msvc": 13.2.5-canary.25
+    "@next/swc-win32-ia32-msvc": 13.2.5-canary.25
+    "@next/swc-win32-x64-msvc": 13.2.5-canary.25
     "@swc/helpers": 0.4.14
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -2961,7 +2961,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 7fb85a44845d1123386f56d90549459a546826fa949c88f2714c6e420aea3df1c882a8401318844cc2d71ae7199f075bb96f469d4f87776d083ae52707fb7697
+  checksum: 59a9b9d72fa49dba8ed3ed41562cc76f1d08bb708d1d692272617aec2111170b06c92485b0137f20abeac3a76f93ba63037adffbbc4ce32c8e0b8c71e4d0eea8
   languageName: node
   linkType: hard
 
@@ -3391,14 +3391,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-prisma@npm:^4.10.0":
-  version: 4.10.0
-  resolution: "prettier-plugin-prisma@npm:4.10.0"
+"prettier-plugin-prisma@npm:^4.12.0":
+  version: 4.12.0
+  resolution: "prettier-plugin-prisma@npm:4.12.0"
   dependencies:
-    "@prisma/prisma-fmt-wasm": 4.10.0-85.d02666423b9d2b618381d5bee85532527a012123
+    "@prisma/prisma-fmt-wasm": 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
   peerDependencies:
     prettier: ">=2"
-  checksum: fd89dc6b7cee1d2e3977084f7bda1f4d4b4446cb3c1ed73bf4dd4a8d552a167644f5557403b0e4387c6fb9d11e1d0d822910cb63f852e872f2dc4927b3a52eaf
+  checksum: a2de4c217c96413811236dc38332f2996e103e4e7b431bec3df37c1467034aac67102006943a9397d70f132f67c92605ae474fd83727bf155e9f2e3a54b3116d
   languageName: node
   linkType: hard
 
@@ -4080,9 +4080,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:3.3.0":
-  version: 3.3.0
-  resolution: "tailwindcss@npm:3.3.0"
+"tailwindcss@npm:3.3.1":
+  version: 3.3.1
+  resolution: "tailwindcss@npm:3.3.1"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -4113,7 +4113,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 00a9c603064b15e57be96603112a9e6385b1d1dc229fc49e9267d7f1fd0588a91e07e413ab9422e54afd49fffe9667f317eb5a4e49c44353342128fa3dbb8b0c
+  checksum: 966ba175486fb65ef3dd76aa8ec6929ff1d168531843ca7d5faf680b7097c36bf5f9ca385b563cdfdff935bb2bd37ac5998e877491407867503cc129d118bf93
   languageName: node
   linkType: hard
 
@@ -4283,23 +4283,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.0.2":
-  version: 5.0.2
-  resolution: "typescript@npm:5.0.2"
+"typescript@npm:5.0.3":
+  version: 5.0.3
+  resolution: "typescript@npm:5.0.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bef1dcd166acfc6934b2ec4d72f93edb8961a5fab36b8dd2aaf6f4f4cd5c0210f2e0850aef4724f3b4913d5aef203a94a28ded731b370880c8bcff7e4ff91fc1
+  checksum: 3cce0576d218cb4277ff8b6adfef1a706e9114a98b4261a38ad658a7642f1b274a8396394f6cbff8c0ba852996d7ed2e233e9b8431d5d55ac7c2f6fea645af02
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@5.0.2#~builtin<compat/typescript>":
-  version: 5.0.2
-  resolution: "typescript@patch:typescript@npm%3A5.0.2#~builtin<compat/typescript>::version=5.0.2&hash=85af82"
+"typescript@patch:typescript@5.0.3#~builtin<compat/typescript>":
+  version: 5.0.3
+  resolution: "typescript@patch:typescript@npm%3A5.0.3#~builtin<compat/typescript>::version=5.0.3&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b63cb742fbb9aeb3085e002ad8f10d5fd963606aa4d6b3b65b4e76c396ff09739f03b5dbae08e1698c3bce9d5619d3f67aeb7ee470ed4016bd345b3cfe37b54a
+  checksum: 5580367025ff7ee1f2a61e5affdbddccfe6e893bc662aa33fefdbf12de7e493173fa7d47475e9e15121828691004c4ed13bcd115e57866baed97b54c60954e1c
   languageName: node
   linkType: hard
 
