@@ -18,7 +18,7 @@ export const GET = async (request: Request): Promise<Response> => {
 };
 
 const throwFetch = (...args: Parameters<typeof fetch>): Promise<Response> => {
-  console.log(`Fetching ${args[0]}...`);
+  console.log(`Fetching ${args[0]}...`.replace(HOST, ''));
   return fetch(...args).then((response) => {
     if (response.ok) {
       console.log(`${args[0]} OK ${response.status}`);
