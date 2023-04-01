@@ -2,7 +2,7 @@ import * as R from 'remeda';
 
 import { locations } from '@/scraping/metadata';
 
-const HOST = `https://${process.env.VERCEL_URL}` ?? 'http://localhost:3000';
+const HOST = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
 export const dynamic = 'force-dynamic';
 

@@ -12,15 +12,16 @@ import {
 } from '@/scraping/types';
 import { toDateString } from '@/utils/date';
 import { getLocation, jsonToExtractedDays } from '@/db/location';
-import { emptyDropinDay } from '@/utils/days';
+import { createEmptyDropinDay } from '@/utils/days';
 import { daysToLatestDate, privateToDropInCollissions } from '@/service/booking-utils';
+import { Locations, locations } from '@/scraping/metadata';
 
 interface LocationResult {
   timestamp: string | null;
   result: DateResultTuple[];
 }
 
-export async function getDropins(name: string): Promise<LocationResult> {
+export async function getDropins(name: Locations): Promise<LocationResult> {
   const location = await getLocation(name);
 
   if (
@@ -52,7 +53,7 @@ export async function getDropins(name: string): Promise<LocationResult> {
     ),
     result: R.pipe(
       dropins,
-      addEmptyDays(diffInDaysToNow ?? 10),
+      addEmptyDays(diffInDaysToNow ?? 10, createEmptyDropinDay(locations[name].dropinSlots)),
       R.map(
         ([date, times]): DateResultTuple => [
           date,
@@ -71,12 +72,12 @@ export async function getDropins(name: string): Promise<LocationResult> {
   };
 }
 
-function addEmptyDays(daysToAdd: number) {
+function addEmptyDays(daysToAdd: number, emptyDay: AvailabilityMap) {
   return (days: ExtractedDay[]): DateTimesTuple[] => {
     const today = new Date();
     const emptyDays: Record<string, AvailabilityMap> = R.pipe(
       R.range(0, daysToAdd).map((it) => addDays(it, today)),
-      R.map((it): DateTimesTuple => [toDateString(it), emptyDropinDay]),
+      R.map((it): DateTimesTuple => [toDateString(it), emptyDay]),
       (it) => R.fromPairs(it),
     );
 

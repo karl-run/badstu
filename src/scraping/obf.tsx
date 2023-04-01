@@ -4,9 +4,9 @@ import { formatISOWithOptions, parse } from 'date-fns/fp';
 
 import { ExtractedDay } from '@/scraping/types';
 import { upsertLocation } from '@/db/location';
-import { emptyDropinDay } from '@/utils/days';
+import { createEmptyDropinDay } from '@/utils/days';
 import { fullyLoadDom } from '@/utils/jsdom-utils';
-import { createUrl, locations, Locations } from "@/scraping/metadata";
+import { createUrl, locations, Locations } from '@/scraping/metadata';
 
 export async function scrapeTimes(name: Locations): Promise<void> {
   const location = locations[name];
@@ -20,11 +20,11 @@ export async function scrapeTimes(name: Locations): Promise<void> {
 
   const [dropinDays, privateDays] = await Promise.all([
     fullyLoadDom(createUrl(location.dropin, true), 'upcoming-day-group').then(
-      getDaysFromDom(false),
+      getDaysFromDom(location.dropinSlots),
     ),
     location.privat != null
       ? fullyLoadDom(createUrl(location.privat, false), 'upcoming-day-group').then(
-          getDaysFromDom(true),
+          getDaysFromDom(null),
         )
       : undefined,
   ]);
@@ -35,17 +35,17 @@ export async function scrapeTimes(name: Locations): Promise<void> {
   console.timeEnd('Updating scrape time in db');
 }
 
-export function getDaysFromDom(isEntireSaunaBooking: boolean) {
+export function getDaysFromDom(fillEmptyHours: string[] | null) {
   return (dom: JSDOM): ExtractedDay[] =>
     R.pipe(
       dom.window.document.getElementsByClassName('upcoming-day-group'),
       Array.from,
-      R.map(dayGroupToDay(isEntireSaunaBooking)),
+      R.map(dayGroupToDay(fillEmptyHours)),
       R.compact,
     );
 }
 
-function dayGroupToDay(isEntireSaunaBooking: boolean) {
+function dayGroupToDay(fillEmptyHours: string[] | null) {
   return (dayGroup: Element): ExtractedDay | null => {
     const firstLink = dayGroup.querySelector('.thumbnail')?.getAttribute('onclick');
     const dateFromLink = /start_date=(\d{2}\.\d{2}\.\d{4})/.exec(firstLink ?? '')?.[1];
@@ -55,8 +55,8 @@ function dayGroupToDay(isEntireSaunaBooking: boolean) {
       return null;
     }
 
-    const times = R.pipe(dayGroup, getTimesFromDayGroup(isEntireSaunaBooking), (it) =>
-      isEntireSaunaBooking ? it : R.merge(emptyDropinDay, it),
+    const times = R.pipe(dayGroup, getTimesFromDayGroup(fillEmptyHours == null), (it) =>
+      fillEmptyHours == null ? it : R.merge(createEmptyDropinDay(fillEmptyHours), it),
     );
 
     return {
