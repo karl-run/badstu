@@ -22,11 +22,11 @@ export async function lock(location: string, whoami: string) {
     create: {
       location,
       locked_at: new Date(),
-      locked_by: 'scraper',
+      locked_by: whoami,
     },
     update: {
       locked_at: new Date(),
-      locked_by: 'scraper',
+      locked_by: whoami,
     },
     where: {
       location,

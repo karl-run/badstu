@@ -10,7 +10,7 @@ const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
   loading: () => <p>Klokkeslettene</p>,
 });
 
-export const revalidate = 10;
+export const revalidate = 1;
 
 type LocationPageMetadata = { slug: Locations };
 
