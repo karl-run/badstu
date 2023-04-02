@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     >
       <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
         {children}
+        <Analytics />
       </body>
     </html>
   );
