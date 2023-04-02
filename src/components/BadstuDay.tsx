@@ -1,5 +1,5 @@
 import * as R from 'remeda';
-import { format } from 'date-fns';
+import { addMinutes, format, isAfter, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
 
 import { Availability, AvailabilityResult } from '@/scraping/types';
@@ -8,7 +8,8 @@ import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
 import CrossIcon from '@/components/CrossIcon';
 import HouseIcon from '@/components/HouseIcon';
-import { Location, LocationDetails, locations } from '@/scraping/metadata';
+import { LocationDetails } from '@/scraping/metadata';
+import { dateAndTimeToDate } from '@/utils/date';
 
 interface BadstuDayProps {
   location: LocationDetails;
@@ -33,7 +34,7 @@ export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
         <span>{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</span>
         {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
       </h2>
-      <ul className="grid grid-cols-1 divide-y">
+      <ul className="grid grid-cols-1 divide-y dark:divide-white/10">
         {timesList.map(([time, availability]) => (
           <BookingListItem
             key={time}
@@ -62,10 +63,13 @@ function BookingListItem({
   availability: { available, isFullyBookable },
 }: BookingListItemProps) {
   const hasAvailableSlots = available > 0;
+  const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(date, time), 60));
+
   return (
     <li
       className={cn({
         'bg-emerald-600/20 hover:bg-emerald-600/50': hasAvailableSlots,
+        'opacity-30': isTooLate,
       })}
     >
       {hasAvailableSlots ? (
