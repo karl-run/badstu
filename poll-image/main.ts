@@ -1,13 +1,13 @@
 import { Cron } from './deps.ts';
 
-console.log('Setting up minute cron job');
+logWithTimestamp('Setting up minute cron job');
 
 const job = new Cron('* * * * *', async () => {
   await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia'].map(scrape));
 });
 
 async function scrape(location: string) {
-  console.log(`Time to poll location ${location}`);
+  logWithTimestamp(`Time to poll location ${location}`);
 
   const response = await fetch(
     `https://badstu.karl.run/api/scrape?source=cron&location=${location}`,
@@ -17,16 +17,26 @@ async function scrape(location: string) {
   );
 
   if (response.ok) {
-    console.log(`${location} OK ${response.status}`);
+    logWithTimestamp(`${location} OK ${response.status}`);
   } else {
-    console.error(`${location} ${response.status} ${response.statusText}`);
+    errorWithTimestamp(`${location} ${response.status} ${response.statusText}`);
   }
 }
 
-console.log(`Started... job will run ${job.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`);
+function logWithTimestamp(message: string) {
+  console.log(`${new Date().toISOString()}: ${message}`);
+}
+
+function errorWithTimestamp(message: unknown) {
+  console.error(`${new Date().toISOString()}`, message);
+}
+
+logWithTimestamp(
+  `Started... job will run ${job.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`,
+);
 
 Deno.addSignalListener('SIGINT', () => {
-  console.log('SIGINT received, exiting...');
+  logWithTimestamp('SIGINT received, exiting...');
   job.stop();
   Deno.exit(0);
 });
