@@ -1,20 +1,28 @@
-import dynamic from 'next/dynamic';
+import loadDynamic from 'next/dynamic';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
-import { locations, Location } from '@/scraping/metadata';
+import { locations, Location, validateLocation } from '@/scraping/metadata';
 
-const LastUpdated = dynamic(() => import('@/components/LastUpdated'), {
+const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
   loading: () => <p>Klokkeslettene</p>,
 });
 
-export const revalidate = 1;
+export const dynamic = 'force-dynamic';
 
 type LocationPageMetadata = { slug: Location };
 
 export default async function LocationPage({ params }: { params: LocationPageMetadata }) {
+  try {
+    validateLocation(params.slug);
+  } catch (e) {
+    console.error(`Someone tried to load ${params.slug} hmmm`);
+    notFound();
+  }
+
   const { result, timestamp } = await getDropins(params.slug);
 
   return (
@@ -39,17 +47,6 @@ export default async function LocationPage({ params }: { params: LocationPageMet
           <div>Fant ingen tider. Virker som noe er ødelagt! Kom tilbake senere.</div>
         )}
       </div>
-      <GeneratedAt />
     </main>
   );
-}
-
-const GeneratedAt = () => (
-  <p className="mt-8 text-right text-slate-700/30 dark:text-slate-100/30">
-    Generert {new Date().toISOString()}
-  </p>
-);
-
-export function generateStaticParams(): LocationPageMetadata[] {
-  return [{ slug: 'kroloftet' }, { slug: 'sukkerbiten' }, { slug: 'langkaia' }];
 }
