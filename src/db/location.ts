@@ -4,6 +4,7 @@ import { Prisma } from '.prisma/client';
 import prisma from '@/db/prisma';
 import { AvailabilityMap, ExtractedDay } from '@/scraping/types';
 import { Location, Locations, validateLocation } from '@/scraping/metadata';
+import { debugF, unsafeFirst } from '@/utils/R';
 
 export async function upsertLocation(
   name: Location,
@@ -43,40 +44,41 @@ export async function nextAvailableLocation(): Promise<
   [where: Location, when: string, slot: string, available: number] | null
 > {
   const nothingAvailable = (count: number) => count === 0;
+  const dayToEarliestSlot: (map: AvailabilityMap) => [string, number] = R.createPipe(
+    R.omitBy(nothingAvailable),
+    R.toPairs,
+    R.sortBy(R.first),
+    unsafeFirst,
+  );
+  const daysToEarliestDay: (days: ExtractedDay[]) => [string, [string, number]] = R.createPipe(
+    R.sortBy(R.prop('date')),
+    R.mapToObj((it) => [it.date, it.times]),
+    R.mapValues(dayToEarliestSlot),
+    R.toPairs,
+    R.sortBy(R.first),
+    unsafeFirst,
+  );
+  const byDateAndSlot = ([date, [slot]]: [string, [string, [string, number]]]) => `${date}:${slot}`;
 
   const locations = await prisma.location.findMany({
     where: { NOT: { dropins_polled_at: null } },
   });
 
-  const result = R.pipe(
+  const earliestPossibleDay = R.pipe(
     locations,
     R.mapToObj((it) => [it.name, it.dropins]),
-    R.mapValues(
-      R.createPipe(
-        jsonToExtractedDays,
-        R.sortBy(R.prop('date')),
-        R.mapToObj((it) => [it.date, it.times]),
-        R.mapValues(
-          R.createPipe(
-            R.omitBy(nothingAvailable),
-            R.toPairs,
-            R.sortBy(R.first),
-            (it) => it[0],
-          )),
-        R.toPairs,
-        R.sortBy((it) => it[0]),
-        (it) => it[0],
-      ),
-    ),
+    R.mapValues(jsonToExtractedDays),
+    R.mapValues(daysToEarliestDay),
     R.toPairs,
-    R.minBy(R.first),
+    R.sortBy([byDateAndSlot, 'desc']),
+    unsafeFirst,
   );
 
-  if (result == null) {
+  if (earliestPossibleDay == null) {
     return null;
   }
 
-  const [where, [when, [slot, available]]] = result;
+  const [where, [when, [slot, available]]] = earliestPossibleDay;
   return [validateLocation(where), when, slot, available];
 }
 
