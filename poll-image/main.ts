@@ -9,12 +9,18 @@ const job = new Cron('* * * * *', async () => {
 async function scrape(location: string) {
   logWithTimestamp(`Time to poll location ${location}`);
 
-  const response = await fetch(
-    `https://badstu.karl.run/api/scrape?source=cron&location=${location}`,
-    {
-      method: 'POST',
-    },
-  );
+  let response: Response;
+  try {
+    response = await fetch(
+      `https://badstu.karl.run/api/scrape?source=cron&location=${location}`,
+      {
+        method: 'POST',
+      },
+    );
+  } catch (e) {
+    errorWithTimestamp(new Error(`Error scraping ${location}`, { cause: e }));
+    return;
+  }
 
   if (response.ok) {
     logWithTimestamp(`${location} OK ${response.status}`);
