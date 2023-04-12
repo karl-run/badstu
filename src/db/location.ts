@@ -1,8 +1,9 @@
+import * as R from 'remeda';
 import { Prisma } from '.prisma/client';
 
 import prisma from '@/db/prisma';
-import { ExtractedDay } from '@/scraping/types';
-import { Location } from '@/scraping/metadata';
+import { AvailabilityMap, ExtractedDay } from '@/scraping/types';
+import { Location, Locations, validateLocation } from '@/scraping/metadata';
 
 export async function upsertLocation(
   name: Location,
@@ -36,6 +37,47 @@ export async function getLocation(name: string) {
       name,
     },
   });
+}
+
+export async function nextAvailableLocation(): Promise<
+  [where: Location, when: string, slot: string, available: number] | null
+> {
+  const nothingAvailable = (count: number) => count === 0;
+
+  const locations = await prisma.location.findMany({
+    where: { NOT: { dropins_polled_at: null } },
+  });
+
+  const result = R.pipe(
+    locations,
+    R.mapToObj((it) => [it.name, it.dropins]),
+    R.mapValues(
+      R.createPipe(
+        jsonToExtractedDays,
+        R.sortBy(R.prop('date')),
+        R.mapToObj((it) => [it.date, it.times]),
+        R.mapValues(
+          R.createPipe(
+            R.omitBy(nothingAvailable),
+            R.toPairs,
+            R.sortBy(R.first),
+            (it) => it[0],
+          )),
+        R.toPairs,
+        R.sortBy((it) => it[0]),
+        (it) => it[0],
+      ),
+    ),
+    R.toPairs,
+    R.minBy(R.first),
+  );
+
+  if (result == null) {
+    return null;
+  }
+
+  const [where, [when, [slot, available]]] = result;
+  return [validateLocation(where), when, slot, available];
 }
 
 export function extractedDaysToJson(questions: ExtractedDay[]): Prisma.JsonArray {

@@ -25,6 +25,7 @@ export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
 
   return (
     <div
+      id={date}
       key={date}
       className={cn(
         'dark:highlight-white rounded-lg border dark:border-none dark:bg-slate-800/70 dark:shadow-highlight-white',

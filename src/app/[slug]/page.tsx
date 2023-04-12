@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
 import { locations, Location, validateLocation } from '@/scraping/metadata';
+import ScrollToHash from "@/components/ScrollToHash";
 
 const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -47,6 +48,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
           <div>Fant ingen tider. Virker som noe er ødelagt! Kom tilbake senere.</div>
         )}
       </div>
+      <ScrollToHash />
     </main>
   );
 }
