@@ -1,18 +1,18 @@
 import React from 'react';
 
-function Checkbox({
-  id,
-  onToggle,
-}: {
+interface Props {
   id: string;
+  defaultChecked: boolean;
   onToggle: (checked: boolean) => Promise<boolean>;
-}): JSX.Element {
+}
+
+function Checkbox({ id, defaultChecked, onToggle }: Props): JSX.Element {
   return (
     <div className="relative flex h-full w-10 shrink-0 items-center justify-center border-r">
       <input
         id={id}
         type="checkbox"
-        defaultChecked={false}
+        defaultChecked={defaultChecked}
         onChange={async (event) => {
           const returnToIfFailed = !event.target.checked;
           const toggleResult: boolean = await onToggle(event.target.checked);

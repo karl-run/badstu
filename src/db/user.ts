@@ -25,7 +25,7 @@ export async function addNotify(newNotify: AddNotify) {
 
 export async function getNotifies(id: string) {
   return prisma.notify.findMany({
-    where: { userId: id },
+    where: { userId: id, date: { gte: new Date() }, notified: false },
     orderBy: { date: 'asc' },
   });
 }

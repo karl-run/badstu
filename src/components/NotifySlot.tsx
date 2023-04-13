@@ -1,18 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { startTransition } from 'react';
+import { useRouter } from 'next/navigation';
 
 import Checkbox from '@/components/Checkbox';
+import { Location } from '@/scraping/metadata';
 
 interface Props {
+  location: Location;
   slot: string;
   date: string;
   className: string;
+  hasNotify: boolean;
 }
 
-function NotifySlot({ slot, date, className }: Props): JSX.Element {
+function NotifySlot({ location, slot, date, hasNotify }: Props): JSX.Element {
+  const router = useRouter();
   const toggle = async (): Promise<boolean> => {
-    const response = await fetch('/api/notify', {
+    const response = await fetch(`/${location}/notify`, {
       method: 'PUT',
       body: JSON.stringify({
         slot,
@@ -20,10 +25,16 @@ function NotifySlot({ slot, date, className }: Props): JSX.Element {
       }),
     });
 
+    if (response.ok) {
+      startTransition(() => {
+        router.refresh();
+      });
+    }
+
     return response.ok;
   };
 
-  return <Checkbox id={`${date}-${slot}`} onToggle={toggle} />;
+  return <Checkbox id={`${date}-${slot}`} defaultChecked={hasNotify} onToggle={toggle} />;
 }
 
 export default NotifySlot;

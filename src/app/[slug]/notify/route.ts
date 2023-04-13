@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { parseISO } from 'date-fns';
 
-import { Location } from '@/scraping/metadata';
+import { Location, validateLocation } from '@/scraping/metadata';
 import { addNotify } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
@@ -12,6 +12,8 @@ type Params = {
 };
 
 export async function PUT(request: Request, { params }: Params) {
+  validateLocation(params.slug);
+
   const session = await getServerSession(authOptions);
 
   if (!session?.user?.email) {
