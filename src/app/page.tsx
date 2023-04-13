@@ -22,7 +22,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <main className="container mx-auto p-4 sm:p-16">
+    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
       <NextAvailable />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(

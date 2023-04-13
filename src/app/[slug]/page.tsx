@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
 import { locations, Location, validateLocation } from '@/scraping/metadata';
-import ScrollToHash from "@/components/ScrollToHash";
+import ScrollToHash from '@/components/ScrollToHash';
 
 const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -27,7 +27,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
   const { result, timestamp } = await getDropins(params.slug);
 
   return (
-    <main className="container mx-auto p-4 sm:p-16">
+    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
       <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <h1 className="text-2xl font-bold">
           <Link
