@@ -11,7 +11,7 @@ import { Availability, AvailabilityResult } from '@/scraping/types';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
-import HouseIcon from '@/components/HouseIcon';
+import HouseIcon from '@/components/icons/HouseIcon';
 import { Location, LocationDetails } from '@/scraping/metadata';
 import { dateAndTimeToDate } from '@/utils/date';
 import NotifySlot from '@/components/NotifySlot';
@@ -139,7 +139,7 @@ function BookingListItem({
         </a>
       ) : (
         <div
-          className="flex items-center justify-between px-4 py-2"
+          className="flex items-center justify-between gap-3 px-4 py-2"
           title={isFullyBookable ? 'Denne badstuen kan fortsatt bookes privat' : undefined}
         >
           <div className="flex items-center">

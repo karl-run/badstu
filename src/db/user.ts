@@ -9,8 +9,8 @@ export function insertUser(id: string) {
   });
 }
 
-type AddNotify = { id: string; location: Location; date: Date; slot: string };
-export async function addNotify(newNotify: AddNotify) {
+type AddRemoveNotify = { id: string; location: Location; date: Date; slot: string };
+export async function addNotify(newNotify: AddRemoveNotify) {
   return prisma.notify.create({
     data: {
       date: newNotify.date,
@@ -20,6 +20,25 @@ export async function addNotify(newNotify: AddNotify) {
       notified: false,
       notified_at: null,
     },
+  });
+}
+
+export async function removeNotify(deleteNotify: AddRemoveNotify) {
+  await prisma.$transaction(async () => {
+    const itemToDelete = await prisma.notify.findFirst({
+      where: {
+        userId: deleteNotify.id,
+        location: deleteNotify.location,
+        date: deleteNotify.date,
+        slot: deleteNotify.slot,
+      },
+    });
+
+    if (!itemToDelete) return;
+
+    await prisma.notify.delete({
+      where: { id: itemToDelete.id },
+    });
   });
 }
 

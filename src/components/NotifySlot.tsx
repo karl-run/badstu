@@ -16,12 +16,13 @@ interface Props {
 
 function NotifySlot({ location, slot, date, hasNotify }: Props): JSX.Element {
   const router = useRouter();
-  const toggle = async (): Promise<boolean> => {
+  const toggle = async (checked: boolean): Promise<boolean> => {
     const response = await fetch(`/${location}/notify`, {
       method: 'PUT',
       body: JSON.stringify({
         slot,
         date,
+        add: checked,
       }),
     });
 
