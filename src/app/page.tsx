@@ -10,7 +10,7 @@ import langkaia from '../images/langkaia.jpeg';
 
 import { locationNames, Location } from '@/scraping/metadata';
 import NextAvailable from '@/components/NextAvailable';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
 const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,

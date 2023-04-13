@@ -1,3 +1,6 @@
+// As long as this is named _route.ts it wont be used as a route.
+// Temporarily using pages as a workaround.
+
 import NextAuth, { AuthOptions } from 'next-auth';
 import Google from 'next-auth/providers/google';
 
