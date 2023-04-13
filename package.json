@@ -40,5 +40,8 @@
     "prisma": "^4.12.0",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4"
+  },
+  "resolutions": {
+    "next-auth@^4.22.0": "patch:next-auth@npm%3A4.22.0#./.yarn/patches/next-auth-npm-4.22.0-3c6b53baaa.patch"
   }
 }
