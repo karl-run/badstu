@@ -2938,7 +2938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:4.22.0":
+"next-auth@npm:^4.22.0":
   version: 4.22.0
   resolution: "next-auth@npm:4.22.0"
   dependencies:
@@ -2960,31 +2960,6 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 327a7715a963c890afd0b5a47316ce2c4cec887a86d96f2c208135df0f10b52c6e1fdcbb436a77926c24695165beea3bd0588da2411d5dec12fa19baae0c2533
-  languageName: node
-  linkType: hard
-
-"next-auth@patch:next-auth@npm%3A4.22.0#./.yarn/patches/next-auth-npm-4.22.0-3c6b53baaa.patch::locator=badstu%40workspace%3A.":
-  version: 4.22.0
-  resolution: "next-auth@patch:next-auth@npm%3A4.22.0#./.yarn/patches/next-auth-npm-4.22.0-3c6b53baaa.patch::version=4.22.0&hash=d086ad&locator=badstu%40workspace%3A."
-  dependencies:
-    "@babel/runtime": ^7.20.13
-    "@panva/hkdf": ^1.0.2
-    cookie: ^0.5.0
-    jose: ^4.11.4
-    oauth: ^0.9.15
-    openid-client: ^5.4.0
-    preact: ^10.6.3
-    preact-render-to-string: ^5.1.19
-    uuid: ^8.3.2
-  peerDependencies:
-    next: ^12.2.5 || ^13
-    nodemailer: ^6.6.5
-    react: ^17.0.2 || ^18
-    react-dom: ^17.0.2 || ^18
-  peerDependenciesMeta:
-    nodemailer:
-      optional: true
-  checksum: 98ffb479c54fe84399c7ff6f44b3638680d0daf0842fb4e09dbcc45eaff834fc6f3044d2c34f2841e34a5329cf9c5d26d01c2baa66cda5b9d1c9b2dbe63622a1
   languageName: node
   linkType: hard
 
