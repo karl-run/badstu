@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
 
 function UserHeader() {
   return (
@@ -13,11 +14,16 @@ function UserHeader() {
 function LoginButton() {
   const { data: session } = useSession();
 
-  if (session) {
+  if (session?.user) {
+    const user = session.user;
     return (
       <>
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Logg ut</button>
+        <button className="ml-8 hover:underline" onClick={() => signOut()}>
+          Logg ut ({user.name})
+        </button>
+        {user.image && (
+          <Image width="28" height="28" className="ml-4 h-6 w-6" src={user.image} alt="" />
+        )}
       </>
     );
   }
