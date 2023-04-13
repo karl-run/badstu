@@ -3,10 +3,12 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth';
 
 import { cn } from '@/utils/cn';
 import Providers from '@/app/Providers';
 import UserHeader from '@/components/UserHeader/UserHeader';
+import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +17,9 @@ export const metadata = {
   description: 'Secret page, please ignore',
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html
       lang="en"
@@ -25,7 +29,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       )}
     >
       <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
-        <Providers session={null}>
+        <Providers session={session}>
           <UserHeader />
           {children}
         </Providers>

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import * as R from 'remeda';
 import React from 'react';
-import { getServerSession } from 'next-auth';
 
 import kroloftet from '../images/kroloftet.jpeg';
 import sukkerbiten from '../images/sukkerbiten.jpg';
@@ -10,7 +9,6 @@ import langkaia from '../images/langkaia.jpeg';
 
 import { locationNames, Location } from '@/scraping/metadata';
 import NextAvailable from '@/components/NextAvailable';
-import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
 const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,
@@ -19,8 +17,6 @@ const images: Record<Location, typeof kroloftet> = {
 };
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
   return (
     <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
       <NextAvailable />
@@ -43,7 +39,6 @@ export default async function Home() {
           )),
         )}
       </div>
-      {session ? JSON.stringify(session, null, 2) : ''}
     </main>
   );
 }
