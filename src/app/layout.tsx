@@ -1,9 +1,12 @@
+import './globals.css';
+
 import { Analytics } from '@vercel/analytics/react';
 import { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
 
-import './globals.css';
 import { cn } from '@/utils/cn';
+import Providers from '@/app/Providers';
+import UserHeader from '@/components/UserHeader/UserHeader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +25,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
       )}
     >
       <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
-        {children}
+        <Providers session={null}>
+          <UserHeader />
+          {children}
+        </Providers>
         <Analytics />
       </body>
     </html>
