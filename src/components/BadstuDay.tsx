@@ -1,15 +1,21 @@
+'use client';
+
 import * as R from 'remeda';
-import { addMinutes, format, isAfter, parseISO } from 'date-fns';
+import { addMinutes, format, isAfter } from 'date-fns';
 import { nb } from 'date-fns/locale';
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 import { Availability, AvailabilityResult } from '@/scraping/types';
 import { cn } from '@/utils/cn';
 import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
-import CrossIcon from '@/components/CrossIcon';
 import HouseIcon from '@/components/HouseIcon';
 import { LocationDetails } from '@/scraping/metadata';
 import { dateAndTimeToDate } from '@/utils/date';
+import NotifySlot from '@/components/NotifySlot';
+import EditIcon from '@/components/icons/EditIcon';
+import CrossIcon from '@/components/icons/CrossIcon';
 
 interface BadstuDayProps {
   location: LocationDetails;
@@ -18,10 +24,12 @@ interface BadstuDayProps {
 }
 
 export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
+  const session = useSession();
   const timesList = R.toPairs(times);
   const anythingAvailable = timesList.some(
     ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
   );
+  const [isToggleMode, setToggleMode] = useState(false);
 
   return (
     <div
@@ -34,6 +42,16 @@ export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
       <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
         <span>{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</span>
         {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
+        {session.status === 'authenticated' && (
+          <button
+            onClick={() => setToggleMode((b) => !b)}
+            className={cn('h-8 w-8 transition-transform', {
+              'rotate-180': isToggleMode,
+            })}
+          >
+            <EditIcon />
+          </button>
+        )}
       </h2>
       <ul className="grid grid-cols-1 divide-y dark:divide-white/10">
         {timesList.map(([time, availability]) => (
@@ -43,6 +61,7 @@ export const BadstuDay = ({ location, date, times }: BadstuDayProps) => {
             availability={availability}
             date={date}
             time={time}
+            isToggleMode={isToggleMode}
           />
         ))}
       </ul>
@@ -55,12 +74,14 @@ interface BookingListItemProps {
   time: string;
   availability: Availability;
   date: string;
+  isToggleMode: boolean;
 }
 
 function BookingListItem({
   locationId,
   time,
   date,
+  isToggleMode,
   availability: { available, isFullyBookable },
 }: BookingListItemProps) {
   const hasAvailableSlots = available > 0;
@@ -68,11 +89,12 @@ function BookingListItem({
 
   return (
     <li
-      className={cn({
+      className={cn('flex', {
         'bg-emerald-600/20 hover:bg-emerald-600/50': hasAvailableSlots,
         'opacity-30': isTooLate,
       })}
     >
+      {isToggleMode && <NotifySlot className="" slot={time} date={date} />}
       {hasAvailableSlots ? (
         <a
           href={createClickableBookingLink(locationId, date, time)}

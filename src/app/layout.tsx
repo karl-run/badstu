@@ -9,6 +9,7 @@ import { cn } from '@/utils/cn';
 import Providers from '@/app/Providers';
 import UserHeader from '@/components/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
+import { getNotifies } from '@/db/user';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,11 +31,20 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
         <Providers session={session}>
-          <UserHeader />
+          <UserHeader
+            // @ts-expect-error Async RSC
+            notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
+          />
           {children}
         </Providers>
         <Analytics />
       </body>
     </html>
   );
+}
+
+async function NotifiesCount({ id }: { id: string }) {
+  const notifies = await getNotifies(id);
+
+  return <div className="mr-4">{notifies.length} aktive varsler</div>;
 }

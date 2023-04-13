@@ -2,10 +2,12 @@
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
-function UserHeader() {
+function UserHeader({ notifies }: { notifies: ReactNode }) {
   return (
     <div className="flex items-center justify-end p-4">
+      {notifies}
       <LoginButton />
     </div>
   );
