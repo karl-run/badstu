@@ -3,6 +3,7 @@
 
 import NextAuth, { AuthOptions } from 'next-auth';
 import Google from 'next-auth/providers/google';
+import { insertUser } from '@/db/user';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -13,7 +14,11 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      console.log('signIn', JSON.stringify({ account, profile }));
+      console.log(`User logged in with ${account?.provider ?? 'no provider'}`);
+
+      if (profile?.email) {
+        await insertUser(profile.email);
+      }
 
       return true;
     },

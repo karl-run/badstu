@@ -23,3 +23,21 @@ model ScrapeLock {
   locked_by String?
   location  String    @unique
 }
+
+model User {
+  id       String   @id @unique
+  notifies Notify[]
+}
+
+model Notify {
+  id          Int       @id @default(autoincrement())
+  userId      String
+  slot        String
+  date        DateTime
+  location    String
+  notified    Boolean   @default(false)
+  notified_at DateTime?
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
