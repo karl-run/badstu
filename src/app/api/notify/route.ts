@@ -56,7 +56,7 @@ async function findAndNotify(
 
       console.log('Sending notification to user');
       const result = await notifyUser({
-        phoneNumber: user.number,
+        phoneNumber: `+47${user.number}`,
         message: createNotifyMessage(toNotify),
       });
 
