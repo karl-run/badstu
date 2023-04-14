@@ -11,7 +11,7 @@ import {
   MenuSeparator,
   useMenuStore,
 } from '@ariakit/react';
-import { DefaultSession } from 'next-auth/src/core/types';
+import { DefaultSession } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -34,10 +34,17 @@ export default function UserMenu({ user }: Props) {
         <MenuHeading className="menu-heading p-2 pb-0">{user?.name ?? 'Ukjent bruker'}</MenuHeading>
         <MenuDescription className="p-2 pt-0 text-xs">{user?.email}</MenuDescription>
         <MenuSeparator className="separator" />
-        <MenuItem className="cursor-pointer p-2 dark:hover:bg-slate-800 hover:bg-slate-100 block" as={Link} href="/profile">
+        <MenuItem
+          className="block cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          as={Link}
+          href="/profile"
+        >
           Min profil
         </MenuItem>
-        <MenuItem className="cursor-pointer p-2 dark:hover:bg-slate-800 hover:bg-slate-100" onClick={() => signOut()}>
+        <MenuItem
+          className="cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+          onClick={() => signOut()}
+        >
           Logg ut
         </MenuItem>
       </Menu>

@@ -5,7 +5,6 @@ import { addMinutes, format, isAfter, isSameDay, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Notify } from '@prisma/client';
 
 import { Availability, AvailabilityResult } from '@/scraping/types';
 import { cn } from '@/utils/cn';
