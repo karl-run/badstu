@@ -1,10 +1,12 @@
 import { Cron } from './deps.ts';
 
-logWithTimestamp('Setting up minute cron job');
+logWithTimestamp('Setting up scrape cron job');
 
 const job = new Cron('* * * * *', async () => {
   await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia'].map(scrape));
 });
+
+logWithTimestamp('Setting up notify cron job');
 
 const notifyJob = new Cron('*/2 * * * *', async () => {
   logWithTimestamp(`Notify: Time to start notify job`);
@@ -53,7 +55,12 @@ function errorWithTimestamp(message: unknown) {
 }
 
 logWithTimestamp(
-  `Started... job will run ${job.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`,
+  `Scrape: Started... job will run ${job.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`,
+);
+logWithTimestamp(
+  `Notify: Started... job will run ${
+    notifyJob.nextRun()?.toLocaleTimeString() ?? 'never somehow?'
+  }`,
 );
 
 Deno.addSignalListener('SIGINT', () => {
