@@ -38,7 +38,7 @@ function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
           className="my-2 rounded border bg-red-100 p-2 empty:absolute empty:hidden sm:max-w-xs dark:bg-red-800 dark:text-white"
         />
       </div>
-      <button className="mt-4 rounded bg-blue-200 p-2 dark:bg-blue-700 text-blue-100" type="submit">
+      <button className="mt-4 rounded bg-blue-200 p-2 dark:bg-blue-700 dark:text-blue-100" type="submit">
         Oppdater
       </button>
     </Form>
