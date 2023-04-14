@@ -6,26 +6,41 @@ const job = new Cron('* * * * *', async () => {
   await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia'].map(scrape));
 });
 
-async function scrape(location: string) {
-  logWithTimestamp(`Time to poll location ${location}`);
+const notifyJob = new Cron('*/2 * * * *', async () => {
+  logWithTimestamp(`Notify: Time to start notify job`);
 
   let response: Response;
   try {
-    response = await fetch(
-      `https://badstu.karl.run/api/scrape?source=cron&location=${location}`,
-      {
-        method: 'POST',
-      },
-    );
+    response = await fetch(`https://badstu.karl.run/api/notify`, { method: 'POST' });
   } catch (e) {
-    errorWithTimestamp(new Error(`Error scraping ${location}`, { cause: e }));
+    errorWithTimestamp(new Error(`Notify: Error in notify job`, { cause: e }));
     return;
   }
 
   if (response.ok) {
-    logWithTimestamp(`${location} OK ${response.status}`);
+    logWithTimestamp(`Notify: Notify job OK ${response.status}`);
   } else {
-    errorWithTimestamp(`${location} ${response.status} ${response.statusText}`);
+    errorWithTimestamp(`Notify: Notify job BAD ${response.status} ${response.statusText}`);
+  }
+});
+
+async function scrape(location: string) {
+  logWithTimestamp(`Scrape: Time to poll location ${location}`);
+
+  let response: Response;
+  try {
+    response = await fetch(`https://badstu.karl.run/api/scrape?source=cron&location=${location}`, {
+      method: 'POST',
+    });
+  } catch (e) {
+    errorWithTimestamp(new Error(`Scrape: Error scraping ${location}`, { cause: e }));
+    return;
+  }
+
+  if (response.ok) {
+    logWithTimestamp(`Scrape: ${location} OK ${response.status}`);
+  } else {
+    errorWithTimestamp(`Scrape: ${location} ${response.status} ${response.statusText}`);
   }
 }
 
