@@ -42,6 +42,13 @@ export async function removeNotify(deleteNotify: AddRemoveNotify) {
   });
 }
 
+export async function markNotifyNotified(id: number) {
+  await prisma.notify.update({
+    where: { id },
+    data: { notified: true, notified_at: new Date() },
+  });
+}
+
 export async function getNotifies(id: string) {
   return prisma.notify.findMany({
     where: { userId: id, date: { gte: new Date() }, notified: false },
@@ -74,4 +81,8 @@ export async function updatePhoneNumber(id: string, phoneNumber: string) {
 export async function getUserPhoneNumber(id: string) {
   const user = await prisma.user.findUnique({ where: { id } });
   return user?.number ?? null;
+}
+
+export async function getValidUsers() {
+  return prisma.user.findMany({ where: { number: { not: null } }, include: { notifies: true } });
 }

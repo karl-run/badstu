@@ -3,8 +3,8 @@ import { Prisma } from '.prisma/client';
 
 import prisma from '@/db/prisma';
 import { AvailabilityMap, ExtractedDay } from '@/scraping/types';
-import { Location, Locations, validateLocation } from '@/scraping/metadata';
-import { debugF, unsafeFirst } from '@/utils/R';
+import { Location, validateLocation } from '@/scraping/metadata';
+import { unsafeFirst } from '@/utils/R';
 
 export async function upsertLocation(
   name: Location,
@@ -33,11 +33,15 @@ export async function upsertLocation(
 }
 
 export async function getLocation(name: string) {
-  return prisma.location.findUnique({
-    where: {
-      name,
-    },
+  const location = prisma.location.findUnique({
+    where: { name },
   });
+
+  if (location == null) {
+    console.warn(`Someone looked up location ${name}, and it was null. That's weird.`);
+  }
+
+  return location;
 }
 
 export async function nextAvailableLocation(): Promise<
