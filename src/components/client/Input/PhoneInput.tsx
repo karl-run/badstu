@@ -26,7 +26,7 @@ function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
         </FormLabel>
         <FormInput
           name={form.names.number}
-          className="rounded border p-2 sm:max-w-xs"
+          className="rounded border p-2 sm:max-w-xs dark:bg-slate-800 dark:text-white"
           type="tel"
           required
           minLength={8}
@@ -35,10 +35,10 @@ function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
         />
         <FormError
           name={form.names.number}
-          className="my-2 rounded border bg-red-100 p-2 empty:absolute empty:hidden sm:max-w-xs"
+          className="my-2 rounded border bg-red-100 p-2 empty:absolute empty:hidden sm:max-w-xs dark:bg-red-800 dark:text-white"
         />
       </div>
-      <button className="mt-2 rounded bg-blue-200 p-2" type="submit">
+      <button className="mt-4 rounded bg-blue-200 p-2 dark:bg-blue-700 text-blue-100" type="submit">
         Oppdater
       </button>
     </Form>

@@ -30,14 +30,14 @@ export default function UserMenu({ user }: Props) {
         )}
         <MenuButtonArrow />
       </MenuButton>
-      <Menu store={menu} className="rounded border bg-white">
+      <Menu store={menu} className="rounded border bg-white dark:bg-slate-900">
         <MenuHeading className="menu-heading p-2 pb-0">{user?.name ?? 'Ukjent bruker'}</MenuHeading>
         <MenuDescription className="p-2 pt-0 text-xs">{user?.email}</MenuDescription>
         <MenuSeparator className="separator" />
-        <MenuItem className="cursor-pointer p-2 hover:bg-slate-100 block" as={Link} href="/profile">
+        <MenuItem className="cursor-pointer p-2 dark:hover:bg-slate-800 hover:bg-slate-100 block" as={Link} href="/profile">
           Min profil
         </MenuItem>
-        <MenuItem className="cursor-pointer p-2 hover:bg-slate-100" onClick={() => signOut()}>
+        <MenuItem className="cursor-pointer p-2 dark:hover:bg-slate-800 hover:bg-slate-100" onClick={() => signOut()}>
           Logg ut
         </MenuItem>
       </Menu>

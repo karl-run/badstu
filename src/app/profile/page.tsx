@@ -1,13 +1,11 @@
 import React from 'react';
 import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { getAllTimeNotifyCount, getNotifies, getUserPhoneNumber } from '@/db/user';
-import { metadata } from '@/app/layout';
-import { FormInput, FormLabel } from '@ariakit/react';
+import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
 import PhoneInput from '@/components/client/Input/PhoneInput';
-import Link from 'next/link';
 import DeleteMeButton from '@/components/client/DeleteMeButton';
 
 async function Page(): Promise<JSX.Element> {
@@ -15,8 +13,8 @@ async function Page(): Promise<JSX.Element> {
   const notifies = await getAllTimeNotifyCount(session?.user?.email ?? '');
 
   return (
-    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
-      <div className="-ml-3 mb-2">
+    <main className="container mx-auto p-4 pb-8 sm:p-16 sm:pt-2">
+      <div className="mb-2 sm:-ml-3">
         <Link href="/">
           <span>‹</span> Tilbake til hovedsiden
         </Link>
@@ -53,7 +51,7 @@ function LoggedInUser({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded border p-4">
+      <div className="rounded border p-4 dark:bg-slate-800/70">
         <h2 className="mb-4 text-lg font-bold">Informasjon</h2>
         <div className="flex gap-2">
           {user.image && <Image src={user.image} height={48} width={48} alt="profile image" />}
@@ -79,7 +77,7 @@ function LoggedInUser({
 
 function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element {
   return (
-    <div className="rounded border p-4">
+    <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Varsling</h2>
       <p>For å bli varslet må du legge inn et gyldig mobilnummer.</p>
       <PhoneInput key={userPhone} userPhone={userPhone} />
@@ -89,7 +87,7 @@ function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element
 
 function DeleteMe({ userId }: { userId: string }) {
   return (
-    <div className="rounded border p-4">
+    <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Slett meg</h2>
       <p className="mt-4 max-w-prose">
         Alt vi har lagret om deg, inkludert varslinger vil bli slettet øyeblikkelig dersom du velger

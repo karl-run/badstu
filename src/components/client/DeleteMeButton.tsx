@@ -40,14 +40,20 @@ function DeleteMeButton({ userId }: { userId: string }): JSX.Element {
 
   return (
     <>
-      <PopoverDisclosure store={popover} className="mt-2 rounded bg-red-300 p-2">
+      <PopoverDisclosure
+        store={popover}
+        className="mt-2 rounded bg-red-300 p-2 dark:bg-red-800 dark:text-white"
+      >
         Slett all data om meg
       </PopoverDisclosure>
       {isDeleting && <p>Vent mens du slettes...</p>}
       {deletingError && (
         <p className="my-4 max-w-prose rounded border bg-red-50 p-2">{deletingError}</p>
       )}
-      <Popover store={popover} className="m-8 mt-0 max-w-xs rounded border bg-white p-2">
+      <Popover
+        store={popover}
+        className="m-8 mt-0 max-w-xs rounded border bg-white p-4 pt-3 dark:bg-slate-800"
+      >
         <PopoverArrow className="arrow" />
         <PopoverHeading className="text-lg font-bold">
           Er du sikker på at all data om deg skal slettes?
