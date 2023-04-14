@@ -48,3 +48,30 @@ export async function getNotifies(id: string) {
     orderBy: { date: 'asc' },
   });
 }
+
+export async function getAllTimeNotifyCount(id: string) {
+  return await prisma.$transaction(async () => {
+    const [allTime, notified] = await Promise.all([
+      prisma.notify.count({ where: { userId: id } }),
+      prisma.notify.count({ where: { userId: id, notified: true } }),
+    ]);
+
+    return { allTime, notified };
+  });
+}
+
+export async function deleteMe(id: string) {
+  await prisma.user.delete({ where: { id } });
+}
+
+export async function updatePhoneNumber(id: string, phoneNumber: string) {
+  await prisma.user.update({
+    where: { id },
+    data: { number: phoneNumber },
+  });
+}
+
+export async function getUserPhoneNumber(id: string) {
+  const user = await prisma.user.findUnique({ where: { id } });
+  return user?.number ?? null;
+}

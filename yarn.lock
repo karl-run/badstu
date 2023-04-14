@@ -5,6 +5,40 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@ariakit/core@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@ariakit/core@npm:0.1.0"
+  checksum: 717e6548fc35ab980728620aacb6edaa8ed48c644ff557a0339f9a7459b1f5a854de44d22df2d212aa9bdfe2f09ed9e824f057e092d7c7e31986a85fae3776a0
+  languageName: node
+  linkType: hard
+
+"@ariakit/react-core@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@ariakit/react-core@npm:0.1.1"
+  dependencies:
+    "@ariakit/core": 0.1.0
+    use-sync-external-store: ^1.2.0
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: 6e58c514027c6407e4afc2f21e48dc771e1260aa668822b2bb04a416e0ee147c037700c7800328bbc731a4152c36e5ec9eb609ce33dd9cb18a986077a05a55ef
+  languageName: node
+  linkType: hard
+
+"@ariakit/react@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@ariakit/react@npm:0.1.1"
+  dependencies:
+    "@ariakit/core": 0.1.0
+    "@ariakit/react-core": 0.1.1
+    "@floating-ui/dom": ^1.0.0
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+  checksum: caaad474369f763c445ff3cb3019cfcad79aa0e68e7db9aa8dea5a91f67d871e2b0019edd15b55423e3f72cad17d478db2134675d3a0e5586db7a1c3a786ff41
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.20.7":
   version: 7.21.0
   resolution: "@babel/runtime@npm:7.21.0"
@@ -53,6 +87,22 @@ __metadata:
   version: 8.38.0
   resolution: "@eslint/js@npm:8.38.0"
   checksum: 1f28987aa8c9cd93e23384e16c7220863b39b5dc4b66e46d7cdbccce868040f455a98d24cd8b567a884f26545a0555b761f7328d4a00c051e7ef689cbea5fce1
+  languageName: node
+  linkType: hard
+
+"@floating-ui/core@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "@floating-ui/core@npm:1.2.6"
+  checksum: e4aa96c435277f1720d4bc939e17a79b1e1eebd589c20b622d3c646a5273590ff889b8c6e126f7be61873cf8c4d7db7d418895986ea19b8b0d0530de32504c3a
+  languageName: node
+  linkType: hard
+
+"@floating-ui/dom@npm:^1.0.0":
+  version: 1.2.6
+  resolution: "@floating-ui/dom@npm:1.2.6"
+  dependencies:
+    "@floating-ui/core": ^1.2.6
+  checksum: 2226c6c244b96ae75ab14cc35bb119c8d7b83a85e2ff04e9d9800cffdb17faf4a7cf82db741dd045242ced56e31c8a08e33c8c512c972309a934d83b1f410441
   languageName: node
   linkType: hard
 
@@ -747,6 +797,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "badstu@workspace:."
   dependencies:
+    "@ariakit/react": ^0.1.1
     "@prisma/client": 4.12.0
     "@types/jsdom": ^21.1.1
     "@types/node": 18.15.11

@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth';
 
 import { cn } from '@/utils/cn';
 import Providers from '@/app/Providers';
-import UserHeader from '@/components/UserHeader/UserHeader';
+import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getNotifies } from '@/db/user';
 

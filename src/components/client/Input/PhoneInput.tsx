@@ -1,0 +1,48 @@
+'use client';
+
+import React from 'react';
+import { Form, FormError, FormInput, FormLabel, useFormStore } from '@ariakit/react';
+import { useRouter } from 'next/navigation';
+
+function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
+  const router = useRouter();
+  const form = useFormStore({ defaultValues: { number: userPhone ?? '' } });
+
+  form.useSubmit(async (state) => {
+    const newNumber = state.values.number;
+    await fetch('/profile/edit-number', {
+      method: 'POST',
+      body: JSON.stringify({ phoneNumber: newNumber }),
+    });
+
+    router.refresh();
+  });
+
+  return (
+    <Form store={form} className="mt-4">
+      <div className="flex flex-col">
+        <FormLabel name={form.names.number} className="mb-1 text-sm">
+          Telefonnummer
+        </FormLabel>
+        <FormInput
+          name={form.names.number}
+          className="rounded border p-2 sm:max-w-xs"
+          type="tel"
+          required
+          minLength={8}
+          maxLength={8}
+          placeholder="Kun norsk nummer er gyldig"
+        />
+        <FormError
+          name={form.names.number}
+          className="my-2 rounded border bg-red-100 p-2 empty:absolute empty:hidden sm:max-w-xs"
+        />
+      </div>
+      <button className="mt-2 rounded bg-blue-200 p-2" type="submit">
+        Oppdater
+      </button>
+    </Form>
+  );
+}
+
+export default PhoneInput;
