@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -80,7 +80,13 @@ function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element
     <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Varsling</h2>
       <p>For å bli varslet må du legge inn et gyldig mobilnummer.</p>
-      <PhoneInput key={userPhone} userPhone={userPhone} />
+      <Suspense
+        fallback={
+          <div className="h-[66px] max-w-prose animate-pulse rounded-full bg-gray-200 dark:bg-gray-700 sm:w-64" />
+        }
+      >
+        <PhoneInput key={userPhone} userPhone={userPhone} />
+      </Suspense>
     </div>
   );
 }
@@ -93,7 +99,13 @@ function DeleteMe({ userId }: { userId: string }) {
         Alt vi har lagret om deg, inkludert varslinger vil bli slettet øyeblikkelig dersom du velger
         å gjøre det.
       </p>
-      <DeleteMeButton userId={userId} />
+      <Suspense
+        fallback={
+          <div className="mt-2 h-[40px] max-w-prose animate-pulse rounded-full bg-gray-200 dark:bg-gray-700 sm:w-64" />
+        }
+      >
+        <DeleteMeButton userId={userId} />
+      </Suspense>
     </div>
   );
 }
