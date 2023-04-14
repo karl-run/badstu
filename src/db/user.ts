@@ -84,5 +84,8 @@ export async function getUserPhoneNumber(id: string) {
 }
 
 export async function getValidUsers() {
-  return prisma.user.findMany({ where: { number: { not: null } }, include: { notifies: true } });
+  return prisma.user.findMany({
+    where: { number: { not: null } },
+    include: { notifies: { where: { notified: { not: true }, date: { gte: new Date() } } } },
+  });
 }
