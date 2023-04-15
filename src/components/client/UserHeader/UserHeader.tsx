@@ -21,7 +21,7 @@ function UserHeader({ userHasNumber, notifies }: Props) {
           alt=""
           height={32}
           width={32}
-          className="ml-4 h-8 w-8 shrink-0 max-[360px]:hidden"
+          className="ml-4 hidden h-8 w-8 shrink-0 sm:block"
         />
       </Link>
       <div className="flex items-center justify-end p-4">

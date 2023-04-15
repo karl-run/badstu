@@ -35,7 +35,7 @@ export default function UserMenu({ user, userHasNumber }: Props) {
         {!userHasNumber && <MissingPhoneWarning />}
         <div>{user?.name ?? 'Ukjent navn'}</div>
         {user?.image && (
-          <Image width="28" height="28" className="ml-4 h-6 w-6" src={user.image} alt="" />
+          <Image width="28" height="28" className="mx-2 h-6 w-6" src={user.image} alt="" />
         )}
         <MenuButtonArrow />
       </MenuButton>
