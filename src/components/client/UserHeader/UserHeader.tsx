@@ -5,20 +5,25 @@ import { ReactNode } from 'react';
 
 import UserMenu from './UserMenu';
 
-function UserHeader({ notifies }: { notifies: ReactNode }) {
+interface Props {
+  notifies: ReactNode;
+  userHasNumber: boolean;
+}
+
+function UserHeader({ userHasNumber, notifies }: Props) {
   return (
     <div className="flex items-center justify-end p-4">
       {notifies}
-      <LoginButton />
+      <LoginButton userHasNumber={userHasNumber} />
     </div>
   );
 }
 
-function LoginButton() {
+function LoginButton({ userHasNumber }: Pick<Props, 'userHasNumber'>) {
   const { data: session } = useSession();
 
   return session?.user ? (
-    <UserMenu user={session.user} />
+    <UserMenu user={session.user} userHasNumber={userHasNumber} />
   ) : (
     <button onClick={() => signIn()}>Logg inn for varsler</button>
   );

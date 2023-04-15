@@ -1,6 +1,7 @@
+import { addMinutes, isAfter, subDays } from 'date-fns';
+
 import prisma from '@/db/prisma';
 import { Location } from '@/scraping/metadata';
-import { addMinutes, isAfter, isToday, subDays } from 'date-fns';
 import { dateAndTimeToDate, toDateString } from '@/utils/date';
 
 export function insertUser(id: string) {

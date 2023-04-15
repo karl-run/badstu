@@ -9,7 +9,7 @@ import { cn } from '@/utils/cn';
 import Providers from '@/app/Providers';
 import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { getNotifies } from '@/db/user';
+import { getNotifies, getUserPhoneNumber } from '@/db/user';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,6 +20,9 @@ export const metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
+  const userHasNumber = session?.user?.email
+    ? await getUserPhoneNumber(session.user.email) != null
+    : false;
 
   return (
     <html
@@ -34,6 +37,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           <UserHeader
             // @ts-expect-error Async RSC
             notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
+            userHasNumber={userHasNumber}
           />
           {children}
         </Providers>
