@@ -6,10 +6,10 @@ import { getServerSession } from 'next-auth';
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
 import { locations, Location, validateLocation } from '@/scraping/metadata';
-import ScrollToHash from '@/components/ScrollToHash';
+import ScrollToHash from '@/components/client/ScrollToHash';
 import { getNotifies } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { toDateString } from '@/utils/date';
+import { toCleanNotify } from '@/utils/notify.ts/types';
 
 const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -54,11 +54,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
             location={locations[params.slug]}
             date={date}
             times={times}
-            notifies={notifies.map((it) => ({
-              location: validateLocation(it.location),
-              slot: it.slot,
-              date: toDateString(it.date),
-            }))}
+            notifies={notifies.map(toCleanNotify)}
           />
         ))}
         {result.length === 0 && (

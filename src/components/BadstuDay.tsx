@@ -16,12 +16,7 @@ import { dateAndTimeToDate } from '@/utils/date';
 import NotifySlot from '@/components/NotifySlot';
 import EditIcon from '@/components/icons/EditIcon';
 import CrossIcon from '@/components/icons/CrossIcon';
-
-export interface NotifyClean {
-  location: Location;
-  slot: string;
-  date: string;
-}
+import { NotifyClean } from '@/utils/notify.ts/types';
 
 interface BadstuDayProps {
   locationName: Location;

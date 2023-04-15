@@ -10,6 +10,8 @@ import Providers from '@/app/Providers';
 import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getNotifies, getUserPhoneNumber } from '@/db/user';
+import { toCleanNotify } from '@/utils/notify.ts/types';
+import NotifyList from '@/components/client/NotifyList';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +23,7 @@ export const metadata = {
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
   const userHasNumber = session?.user?.email
-    ? await getUserPhoneNumber(session.user.email) != null
+    ? (await getUserPhoneNumber(session.user.email)) != null
     : false;
 
   return (
@@ -48,7 +50,11 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 }
 
 async function NotifiesCount({ id }: { id: string }) {
-  const notifies = await getNotifies(id);
+  const notifies = (await getNotifies(id)).map(toCleanNotify);
 
-  return <div className="mr-4">{notifies.length} aktive varsler</div>;
+  return (
+    <div className="mr-4">
+      <NotifyList notifies={notifies} />
+    </div>
+  );
 }

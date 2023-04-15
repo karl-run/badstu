@@ -1,13 +1,18 @@
 import { Twilio } from 'twilio';
 
-const client = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+let twilio: Twilio | null;
+function getTwilio() {
+  if (!twilio) twilio = new Twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+
+  return twilio;
+}
 
 type NotifyUser = {
   phoneNumber: string;
   message: string;
 };
 export async function notifyUser({ phoneNumber, message }: NotifyUser): Promise<boolean> {
-  const result = await client.messages.create({
+  const result = await getTwilio().messages.create({
     from: process.env.TWILIO_FROM,
     to: phoneNumber,
     body: message,

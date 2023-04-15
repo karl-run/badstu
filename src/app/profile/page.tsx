@@ -8,6 +8,8 @@ import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
 import PhoneInput from '@/components/client/Input/PhoneInput';
 import DeleteMeButton from '@/components/client/DeleteMeButton';
 
+export const dynamic = 'force-dynamic';
+
 async function Page(): Promise<JSX.Element> {
   const session = await getServerSession(authOptions);
   const notifies = await getAllTimeNotifyCount(session?.user?.email ?? '');
