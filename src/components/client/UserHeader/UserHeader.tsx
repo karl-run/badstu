@@ -3,7 +3,7 @@
 import { useSession, signIn } from 'next-auth/react';
 import { ReactNode } from 'react';
 import Image from 'next/image';
-import Link from "next/link";
+import Link from 'next/link';
 
 import UserMenu from './UserMenu';
 
@@ -16,7 +16,13 @@ function UserHeader({ userHasNumber, notifies }: Props) {
   return (
     <div className="flex items-center justify-between">
       <Link href="/">
-        <Image src="/logo.png" alt="" height={32} width={32} className="mx-4 h-8 w-8 shrink-0" />
+        <Image
+          src="/logo.png"
+          alt=""
+          height={32}
+          width={32}
+          className="ml-4 h-8 w-8 shrink-0 max-[360px]:hidden"
+        />
       </Link>
       <div className="flex items-center justify-end p-4">
         {notifies}
