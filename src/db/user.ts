@@ -1,4 +1,4 @@
-import { addMinutes, isAfter, subDays } from 'date-fns';
+import { addMinutes, isAfter, startOfDay, subDays } from 'date-fns';
 
 import prisma from '@/db/prisma';
 import { Location } from '@/scraping/metadata';
@@ -57,6 +57,17 @@ export async function getNotifies(id: string) {
     await prisma.notify.findMany({
       where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
       orderBy: { date: 'asc' },
+    })
+  ).filter((it) =>
+    isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()),
+  );
+}
+
+export async function getTodaysNotified(id: string) {
+  return (
+    await prisma.notify.findMany({
+      where: { userId: id, notified_at: { gte: startOfDay(new Date()) }, notified: true },
+      orderBy: { notified_at: 'asc' },
     })
   ).filter((it) =>
     isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()),

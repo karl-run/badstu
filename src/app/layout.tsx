@@ -9,7 +9,7 @@ import { cn } from '@/utils/cn';
 import Providers from '@/app/Providers';
 import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { getNotifies, getUserPhoneNumber } from '@/db/user';
+import { getNotifies, getTodaysNotified, getUserPhoneNumber } from '@/db/user';
 import { toCleanNotify } from '@/utils/notify.ts/types';
 import NotifyList from '@/components/client/NotifyList';
 
@@ -51,10 +51,11 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
 async function NotifiesCount({ id }: { id: string }) {
   const notifies = (await getNotifies(id)).map(toCleanNotify);
+  const todays = (await getTodaysNotified(id)).map(toCleanNotify);
 
   return (
     <div className="mr-4">
-      <NotifyList notifies={notifies} />
+      <NotifyList todays={todays} notifies={notifies} />
     </div>
   );
 }

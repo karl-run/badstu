@@ -1,8 +1,7 @@
 'use client';
 
 import * as R from 'remeda';
-import { addMinutes, format, isAfter, isSameDay, parseISO } from 'date-fns';
-import { nb } from 'date-fns/locale';
+import { addMinutes, isAfter, isSameDay, parseISO } from 'date-fns';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -12,7 +11,7 @@ import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
 import HouseIcon from '@/components/icons/HouseIcon';
 import { Location, LocationDetails } from '@/scraping/metadata';
-import { dateAndTimeToDate } from '@/utils/date';
+import { dateAndTimeToDate, toReadableDateWithWeekdayName } from "@/utils/date";
 import NotifySlot from '@/components/NotifySlot';
 import EditIcon from '@/components/icons/EditIcon';
 import CrossIcon from '@/components/icons/CrossIcon';
@@ -43,7 +42,7 @@ export const BadstuDay = ({ locationName, location, date, times, notifies }: Bad
       )}
     >
       <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
-        <span>{format(new Date(date), 'do LLLL (EEEE)', { locale: nb })}</span>
+        <span>{toReadableDateWithWeekdayName(date)}</span>
         {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
         {session.status === 'authenticated' && (
           <button
