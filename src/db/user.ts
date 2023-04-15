@@ -1,5 +1,6 @@
 import prisma from '@/db/prisma';
 import { Location } from '@/scraping/metadata';
+import { subDays } from 'date-fns';
 
 export function insertUser(id: string) {
   return prisma.user.upsert({
@@ -51,7 +52,7 @@ export async function markNotifyNotified(id: number) {
 
 export async function getNotifies(id: string) {
   return prisma.notify.findMany({
-    where: { userId: id, date: { gte: new Date() }, notified: false },
+    where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
     orderBy: { date: 'asc' },
   });
 }
@@ -86,6 +87,8 @@ export async function getUserPhoneNumber(id: string) {
 export async function getValidUsers() {
   return prisma.user.findMany({
     where: { number: { not: null } },
-    include: { notifies: { where: { notified: { not: true }, date: { gte: new Date() } } } },
+    include: {
+      notifies: { where: { notified: { not: true }, date: { gte: subDays(new Date(), 1) } } },
+    },
   });
 }
