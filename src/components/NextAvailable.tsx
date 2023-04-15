@@ -6,7 +6,7 @@ import { formatDistanceToNowStrict, isToday, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
 import Link from 'next/link';
 
-import { Location } from '@/scraping/metadata';
+import { Location, locationToTitle } from '@/scraping/metadata';
 
 function NextAvailable(): JSX.Element {
   const [show, setShow] = useState(false);
@@ -50,7 +50,7 @@ function NextSlot() {
     <div className="text-sm">
       <span>Neste ledige tidspunkt er på </span>
       <Link href={`${where}?scrollTo=${when}`} scroll className="underline">
-        {where}
+        {locationToTitle(where)}
       </Link>{' '}
       <NextSlotSpan whenDate={whenDate} /> kl. <span className="font-bold">{slot}</span>. Det er{' '}
       <span className="font-bold">{available}</span> ledige plasser.

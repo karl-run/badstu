@@ -4,7 +4,7 @@ import { Prisma } from '.prisma/client';
 import prisma from '@/db/prisma';
 import { AvailabilityMap, ExtractedDay } from '@/scraping/types';
 import { Location, validateLocation } from '@/scraping/metadata';
-import { unsafeFirst } from '@/utils/R';
+import { debugF, unsafeFirst } from '@/utils/R';
 
 export async function upsertLocation(
   name: Location,
@@ -74,7 +74,7 @@ export async function nextAvailableLocation(): Promise<
     R.mapValues(jsonToExtractedDays),
     R.mapValues(daysToEarliestDay),
     R.toPairs,
-    R.sortBy([byDateAndSlot, 'desc']),
+    R.sortBy([byDateAndSlot, 'asc']),
     unsafeFirst,
   );
 
