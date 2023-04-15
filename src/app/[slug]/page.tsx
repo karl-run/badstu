@@ -5,7 +5,7 @@ import { getServerSession } from 'next-auth';
 
 import { getDropins } from '@/service/booking-service';
 import { BadstuDay } from '@/components/BadstuDay';
-import { locations, Location, validateLocation } from '@/scraping/metadata';
+import { locations, Location, validateLocation, locationToTitle } from '@/scraping/metadata';
 import ScrollToHash from '@/components/client/ScrollToHash';
 import { getNotifies } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
@@ -42,7 +42,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
           >
             ‹
           </Link>
-          <span className="uppercase">{params.slug}</span> Drop-in
+          <span className="uppercase">{locationToTitle(params.slug)}</span> Drop-in
         </h1>
         {timestamp && <LastUpdated generatedAt={timestamp} location={params.slug} />}
       </div>

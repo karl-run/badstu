@@ -7,13 +7,15 @@ import kroloftet from '../images/kroloftet.jpeg';
 import sukkerbiten from '../images/sukkerbiten.jpg';
 import langkaia from '../images/langkaia.jpeg';
 
-import { locationNames, Location } from '@/scraping/metadata';
+import { locationNames, Location, locationToTitle } from '@/scraping/metadata';
 import NextAvailable from '@/components/NextAvailable';
+import { cn } from '@/utils/cn';
 
 const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,
   sukkerbiten: sukkerbiten,
   langkaia: langkaia,
+  sukkerbiten_nakenbadstu: sukkerbiten,
 };
 
 export default async function Home() {
@@ -23,17 +25,20 @@ export default async function Home() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
           locationNames,
-          R.map((location: Location) => (
+          R.map.indexed((location: Location, index) => (
             <Link
               key={location}
               href={`/${location}`}
               className="max-w-3xl overflow-hidden transition-transform hover:scale-105"
             >
-              <span className="ml-4 font-bold uppercase">{location}</span>
+              <span className="ml-4 font-bold uppercase">{locationToTitle(location)}</span>
               <Image
                 src={images[location]}
                 alt={location}
-                className="max-h-96 w-full rounded-2xl object-cover"
+                className={cn('max-h-96 w-full rounded-2xl object-cover', {
+                  'max-h-36': index >= 3,
+                  grayscale: location.includes('naken'),
+                })}
               />
             </Link>
           )),
