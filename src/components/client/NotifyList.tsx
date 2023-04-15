@@ -44,7 +44,7 @@ function NotifyList({ todays, notifies }: Props): JSX.Element {
       </PopoverDisclosure>
       <Popover
         store={popover}
-        className="m-8 mt-0 max-w-xs rounded border bg-white p-4 pt-3 dark:bg-slate-800"
+        className="z-10 m-8 mt-0 max-w-xs rounded border bg-white p-4 pt-3 dark:bg-slate-800"
       >
         <PopoverArrow />
         <PopoverHeading className="text-lg font-bold">Meldinger sendt i dag</PopoverHeading>
