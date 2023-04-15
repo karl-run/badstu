@@ -14,6 +14,7 @@ import Link from 'next/link';
 
 import { NotifyClean } from '@/utils/notify.ts/types';
 import { toReadableDateWithWeekdayName } from '@/utils/date';
+import { Location, locationToTitle } from '@/scraping/metadata';
 
 interface Props {
   todays: NotifyClean[];
@@ -66,14 +67,14 @@ function Groups({
   groups,
   closePopover,
 }: {
-  groups: Record<string, NotifyClean[]>;
+  groups: Record<Location, NotifyClean[]>;
   closePopover: () => void;
 }) {
   return (
     <div>
       {R.toPairs(groups).map(([location, notifies]) => (
-        <div key={location}>
-          <div className="font-bold uppercase">{location}</div>
+        <div key={location} className="mt-2">
+          <div className="font-bold uppercase">{locationToTitle(location as Location)}</div>
           <div key={location} className="flex flex-col">
             {notifies.map((notify) => (
               <div key={`${notify.date}-${notify.slot}`} className="flex justify-between">

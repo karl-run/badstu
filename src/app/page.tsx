@@ -34,7 +34,7 @@ export default async function Home() {
               <span className="ml-4 font-bold uppercase">{locationToTitle(location)}</span>
               <Image
                 src={images[location]}
-                alt={location}
+                alt={locationToTitle(location)}
                 className={cn('max-h-96 w-full rounded-2xl object-cover', {
                   'max-h-36': index >= 3,
                   grayscale: location.includes('naken'),

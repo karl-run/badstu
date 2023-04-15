@@ -1,10 +1,10 @@
 import React from 'react';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getAdminStats } from '@/db/admin';
-import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 

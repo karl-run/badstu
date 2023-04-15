@@ -2,6 +2,7 @@ import * as R from 'remeda';
 import { addDays, differenceInDays, formatISO, min } from 'date-fns/fp';
 import { flow } from 'fp-ts/function';
 import * as O from 'fp-ts/Option';
+import { parseISO } from 'date-fns';
 
 import {
   Availability,
@@ -15,7 +16,6 @@ import { getLocation, jsonToExtractedDays } from '@/db/location';
 import { createEmptyDropinDay } from '@/utils/days';
 import { daysToLatestDate, privateToDropInCollissions } from '@/service/booking-utils';
 import { Location, locations } from '@/scraping/metadata';
-import { getDay, parseISO } from 'date-fns';
 
 interface LocationResult {
   timestamp: string | null;
