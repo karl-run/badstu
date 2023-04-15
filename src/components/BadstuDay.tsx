@@ -112,7 +112,7 @@ function BookingListItem({
     <li
       className={cn('flex', {
         'bg-emerald-600/20 hover:bg-emerald-600/50': hasAvailableSlots,
-        'bg-blue-600/20': hasNotify,
+        'bg-blue-600/20': hasNotify && !hasAvailableSlots && !isTooLate,
         'opacity-30': isTooLate,
       })}
     >
