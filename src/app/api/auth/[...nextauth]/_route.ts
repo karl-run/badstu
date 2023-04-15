@@ -19,6 +19,14 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+    async session({ session, user }) {
+      // Hackily add isAdmin to the session, TODO: type it properly
+      if (session.user?.email === process.env.ADMIN_EMAIL) {
+        (session.user as any).isAdmin = true;
+      }
+
+      return session;
+    },
     async signIn({ account, profile }) {
       console.log(`User logged in with ${account?.provider ?? 'no provider'}`);
 

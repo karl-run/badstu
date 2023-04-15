@@ -26,7 +26,6 @@ interface Props {
 export default function UserMenu({ user, userHasNumber }: Props) {
   const menu = useMenuStore({ gutter: 8, placement: 'bottom-end' });
 
-  console.log({ userHasNumber });
   return (
     <>
       <MenuButton
@@ -61,6 +60,15 @@ export default function UserMenu({ user, userHasNumber }: Props) {
         >
           Min profil
         </MenuItem>
+        {(user as any).isAdmin && (
+          <MenuItem
+            className="block cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
+            as={Link}
+            href="/admin"
+          >
+            Admin
+          </MenuItem>
+        )}
         <MenuItem
           className="cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
           onClick={() => signOut()}
