@@ -25,7 +25,10 @@ function NotifyList({ notifies }: Props): JSX.Element {
 
   return (
     <>
-      <PopoverDisclosure store={popover} className="">
+      <PopoverDisclosure
+        store={popover}
+        className="rounded border p-2 hover:bg-slate-100 dark:hover:bg-slate-800/70"
+      >
         {notifies.length} aktive varsler
       </PopoverDisclosure>
       <Popover

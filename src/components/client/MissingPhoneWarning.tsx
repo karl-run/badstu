@@ -5,7 +5,7 @@ import { Tooltip, TooltipAnchor, useTooltipStore } from '@ariakit/react';
 import WarningIcon from '@/components/icons/WarningIcon';
 
 export function MissingPhoneWarning() {
-  const store = useTooltipStore({ gutter: 8 });
+  const store = useTooltipStore({ gutter: 16 });
   return (
     <div>
       <TooltipAnchor store={store}>

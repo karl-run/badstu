@@ -29,7 +29,10 @@ export default function UserMenu({ user, userHasNumber }: Props) {
   console.log({ userHasNumber });
   return (
     <>
-      <MenuButton store={menu} className="flex items-center border-l pl-4">
+      <MenuButton
+        store={menu}
+        className="flex items-center rounded border p-2 hover:bg-slate-100 dark:hover:bg-slate-800/70"
+      >
         {!userHasNumber && <MissingPhoneWarning />}
         <div>{user?.name ?? 'Ukjent navn'}</div>
         {user?.image && (
