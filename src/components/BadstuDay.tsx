@@ -116,7 +116,7 @@ function BookingListItem({
         'opacity-30': isTooLate,
       })}
     >
-      {isToggleMode && !hasAvailableSlots && (
+      {isToggleMode && !hasAvailableSlots && !isTooLate && (
         <NotifySlot
           location={location}
           className=""
