@@ -7,6 +7,11 @@ import Google from 'next-auth/providers/google';
 import { insertUser } from '@/db/user';
 
 export const authOptions: AuthOptions = {
+  theme: {
+    logo: '/logo.png',
+    colorScheme: 'dark',
+    brandColor: '#4000a2',
+  },
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
