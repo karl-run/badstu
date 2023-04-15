@@ -1,6 +1,7 @@
 import prisma from '@/db/prisma';
 import { Location } from '@/scraping/metadata';
-import { subDays } from 'date-fns';
+import { addMinutes, isAfter, isToday, subDays } from 'date-fns';
+import { dateAndTimeToDate, toDateString } from '@/utils/date';
 
 export function insertUser(id: string) {
   return prisma.user.upsert({
@@ -51,10 +52,14 @@ export async function markNotifyNotified(id: number) {
 }
 
 export async function getNotifies(id: string) {
-  return prisma.notify.findMany({
-    where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
-    orderBy: { date: 'asc' },
-  });
+  return (
+    await prisma.notify.findMany({
+      where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
+      orderBy: { date: 'asc' },
+    })
+  ).filter((it) =>
+    isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()),
+  );
 }
 
 export async function getAllTimeNotifyCount(id: string) {
