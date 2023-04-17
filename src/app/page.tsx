@@ -10,6 +10,7 @@ import langkaia from '../images/langkaia.jpeg';
 import { locationNames, Location, locationToTitle } from '@/scraping/metadata';
 import NextAvailable from '@/components/NextAvailable';
 import { cn } from '@/utils/cn';
+import Container from "@/components/common/Container";
 
 const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,
@@ -20,7 +21,7 @@ const images: Record<Location, typeof kroloftet> = {
 
 export default async function Home() {
   return (
-    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
+    <Container>
       <NextAvailable />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
@@ -44,6 +45,6 @@ export default async function Home() {
           )),
         )}
       </div>
-    </main>
+    </Container>
   );
 }

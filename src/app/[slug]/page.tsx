@@ -10,6 +10,8 @@ import ScrollToHash from '@/components/client/ScrollToHash';
 import { getNotifies } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { toCleanNotify } from '@/utils/notify';
+import Container from '@/components/common/Container';
+import BackToRoot from '@/components/common/BackToRoot';
 
 const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,
@@ -33,15 +35,10 @@ export default async function LocationPage({ params }: { params: LocationPageMet
   const notifies = session?.user?.email ? await getNotifies(session.user.email) : [];
 
   return (
-    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
+    <Container>
+      <BackToRoot />
       <div className="mb-4 flex flex-col lg:flex-row lg:items-center lg:justify-between">
         <h1 className="text-2xl font-bold">
-          <Link
-            href="/"
-            className="inline-flex h-8 w-8 items-center justify-center transition-transform hover:rotate-[359deg]"
-          >
-            ‹
-          </Link>
           <span className="uppercase">{locationToTitle(params.slug)}</span> Drop-in
         </h1>
         {timestamp && <LastUpdated generatedAt={timestamp} location={params.slug} />}
@@ -62,6 +59,6 @@ export default async function LocationPage({ params }: { params: LocationPageMet
         )}
       </div>
       <ScrollToHash />
-    </main>
+    </Container>
   );
 }

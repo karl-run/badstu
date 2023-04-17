@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import useSWR from 'swr';
-import { formatDistanceToNowStrict, isToday, parseISO } from 'date-fns';
+import { differenceInHours, formatDistanceToNowStrict, isToday, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
 import Link from 'next/link';
 
 import { Location, locationToTitle } from '@/scraping/metadata';
+import { dateAndTimeToDate } from '@/utils/date';
 
 function NextAvailable(): JSX.Element {
   const [show, setShow] = useState(false);
@@ -44,7 +45,7 @@ function NextSlot() {
   }
 
   const [where, when, slot, available] = result.data;
-  const whenDate = parseISO(when);
+  const whenDate = dateAndTimeToDate(when, slot);
 
   return (
     <div className="text-sm">
@@ -58,30 +59,29 @@ function NextSlot() {
   );
 }
 
-const NextSlotSpan = ({ whenDate }: { whenDate: Date }): JSX.Element =>
-  isToday(whenDate) ? (
-    <span>
-      om{' '}
-      <span className="font-bold">
-        {formatDistanceToNowStrict(whenDate, {
-          locale: nb,
-        })}
-      </span>
-    </span>
-  ) : (
+const NextSlotSpan = ({ whenDate }: { whenDate: Date }): JSX.Element => {
+  const hoursDiff = differenceInHours(whenDate, new Date());
+
+  return (
     <span>
       om{' '}
       {
         <span className="font-bold">
-          {formatDistanceToNowStrict(whenDate, {
-            locale: nb,
-            unit: 'day',
-            roundingMethod: 'ceil',
-          })}
+          {hoursDiff > 24
+            ? formatDistanceToNowStrict(whenDate, {
+                locale: nb,
+                unit: 'day',
+                roundingMethod: 'ceil',
+              })
+            : formatDistanceToNowStrict(whenDate, {
+                locale: nb,
+                unit: 'hour',
+              })}
         </span>
       }
     </span>
   );
+};
 
 async function fetchNextSlot(): Promise<
   [where: Location, when: string, slot: string, available: number]

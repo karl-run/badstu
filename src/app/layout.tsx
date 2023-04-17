@@ -45,6 +45,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         </Providers>
         <Analytics />
       </body>
+
     </html>
   );
 }

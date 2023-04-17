@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getAdminStats } from '@/db/admin';
+import Container from '@/components/common/Container';
+import BackToRoot from '@/components/common/BackToRoot';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,12 +19,8 @@ async function Page(): Promise<JSX.Element> {
   const [userCount, totalNotify, activeNotify, sentNotifications] = await getAdminStats();
 
   return (
-    <main className="container mx-auto p-4 sm:p-16 sm:pt-2">
-      <div className="mb-2 sm:-ml-3">
-        <Link href="/">
-          <span>‹</span> Tilbake til hovedsiden
-        </Link>
-      </div>
+    <Container>
+      <BackToRoot />
       <h1 className="text-2xl font-bold">Secret admin stats</h1>
       <dl>
         <dt>Antall brukere</dt>
@@ -34,7 +32,7 @@ async function Page(): Promise<JSX.Element> {
         <dt>Antall varsler sendt</dt>
         <dd>{sentNotifications}</dd>
       </dl>
-    </main>
+    </Container>
   );
 }
 
