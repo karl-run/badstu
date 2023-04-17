@@ -62,7 +62,8 @@ export async function nextAvailableLocation(): Promise<
     R.sortBy(R.first),
     unsafeFirst,
   );
-  const byDateAndSlot = ([date, [slot]]: [string, [string, [string, number]]]) => `${date}:${slot}`;
+  const byDateAndSlot = ([, [date, [slot]]]: [string, [string, [string, number]]]) =>
+    `${date}:${slot}`;
 
   const locations = await prisma.location.findMany({
     where: { NOT: { dropins_polled_at: null } },

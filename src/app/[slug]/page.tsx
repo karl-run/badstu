@@ -9,7 +9,7 @@ import { locations, Location, validateLocation, locationToTitle } from '@/scrapi
 import ScrollToHash from '@/components/client/ScrollToHash';
 import { getNotifies } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { toCleanNotify } from '@/utils/notify.ts/types';
+import { toCleanNotify } from '@/utils/notify';
 
 const LastUpdated = loadDynamic(() => import('@/components/LastUpdated'), {
   ssr: false,

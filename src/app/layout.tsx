@@ -10,7 +10,7 @@ import Providers from '@/app/Providers';
 import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getNotifies, getTodaysNotified, getUserPhoneNumber } from '@/db/user';
-import { toCleanNotify } from '@/utils/notify.ts/types';
+import { toCleanNotify } from '@/utils/notify';
 import NotifyList from '@/components/client/NotifyList';
 
 const inter = Inter({ subsets: ['latin'] });

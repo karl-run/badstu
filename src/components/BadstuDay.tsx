@@ -15,7 +15,7 @@ import { dateAndTimeToDate, toReadableDateWithWeekdayName } from "@/utils/date";
 import NotifySlot from '@/components/NotifySlot';
 import EditIcon from '@/components/icons/EditIcon';
 import CrossIcon from '@/components/icons/CrossIcon';
-import { NotifyClean } from '@/utils/notify.ts/types';
+import { NotifyClean } from '@/utils/notify';
 
 interface BadstuDayProps {
   locationName: Location;

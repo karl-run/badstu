@@ -12,7 +12,7 @@ import {
 import { parseISO } from 'date-fns';
 import Link from 'next/link';
 
-import { NotifyClean } from '@/utils/notify.ts/types';
+import { NotifyClean } from '@/utils/notify';
 import { toReadableDateWithWeekdayName } from '@/utils/date';
 import { Location, locationToTitle } from '@/scraping/metadata';
 

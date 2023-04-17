@@ -60,7 +60,14 @@ function NextSlot() {
 
 const NextSlotSpan = ({ whenDate }: { whenDate: Date }): JSX.Element =>
   isToday(whenDate) ? (
-    <span className="font-bold">i dag</span>
+    <span>
+      om{' '}
+      <span className="font-bold">
+        {formatDistanceToNowStrict(whenDate, {
+          locale: nb,
+        })}
+      </span>
+    </span>
   ) : (
     <span>
       om{' '}
