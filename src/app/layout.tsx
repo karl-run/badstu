@@ -1,6 +1,5 @@
 import './globals.css';
 
-import { Analytics } from '@vercel/analytics/react';
 import { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth';
@@ -43,9 +42,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           />
           {children}
         </Providers>
-        <Analytics />
       </body>
-
     </html>
   );
 }
