@@ -2,20 +2,17 @@
 
 import React from 'react';
 import { Form, FormError, FormInput, FormLabel, useFormStore } from '@ariakit/react';
-import { useRouter } from 'next/navigation';
 
-function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
-  const router = useRouter();
+type Props = {
+  userPhone: string | null;
+  updateUserNumber: (data: { number: string }) => Promise<void>;
+};
+
+function PhoneInput({ userPhone, updateUserNumber }: Props): JSX.Element {
   const form = useFormStore({ defaultValues: { number: userPhone ?? '' } });
 
-  form.useSubmit(async (state) => {
-    const newNumber = state.values.number;
-    await fetch('/profile/edit-number', {
-      method: 'POST',
-      body: JSON.stringify({ phoneNumber: newNumber }),
-    });
-
-    router.refresh();
+  form.onSubmit(async (data) => {
+    await updateUserNumber(data.values);
   });
 
   return (

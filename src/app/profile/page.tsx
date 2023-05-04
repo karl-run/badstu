@@ -1,10 +1,9 @@
 import React, { Suspense } from 'react';
 import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
-import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
+import { getAllTimeNotifyCount, getUserPhoneNumber, updatePhoneNumber } from '@/db/user';
 import PhoneInput from '@/components/client/Input/PhoneInput';
 import DeleteMeButton from '@/components/client/DeleteMeButton';
 import Container from '@/components/common/Container';
@@ -76,6 +75,17 @@ function LoggedInUser({
 }
 
 function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element {
+  async function updatePhoneNumberServerAction(data: { number: string }) {
+    'use server';
+
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      throw new Error('Not logged in');
+    }
+
+    await updatePhoneNumber(session.user.email, data.number);
+  }
+
   return (
     <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Varsling</h2>
@@ -85,7 +95,11 @@ function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element
           <div className="h-[66px] max-w-prose animate-pulse rounded-full bg-gray-200 dark:bg-gray-700 sm:w-64" />
         }
       >
-        <PhoneInput key={userPhone} userPhone={userPhone} />
+        <PhoneInput
+          key={userPhone}
+          userPhone={userPhone}
+          updateUserNumber={updatePhoneNumberServerAction}
+        />
       </Suspense>
     </div>
   );
