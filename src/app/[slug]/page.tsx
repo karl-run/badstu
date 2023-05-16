@@ -1,5 +1,4 @@
 import loadDynamic from 'next/dynamic';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
@@ -41,6 +40,7 @@ export default async function LocationPage({ params }: { params: LocationPageMet
         <h1 className="text-2xl font-bold">
           <span className="uppercase">{locationToTitle(params.slug)}</span> Drop-in
         </h1>
+        {/* @ts-expect-error Weird next 13.4 typing issue */}
         {timestamp && <LastUpdated generatedAt={timestamp} location={params.slug} />}
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
