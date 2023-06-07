@@ -36,7 +36,7 @@ export default async function Home() {
               <Image
                 src={images[location]}
                 alt={locationToTitle(location)}
-                className={cn('max-h-42 w-full rounded-2xl object-cover', {
+                className={cn('max-h-40 w-full rounded-2xl object-cover', {
                   'max-h-32': index >= 3,
                   grayscale: location.includes('naken'),
                 })}

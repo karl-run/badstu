@@ -64,7 +64,7 @@ export const locations: Locations = {
   },
   sukkerbiten_nakenbadstu: {
     dropin: 213817,
-    dropinSlots: ['08:30', '13:00', '16:00'],
+    dropinSlots: ['08:30', '13:00', '16:00', '17:30'],
     fillDays: [2],
   },
 };
