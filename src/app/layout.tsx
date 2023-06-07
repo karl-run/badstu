@@ -36,7 +36,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
         <Providers session={session}>
           <UserHeader
-            // @ts-expect-error Async RSC
             notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
             userHasNumber={userHasNumber}
           />
