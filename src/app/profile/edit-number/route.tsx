@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 import { updatePhoneNumber } from '@/db/user';
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
-
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   const body = await request.json();
