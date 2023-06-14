@@ -7,6 +7,9 @@ import { getLocation, jsonToExtractedDays } from '@/db/location';
 import { ExtractedDay } from '@/scraping/types';
 import { dateAndTimeToDate, toDateString } from '@/utils/date';
 import { notifyUser } from '@/notifications/twilio';
+import { emailUser } from '@/notifications/resend';
+import { images } from '@/images/images';
+import { Location } from '@/scraping/metadata';
 
 export async function POST() {
   console.log('Starting notify job');
@@ -54,16 +57,22 @@ async function findAndNotify(
         );
       }
 
-      console.log('Sending notification to user');
-      const result = await notifyUser({
-        phoneNumber: `+47${user.number}`,
-        message: createNotifyMessage(toNotify),
-      });
+      try {
+        console.log('Sending notification to user');
+        const result = await notifyUser({
+          phoneNumber: `+47${user.number}`,
+          message: createNotifyMessage(toNotify),
+        });
 
-      if (result) {
-        console.log('Marking the notify as notified');
-        await markNotifyNotified(toNotify.id);
+        if (result) {
+          console.log('Marking the notify as notified');
+          await markNotifyNotified(toNotify.id);
+        }
+      } catch (e) {
+        console.error(e);
       }
+
+      await emailUser(user.id, createNotifyEmail(toNotify));
     }
   }
 }
@@ -85,4 +94,26 @@ function createNotifyMessage(toNotify: Notify) {
   )} kl. ${toNotify.slot}!\n\nhttps://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(
     toNotify.date,
   )}`;
+}
+
+function createNotifyEmail(toNotify: Notify): { title: string; body: string } {
+  const callbackUrl = `https://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(
+    toNotify.date,
+  )}`;
+
+  return {
+    title: `Det har dukket opp ledige plasser på ${toNotify.location} ${toDateString(
+      toNotify.date,
+    )} kl. ${toNotify.slot}!`,
+    body: `
+          <img alt="" src="https://badstu.karl.run${images[toNotify.location as Location].src}" width="100%" height="150px" style="object-fit: cover" />
+          <h3>Det er nå ledige plasser på <strong>${toNotify.location}</strong>!</h3>
+          <br/>
+          <br/>
+          <p>Dato: ${toDateString(toNotify.date)}<p>
+          <p>Klokkeslett: ${toNotify.slot}</p>
+          <br/>
+          <br/>
+          <a href="${callbackUrl}">${callbackUrl}</a>`,
+  };
 }

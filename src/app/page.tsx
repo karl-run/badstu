@@ -3,21 +3,11 @@ import Image from 'next/image';
 import * as R from 'remeda';
 import React from 'react';
 
-import kroloftet from '../images/kroloftet.jpeg';
-import sukkerbiten from '../images/sukkerbiten.jpg';
-import langkaia from '../images/langkaia.jpeg';
-
-import { locationNames, Location, locationToTitle } from '@/scraping/metadata';
+import { Location, locationNames, locationToTitle } from '@/scraping/metadata';
 import NextAvailable from '@/components/NextAvailable';
 import { cn } from '@/utils/cn';
-import Container from "@/components/common/Container";
-
-const images: Record<Location, typeof kroloftet> = {
-  kroloftet: kroloftet,
-  sukkerbiten: sukkerbiten,
-  langkaia: langkaia,
-  sukkerbiten_nakenbadstu: sukkerbiten,
-};
+import Container from '@/components/common/Container';
+import { images } from '@/images/images';
 
 export default async function Home() {
   return (
