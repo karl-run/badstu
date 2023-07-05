@@ -2,7 +2,7 @@ export const locationNames = [
   'kroloftet',
   'sukkerbiten',
   'langkaia',
-  'sukkerbiten_nakenbadstu',
+  // 'sukkerbiten_nakenbadstu',
 ] as const;
 
 export type Location = (typeof locationNames)[number];
@@ -62,11 +62,11 @@ export const locations: Locations = {
     ],
     dropin: 189278,
   },
-  sukkerbiten_nakenbadstu: {
+  /* sukkerbiten_nakenbadstu: {
     dropin: 213817,
     dropinSlots: ['08:30', '13:00', '16:00', '17:30'],
     fillDays: [2],
-  },
+  },*/
 };
 export const createUrl = (locationId: number, showCount: boolean) =>
   [
@@ -93,7 +93,7 @@ export function locationToTitle(location: Location): string {
       return 'Sukkerbiten';
     case 'langkaia':
       return 'Langkaia';
-    case 'sukkerbiten_nakenbadstu':
-      return 'Sukkerbiten (nakenbadstu)';
+    // case 'sukkerbiten_nakenbadstu':
+    //   return 'Sukkerbiten (nakenbadstu)';
   }
 }

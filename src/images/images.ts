@@ -8,5 +8,5 @@ export const images: Record<Location, typeof kroloftet> = {
   kroloftet: kroloftet,
   sukkerbiten: sukkerbiten,
   langkaia: langkaia,
-  sukkerbiten_nakenbadstu: sukkerbiten,
+  // sukkerbiten_nakenbadstu: sukkerbiten,
 };
