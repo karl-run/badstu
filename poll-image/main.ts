@@ -2,7 +2,7 @@ import { Cron } from './deps.ts';
 
 logWithTimestamp('Setting up scrape cron job');
 
-const job = new Cron('* * * * *', async () => {
+const job = new Cron('*/2 * * * *', async () => {
   await Promise.all(
     [
       'kroloftet',
