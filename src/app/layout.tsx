@@ -1,6 +1,6 @@
 import './globals.css';
 
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth';
 
@@ -11,6 +11,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getNotifies, getTodaysNotified, getUserPhoneNumber } from '@/db/user';
 import { toCleanNotify } from '@/utils/notify';
 import NotifyList from '@/components/client/NotifyList';
+import Container from '@/components/common/Container';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +19,8 @@ export const metadata = {
   title: 'Badstu Booking Overview',
   description: 'Secret page, please ignore',
 };
+
+const IS_DISABLED = true;
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
@@ -39,7 +42,14 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
             userHasNumber={userHasNumber}
           />
-          {children}
+          {IS_DISABLED ? (
+            <Container>
+              Oslo Badustueforening har byttet booking system. Denne siden er ute av drift
+              foreløpig. :)
+            </Container>
+          ) : (
+            children
+          )}
         </Providers>
       </body>
     </html>
