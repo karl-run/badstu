@@ -20,8 +20,6 @@ export const metadata = {
   description: 'Secret page, please ignore',
 };
 
-const IS_DISABLED = true;
-
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
   const userHasNumber = session?.user?.email
@@ -42,14 +40,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
             userHasNumber={userHasNumber}
           />
-          {IS_DISABLED ? (
-            <Container>
-              Oslo Badustueforening har byttet booking system. Denne siden er ute av drift
-              foreløpig. :)
-            </Container>
-          ) : (
-            children
-          )}
+          {children}
         </Providers>
       </body>
     </html>

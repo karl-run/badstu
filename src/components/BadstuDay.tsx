@@ -75,7 +75,7 @@ export const BadstuDay = ({ locationName, location, date, times, notifies }: Bad
 
 interface BookingListItemProps {
   location: Location;
-  locationId: number;
+  locationId: string;
   time: string;
   availability: Availability;
   date: string;
@@ -121,7 +121,7 @@ function BookingListItem({
       )}
       {hasAvailableSlots ? (
         <a
-          href={createClickableBookingLink(locationId, date, time)}
+          href={createClickableBookingLink(locationId, date)}
           className="relative block flex h-full w-full justify-between p-2 px-4"
         >
           <span className="flex">

@@ -1,16 +1,11 @@
-export const locationNames = [
-  'kroloftet',
-  'sukkerbiten',
-  'langkaia',
-  // 'sukkerbiten_nakenbadstu',
-] as const;
+export const locationNames = ['kroloftet', 'sukkerbiten', 'langkaia', 'jurten'] as const;
 
 export type Location = (typeof locationNames)[number];
 
 export type LocationDetails = {
   dropinSlots: string[];
-  dropin: number;
-  privat?: number;
+  dropin: string;
+  privat?: string;
   fillDays?: number[];
 };
 export type Locations = Record<Location, LocationDetails>;
@@ -29,8 +24,8 @@ export const locations: Locations = {
       '20:30',
       '22:00',
     ],
-    dropin: 189283,
-    privat: 189244,
+    dropin: 'XfIruVrKjcN2Alt2DFDY',
+    privat: '49RAU3tqnDgHaxB3RnGi',
   },
   sukkerbiten: {
     dropinSlots: [
@@ -45,7 +40,7 @@ export const locations: Locations = {
       '19:00',
       '20:30',
     ],
-    dropin: 184637,
+    dropin: '1x8uVZQ9KLCRDl0lfTJa',
   },
   langkaia: {
     dropinSlots: [
@@ -60,22 +55,13 @@ export const locations: Locations = {
       '19:00',
       '20:30',
     ],
-    dropin: 189278,
+    dropin: 'TSFPApgD7oKG8H1gcQQ2',
   },
-  /* sukkerbiten_nakenbadstu: {
-    dropin: 213817,
-    dropinSlots: ['08:30', '13:00', '16:00', '17:30'],
-    fillDays: [2],
-  },*/
+  jurten: {
+    dropin: 'EAnCJl6ixIM7X8xoaojC',
+    dropinSlots: ['10:30', '12:00', '13:30', '15:00', '16:30', '18:00', '19:30'],
+  },
 };
-export const createUrl = (locationId: number, showCount: boolean) =>
-  [
-    'https://www.planyo.com/embed-calendar.php?resource_id=',
-    locationId,
-    '&calendar=57139&style=upcoming-av&modver=2.7&custom-language=NO&ifr=calp_3204143258&usage=resform&clk=r&no_range=1',
-    showCount ? '&show_count=1' : '',
-    '&visible_items_per_column=100',
-  ].join('');
 
 export function validateLocation(param: string | null): Location {
   if (param == null || locationNames.find((it) => param === it) == null) {
@@ -93,7 +79,7 @@ export function locationToTitle(location: Location): string {
       return 'Sukkerbiten';
     case 'langkaia':
       return 'Langkaia';
-    // case 'sukkerbiten_nakenbadstu':
-    //   return 'Sukkerbiten (nakenbadstu)';
+    case 'jurten':
+      return 'Jurten (ved Kroloftet)';
   }
 }
