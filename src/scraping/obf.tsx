@@ -44,6 +44,7 @@ export async function scrapeTimes(name: Location): Promise<void> {
           decimalTimeToStringTime(slot.time),
           slot.available - slot.booked,
         ]),
+        R.filter(([, available]) => available > 0),
         (it) => R.fromPairs(it),
       ),
     }),
