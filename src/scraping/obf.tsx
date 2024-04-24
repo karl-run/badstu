@@ -27,7 +27,7 @@ export async function scrapeTimes(name: Location): Promise<void> {
         doc.slots,
         R.map((slot): [string, number] => [
           decimalTimeToStringTime(slot.time),
-          slot.available - slot.booked,
+          slot.available - slot.booked + slot.cancelled,
         ]),
         (it) => R.fromPairs(it),
         (it) => R.merge(createEmptyDropinDay(locations[name].dropinSlots), it),
