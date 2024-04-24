@@ -1,5 +1,4 @@
-import { Notify } from '@prisma/client';
-
+import { Notify } from '@/db/schema';
 import { Location, validateLocation } from '@/scraping/metadata';
 import { toDateString } from '@/utils/date';
 

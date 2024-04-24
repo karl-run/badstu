@@ -1,9 +1,9 @@
 import * as R from 'remeda';
-import { Notify, User } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
+import { Notify, User } from '@/db/schema';
 import { getValidUsers, markNotifyNotified } from '@/db/user';
-import { getLocation, jsonToExtractedDays } from '@/db/location';
+import { getLocation } from '@/db/location';
 import { ExtractedDay } from '@/scraping/types';
 import { dateAndTimeToDate, toDateString } from '@/utils/date';
 import { notifyUser } from '@/notifications/twilio';
@@ -29,7 +29,7 @@ export async function POST() {
 
   const locationToDaysTuple = R.pipe(
     locationsInQuestion,
-    R.map((it) => [it.name, jsonToExtractedDays(it.dropins)] as [string, ExtractedDay[]]),
+    R.map((it) => [it.name, it.dropins] as [string, ExtractedDay[]]),
   );
 
   try {

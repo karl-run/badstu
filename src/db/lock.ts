@@ -1,41 +1,42 @@
-import prisma from '@/db/prisma';
+import db from '@/db/db';
+import { scrapeLocks } from '@/db/schema';
 
 export async function openLock(location: string) {
-  await prisma.scrapeLock.upsert({
-    create: {
+  await db
+    .insert(scrapeLocks)
+    .values({
       location,
       locked_at: null,
       locked_by: null,
-    },
-    update: {
-      locked_at: null,
-      locked_by: null,
-    },
-    where: {
-      location,
-    },
-  });
+    })
+    .onConflictDoUpdate({
+      target: scrapeLocks.location,
+      set: {
+        locked_at: null,
+        locked_by: null,
+      },
+    });
 }
 
 export async function lock(location: string, whoami: string) {
-  await prisma.scrapeLock.upsert({
-    create: {
+  await db
+    .insert(scrapeLocks)
+    .values({
       location,
       locked_at: new Date(),
       locked_by: whoami,
-    },
-    update: {
-      locked_at: new Date(),
-      locked_by: whoami,
-    },
-    where: {
-      location,
-    },
-  });
+    })
+    .onConflictDoUpdate({
+      target: scrapeLocks.location,
+      set: {
+        locked_at: new Date(),
+        locked_by: whoami,
+      },
+    });
 }
 
 export async function getLock(location: string) {
-  return prisma.scrapeLock.findUnique({
-    where: { location },
+  return db.query.scrapeLocks.findFirst({
+    where: (scrapeLocks, { eq }) => eq(scrapeLocks.location, location),
   });
 }

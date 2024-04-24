@@ -1,10 +1,10 @@
 import * as R from 'remeda';
-import { Prisma } from '.prisma/client';
 
-import prisma from '@/db/prisma';
+import db from '@/db/db';
 import { AvailabilityMap, ExtractedDay } from '@/scraping/types';
 import { Location, validateLocation } from '@/scraping/metadata';
-import { debugF, unsafeFirst } from '@/utils/R';
+import { unsafeFirst } from '@/utils/R';
+import { locations } from '@/db/schema';
 
 export async function upsertLocation(
   name: Location,
@@ -12,29 +12,29 @@ export async function upsertLocation(
   privateDays?: ExtractedDay[],
 ): Promise<void> {
   const now = new Date();
-  await prisma.location.upsert({
-    create: {
+  await db
+    .insert(locations)
+    .values({
       name,
       dropins_polled_at: days ? now : undefined,
-      dropins: days ? extractedDaysToJson(days) : undefined,
-      private: privateDays ? extractedDaysToJson(privateDays) : undefined,
+      dropins: days,
+      private: privateDays,
       private_polled_at: privateDays ? now : undefined,
-    },
-    update: {
-      dropins_polled_at: days ? now : undefined,
-      dropins: days ? extractedDaysToJson(days) : undefined,
-      private: privateDays ? extractedDaysToJson(privateDays) : undefined,
-      private_polled_at: privateDays ? now : undefined,
-    },
-    where: {
-      name,
-    },
-  });
+    })
+    .onConflictDoUpdate({
+      target: locations.name,
+      set: {
+        dropins_polled_at: days ? now : undefined,
+        dropins: days,
+        private: privateDays,
+        private_polled_at: privateDays ? now : undefined,
+      },
+    });
 }
 
 export async function getLocation(name: string) {
-  const location = prisma.location.findUnique({
-    where: { name },
+  const location = await db.query.locations.findFirst({
+    where: (locations, { eq }) => eq(locations.name, name),
   });
 
   if (location == null) {
@@ -58,23 +58,24 @@ export async function nextAvailableLocation(): Promise<
     R.sortBy(R.prop('date')),
     R.mapToObj((it) => [it.date, it.times]),
     R.mapValues(dayToEarliestSlot),
-    R.toPairs,
+    R.toPairs.strict,
     R.sortBy(R.first),
     unsafeFirst,
   );
   const byDateAndSlot = ([, [date, [slot]]]: [string, [string, [string, number]]]) =>
     `${date}:${slot}`;
 
-  const locations = await prisma.location.findMany({
-    where: { NOT: { dropins_polled_at: null } },
+  const locations = await db.query.locations.findMany({
+    where: (locations, { isNotNull }) => isNotNull(locations.dropins_polled_at),
   });
 
   const earliestPossibleDay = R.pipe(
     locations,
     R.mapToObj((it) => [it.name, it.dropins]),
-    R.mapValues(jsonToExtractedDays),
+    // @ts-expect-error Need to fix nullability issue
     R.mapValues(daysToEarliestDay),
-    R.toPairs,
+    R.toPairs.strict,
+    (it) => it,
     R.sortBy([byDateAndSlot, 'asc']),
     unsafeFirst,
   );
@@ -83,14 +84,7 @@ export async function nextAvailableLocation(): Promise<
     return null;
   }
 
+  // @ts-expect-error Need to fix nullability issue
   const [where, [when, [slot, available]]] = earliestPossibleDay;
   return [validateLocation(where), when, slot, available];
-}
-
-export function extractedDaysToJson(questions: ExtractedDay[]): Prisma.JsonArray {
-  return questions as unknown as Prisma.JsonArray;
-}
-
-export function jsonToExtractedDays(json: Prisma.JsonValue): ExtractedDay[] {
-  return json as unknown as ExtractedDay[];
 }

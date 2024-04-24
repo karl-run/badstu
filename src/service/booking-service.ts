@@ -12,7 +12,7 @@ import {
   ExtractedDay,
 } from '@/scraping/types';
 import { getDayCorrect, toDateString } from '@/utils/date';
-import { getLocation, jsonToExtractedDays } from '@/db/location';
+import { getLocation } from '@/db/location';
 import { createEmptyDropinDay } from '@/utils/days';
 import { daysToLatestDate, privateToDropInCollissions } from '@/service/booking-utils';
 import { Location, locations } from '@/scraping/metadata';
@@ -36,8 +36,8 @@ export async function getDropins(name: Location): Promise<LocationResult> {
     };
   }
 
-  const dropins = location.dropins ? jsonToExtractedDays(location.dropins) : [];
-  const privates = location.private ? jsonToExtractedDays(location.private) : [];
+  const dropins = location.dropins ? location.dropins : [];
+  const privates = location.private ? location.private : [];
   const isBookable = privateToDropInCollissions(privates);
 
   console.info(`Getting booking data for ${name} (${dropins.length} days)`);
