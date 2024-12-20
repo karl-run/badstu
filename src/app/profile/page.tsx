@@ -3,12 +3,12 @@ import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
 import PhoneInput from '@/components/client/Input/PhoneInput';
 import DeleteMeButton from '@/components/client/DeleteMeButton';
 import Container from '@/components/common/Container';
 import BackToRoot from '@/components/common/BackToRoot';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export const dynamic = 'force-dynamic';
 

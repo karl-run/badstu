@@ -3,10 +3,10 @@ import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { getAdminStats } from '@/db/admin';
 import Container from '@/components/common/Container';
 import BackToRoot from '@/components/common/BackToRoot';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export const dynamic = 'force-dynamic';
 

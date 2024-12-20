@@ -6,11 +6,11 @@ import { BadstuDay } from '@/components/BadstuDay';
 import { locations, Location, validateLocation, locationToTitle } from '@/scraping/metadata';
 import ScrollToHash from '@/components/client/ScrollToHash';
 import { getNotifies } from '@/db/user';
-import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 import { toCleanNotify } from '@/utils/notify';
 import Container from '@/components/common/Container';
 import BackToRoot from '@/components/common/BackToRoot';
 import { LastUpdatedLazy } from '@/components/LastUpdatedLazy';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export const dynamic = 'force-dynamic';
 

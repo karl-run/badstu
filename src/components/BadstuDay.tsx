@@ -11,7 +11,7 @@ import { createClickableBookingLink } from '@/utils/planyo-utils';
 import Time from '@/components/Time';
 import HouseIcon from '@/components/icons/HouseIcon';
 import { Location, LocationDetails } from '@/scraping/metadata';
-import { dateAndTimeToDate, toReadableDateWithWeekdayName } from "@/utils/date";
+import { dateAndTimeToDate, toReadableDateWithWeekdayName } from '@/utils/date';
 import NotifySlot from '@/components/NotifySlot';
 import EditIcon from '@/components/icons/EditIcon';
 import CrossIcon from '@/components/icons/CrossIcon';

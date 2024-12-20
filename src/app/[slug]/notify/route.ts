@@ -4,8 +4,9 @@ import { getServerSession } from 'next-auth';
 import { parseISO } from 'date-fns';
 
 import { Location, validateLocation } from '@/scraping/metadata';
-import { addNotify, removeNotify } from "@/db/user";
-import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
+import { addNotify, removeNotify } from '@/db/user';
+
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 type Params = {
   params: Promise<{ slug: Location }>;
@@ -37,7 +38,7 @@ export async function PUT(request: Request, props: Params) {
       date: parseISO(body.date),
       slot: body.slot,
       location: params.slug,
-    })
+    });
     return NextResponse.json({ ok: 'removed' });
   }
 }

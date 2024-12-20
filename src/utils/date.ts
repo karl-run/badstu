@@ -1,4 +1,4 @@
-import { format, formatISO, getDay, parse, parseISO } from "date-fns";
+import { format, formatISO, getDay, parse, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
 
 export function toDateString(date: Date): string {
@@ -15,5 +15,5 @@ export function toReadableDateWithWeekdayName(date: Date | string): string {
 }
 
 export function getDayCorrect(date: Date) {
-  return (getDay(date) + 6) % 7
+  return (getDay(date) + 6) % 7;
 }
