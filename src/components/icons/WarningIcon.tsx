@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 interface Props {
   className?: string;
   size?: number;
 }
 
-function WarningIcon({ className, size = 24 }: Props): JSX.Element {
+function WarningIcon({ className, size = 24 }: Props): ReactElement {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

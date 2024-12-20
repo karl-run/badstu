@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, ReactElement } from 'react';
 import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import BackToRoot from '@/components/common/BackToRoot';
 
 export const dynamic = 'force-dynamic';
 
-async function Page(): Promise<JSX.Element> {
+async function Page(): Promise<ReactElement> {
   const session = await getServerSession(authOptions);
   const notifies = await getAllTimeNotifyCount(session?.user?.email ?? '');
 
@@ -75,7 +75,7 @@ function LoggedInUser({
   );
 }
 
-function Notifications({ userPhone }: { userPhone: string | null }): JSX.Element {
+function Notifications({ userPhone }: { userPhone: string | null }): ReactElement {
   return (
     <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Varsling</h2>

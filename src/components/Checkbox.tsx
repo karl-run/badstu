@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 interface Props {
   id: string;
@@ -6,7 +6,7 @@ interface Props {
   onToggle: (checked: boolean) => Promise<boolean>;
 }
 
-function Checkbox({ id, defaultChecked, onToggle }: Props): JSX.Element {
+function Checkbox({ id, defaultChecked, onToggle }: Props): ReactElement {
   return (
     <div className="relative flex h-full w-10 shrink-0 items-center justify-center border-r">
       <input

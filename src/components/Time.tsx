@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 
-function Time({ children }: PropsWithChildren): JSX.Element {
+function Time({ children }: PropsWithChildren): ReactElement {
   return <div className="w-14">{children}</div>;
 }
 

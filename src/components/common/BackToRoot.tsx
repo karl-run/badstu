@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import Link from 'next/link';
 
-function BackToRoot(): JSX.Element {
+function BackToRoot(): ReactElement {
   return (
     <div className="mb-2 sm:-ml-3">
       <Link href="/">

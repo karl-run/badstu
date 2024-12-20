@@ -1,7 +1,7 @@
 'use client';
 
 import * as R from 'remeda';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {
   Popover,
   PopoverArrow,
@@ -21,7 +21,7 @@ interface Props {
   notifies: NotifyClean[];
 }
 
-function NotifyList({ todays, notifies }: Props): JSX.Element {
+function NotifyList({ todays, notifies }: Props): ReactElement {
   const popover = usePopoverStore();
   const grouped = R.groupBy(notifies, R.prop('location'));
   const todayGrouped = R.groupBy(todays, R.prop('location'));

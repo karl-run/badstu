@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -10,7 +10,7 @@ import BackToRoot from '@/components/common/BackToRoot';
 
 export const dynamic = 'force-dynamic';
 
-async function Page(): Promise<JSX.Element> {
+async function Page(): Promise<ReactElement> {
   const session = await getServerSession(authOptions);
   if (session?.user?.email !== process.env.ADMIN_EMAIL) {
     notFound();

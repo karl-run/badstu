@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactElement } from 'react';
 import {
   Button,
   Popover,
@@ -12,7 +12,7 @@ import {
 } from '@ariakit/react';
 import { signOut } from 'next-auth/react';
 
-function DeleteMeButton({ userId }: { userId: string }): JSX.Element {
+function DeleteMeButton({ userId }: { userId: string }): ReactElement {
   const popover = usePopoverStore();
   const [isDeleting, setIsDeleting] = useState(false);
   const [deletingError, setDeletingError] = useState<string | null>(null);

@@ -8,10 +8,11 @@ import { addNotify, removeNotify } from "@/db/user";
 import { authOptions } from '@/app/api/auth/[...nextauth]/_route';
 
 type Params = {
-  params: { slug: Location };
+  params: Promise<{ slug: Location }>;
 };
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(request: Request, props: Params) {
+  const params = await props.params;
   validateLocation(params.slug);
 
   const session = await getServerSession(authOptions);

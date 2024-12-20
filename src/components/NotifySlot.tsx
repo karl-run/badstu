@@ -1,6 +1,6 @@
 'use client';
 
-import React, { startTransition } from 'react';
+import React, { startTransition, ReactElement } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Checkbox from '@/components/Checkbox';
@@ -14,7 +14,7 @@ interface Props {
   hasNotify: boolean;
 }
 
-function NotifySlot({ location, slot, date, hasNotify }: Props): JSX.Element {
+function NotifySlot({ location, slot, date, hasNotify }: Props): ReactElement {
   const router = useRouter();
   const toggle = async (checked: boolean): Promise<boolean> => {
     const response = await fetch(`/${location}/notify`, {

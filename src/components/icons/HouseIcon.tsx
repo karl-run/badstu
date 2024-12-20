@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-function HouseIcon(): JSX.Element {
+function HouseIcon(): ReactElement {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" height={18} width={18}>
       <path

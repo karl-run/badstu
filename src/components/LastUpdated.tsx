@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import * as E from 'fp-ts/Either';
 import { parseISO, differenceInSeconds, formatDistanceStrict } from 'date-fns';
 import { nb } from 'date-fns/locale';
@@ -44,7 +44,7 @@ interface Props {
   generatedAt: string;
 }
 
-function LastUpdated({ location, generatedAt }: Props): JSX.Element | null {
+function LastUpdated({ location, generatedAt }: Props): ReactElement | null {
   useScrapeOnMount(location);
   useRerender(1);
 

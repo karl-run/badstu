@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Form, FormError, FormInput, FormLabel, useFormStore } from '@ariakit/react';
 import { useRouter } from 'next/navigation';
 
-function PhoneInput({ userPhone }: { userPhone: string | null }): JSX.Element {
+function PhoneInput({ userPhone }: { userPhone: string | null }): ReactElement {
   const router = useRouter();
   const form = useFormStore({ defaultValues: { number: userPhone ?? '' } });
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactElement } from 'react';
 import useSWR from 'swr';
 import { differenceInHours, formatDistanceToNowStrict, isToday, parseISO } from 'date-fns';
 import { nb } from 'date-fns/locale';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Location, locationToTitle } from '@/scraping/metadata';
 import { dateAndTimeToDate } from '@/utils/date';
 
-function NextAvailable(): JSX.Element {
+function NextAvailable(): ReactElement {
   const [show, setShow] = useState(false);
 
   return (
@@ -59,7 +59,7 @@ function NextSlot() {
   );
 }
 
-const NextSlotSpan = ({ whenDate }: { whenDate: Date }): JSX.Element => {
+const NextSlotSpan = ({ whenDate }: { whenDate: Date }): ReactElement => {
   const hoursDiff = differenceInHours(whenDate, new Date());
 
   return (
