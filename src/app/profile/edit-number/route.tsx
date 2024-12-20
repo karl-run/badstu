@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
 import { updatePhoneNumber } from '@/db/user';
-
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 export async function POST(request: Request) {

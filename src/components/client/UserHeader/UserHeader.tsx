@@ -38,7 +38,7 @@ function LoginButton({ userHasNumber }: Pick<Props, 'userHasNumber'>) {
   return session?.user ? (
     <UserMenu user={session.user} userHasNumber={userHasNumber} />
   ) : (
-    <button onClick={() => signIn()}>Logg inn for varsler</button>
+    <button onClick={() => signIn('google')}>Logg inn for varsler</button>
   );
 }
 

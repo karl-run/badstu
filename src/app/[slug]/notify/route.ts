@@ -5,7 +5,6 @@ import { parseISO } from 'date-fns';
 
 import { Location, validateLocation } from '@/scraping/metadata';
 import { addNotify, removeNotify } from '@/db/user';
-
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 type Params = {
