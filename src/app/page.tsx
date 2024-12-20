@@ -4,7 +4,6 @@ import * as R from 'remeda';
 import React from 'react';
 
 import { Location, locationNames, locationToTitle } from '@/scraping/metadata';
-import NextAvailable from '@/components/NextAvailable';
 import { cn } from '@/utils/cn';
 import Container from '@/components/common/Container';
 import { images } from '@/images/images';
@@ -12,7 +11,6 @@ import { images } from '@/images/images';
 export default async function Home() {
   return (
     <Container>
-      <NextAvailable />
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
           locationNames,
