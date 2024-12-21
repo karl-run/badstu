@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz';
 import { addMinutes, endOfDay, isAfter, startOfDay, subDays } from 'date-fns';
 import { and, count, eq } from 'drizzle-orm';
 
@@ -53,18 +54,20 @@ export async function markNotifyNotified(id: number) {
 export async function getNotifies(id: string) {
   return (
     await db.query.notifies.findMany({
-      // where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
       where: (notifies, { eq, and, gte }) => {
         return and(
           eq(notifies.userId, id),
-          gte(notifies.date, startOfDay(subDays(new Date(), 2))),
+          gte(notifies.date, startOfDay(subDays(new Date(), 1))),
           eq(notifies.notified, false),
         );
       },
       orderBy: (notifies, { desc }) => desc(notifies.date),
     })
   ).filter((it) =>
-    isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()),
+    isAfter(
+      addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60),
+      new TZDate(new Date(), 'Europe/Oslo'),
+    ),
   );
 }
 
