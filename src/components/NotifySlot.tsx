@@ -1,10 +1,10 @@
 'use client';
 
-import React, { startTransition, ReactElement } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { ReactElement } from 'react';
 
 import Checkbox from '@/components/Checkbox';
 import { Location } from '@/scraping/metadata';
+import { toggleNotifySlot } from '@/components/NotifySlotActions';
 
 interface Props {
   location: Location;
@@ -15,24 +15,12 @@ interface Props {
 }
 
 function NotifySlot({ location, slot, date, hasNotify }: Props): ReactElement {
-  const router = useRouter();
   const toggle = async (checked: boolean): Promise<boolean> => {
-    const response = await fetch(`/${location}/notify`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        slot,
-        date,
-        add: checked,
-      }),
-    });
+    const result = await toggleNotifySlot({ location, slot, date, add: checked });
 
-    if (response.ok) {
-      startTransition(() => {
-        router.refresh();
-      });
-    }
+    console.info('NotifySlot', { location, slot, date, hasNotify }, result);
 
-    return response.ok;
+    return true;
   };
 
   return <Checkbox id={`${date}-${slot}`} defaultChecked={hasNotify} onToggle={toggle} />;
