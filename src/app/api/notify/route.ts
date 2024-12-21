@@ -6,7 +6,6 @@ import { getValidUsers, markNotifyNotified } from '@/db/user';
 import { getLocation } from '@/db/location';
 import { ExtractedDay } from '@/scraping/types';
 import { dateAndTimeToDate, toDateString } from '@/utils/date';
-import { notifyUser } from '@/notifications/twilio';
 import { emailUser } from '@/notifications/resend';
 import { images } from '@/images/images';
 import { Location } from '@/scraping/metadata';
@@ -59,20 +58,17 @@ async function findAndNotify(
 
       try {
         console.log('Sending notification to user');
-        const result = await notifyUser({
-          phoneNumber: `+47${user.number}`,
-          message: createNotifyMessage(toNotify),
-        });
+        const result = await emailUser(user.id, createNotifyEmail(toNotify));
 
-        if (result) {
+        if (result.error == null) {
           console.log('Marking the notify as notified');
           await markNotifyNotified(toNotify.id);
+        } else {
+          console.error('Failed to send email', result.error);
         }
       } catch (e) {
         console.error(e);
       }
-
-      await emailUser(user.id, createNotifyEmail(toNotify));
     }
   }
 }

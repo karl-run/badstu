@@ -20,4 +20,6 @@ export async function emailUser(user: string, email: { title: string; body: stri
   });
 
   console.log('email response', result);
+
+  return result;
 }

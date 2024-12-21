@@ -9,10 +9,9 @@ import UserMenu from './UserMenu';
 
 interface Props {
   notifies: ReactNode;
-  userHasNumber: boolean;
 }
 
-function UserHeader({ userHasNumber, notifies }: Props) {
+function UserHeader({ notifies }: Props) {
   return (
     <div className="flex items-center justify-between">
       <Link href="/">
@@ -26,17 +25,17 @@ function UserHeader({ userHasNumber, notifies }: Props) {
       </Link>
       <div className="flex items-center justify-end p-4">
         {notifies}
-        <LoginButton userHasNumber={userHasNumber} />
+        <LoginButton />
       </div>
     </div>
   );
 }
 
-function LoginButton({ userHasNumber }: Pick<Props, 'userHasNumber'>) {
+function LoginButton() {
   const { data: session } = useSession();
 
   return session?.user ? (
-    <UserMenu user={session.user} userHasNumber={userHasNumber} />
+    <UserMenu user={session.user} />
   ) : (
     <button onClick={() => signIn('google')}>Logg inn for varsler</button>
   );

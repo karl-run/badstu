@@ -1,10 +1,8 @@
 import React, { Suspense, ReactElement } from 'react';
 import { getServerSession, Session } from 'next-auth';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
-import PhoneInput from '@/components/client/Input/PhoneInput';
 import DeleteMeButton from '@/components/client/DeleteMeButton';
 import Container from '@/components/common/Container';
 import BackToRoot from '@/components/common/BackToRoot';
@@ -69,24 +67,7 @@ function LoggedInUser({
           </p>
         </div>
       </div>
-      <Notifications userPhone={metadata.phone} />
       <DeleteMe userId={user.email ?? 'unknown-email'} />
-    </div>
-  );
-}
-
-function Notifications({ userPhone }: { userPhone: string | null }): ReactElement {
-  return (
-    <div className="rounded border p-4 dark:bg-slate-800/70">
-      <h2 className="mb-4 text-lg font-bold">Varsling</h2>
-      <p>For å bli varslet må du legge inn et gyldig mobilnummer.</p>
-      <Suspense
-        fallback={
-          <div className="h-[66px] max-w-prose animate-pulse rounded-full bg-gray-200 dark:bg-gray-700 sm:w-64" />
-        }
-      >
-        <PhoneInput key={userPhone} userPhone={userPhone} />
-      </Suspense>
     </div>
   );
 }

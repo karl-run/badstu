@@ -10,7 +10,6 @@ import UserHeader from '@/components/client/UserHeader/UserHeader';
 import { getNotifies, getTodaysNotified, getUserPhoneNumber } from '@/db/user';
 import { toCleanNotify } from '@/utils/notify';
 import NotifyList from '@/components/client/NotifyList';
-import Container from '@/components/common/Container';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -22,9 +21,6 @@ export const metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
-  const userHasNumber = session?.user?.email
-    ? (await getUserPhoneNumber(session.user.email)) != null
-    : false;
 
   return (
     <html
@@ -34,15 +30,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         'bg-white text-slate-600 dark:bg-slate-900 dark:text-slate-400',
       )}
     >
-      <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
-        <Providers session={session}>
-          <UserHeader
-            notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
-            userHasNumber={userHasNumber}
-          />
-          {children}
-        </Providers>
-      </body>
+    <body
+      className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
+    <Providers session={session}>
+      <UserHeader
+        notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
+      />
+      {children}
+    </Providers>
+    </body>
     </html>
   );
 }

@@ -15,15 +15,13 @@ import { DefaultSession } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-import { MissingPhoneWarning } from '@/components/client/MissingPhoneWarning';
 import WarningIcon from '@/components/icons/WarningIcon';
 
 interface Props {
   user: DefaultSession['user'];
-  userHasNumber: boolean;
 }
 
-export default function UserMenu({ user, userHasNumber }: Props) {
+export default function UserMenu({ user }: Props) {
   const menu = useMenuStore({ gutter: 8, placement: 'bottom-end' });
 
   return (
@@ -32,7 +30,6 @@ export default function UserMenu({ user, userHasNumber }: Props) {
         store={menu}
         className="flex items-center rounded border p-2 hover:bg-slate-100 dark:hover:bg-slate-800/70"
       >
-        {!userHasNumber && <MissingPhoneWarning />}
         <div>{user?.name ?? 'Ukjent navn'}</div>
         {user?.image && (
           <Image width="28" height="28" className="mx-2 h-6 w-6" src={user.image} alt="" />
@@ -42,16 +39,6 @@ export default function UserMenu({ user, userHasNumber }: Props) {
       <Menu store={menu} className="rounded border bg-white dark:bg-slate-900">
         <MenuHeading className="menu-heading p-2 pb-0">{user?.name ?? 'Ukjent bruker'}</MenuHeading>
         <MenuDescription className="px-2 text-xs">{user?.email}</MenuDescription>
-        {!userHasNumber && (
-          <MenuItem
-            as={Link}
-            href="/profile"
-            className="m-2 flex cursor-pointer items-center justify-center border p-2 px-2 text-xs hover:bg-slate-100 dark:hover:bg-slate-800"
-          >
-            <WarningIcon size={16} className="mr-2 text-yellow-500" />
-            <p>Mangler telefonnummer</p>
-          </MenuItem>
-        )}
         <MenuSeparator className="mt-2" />
         <MenuItem
           className="block cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
