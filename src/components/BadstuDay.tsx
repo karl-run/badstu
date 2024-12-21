@@ -27,7 +27,7 @@ interface BadstuDayProps {
 
 export const BadstuDay = ({ locationName, location, date, times, notifies }: BadstuDayProps) => {
   const session = useSession();
-  const timesList = R.toPairs(times);
+  const timesList = R.entries(times);
   const anythingAvailable = timesList.some(
     ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
   );

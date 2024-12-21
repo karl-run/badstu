@@ -30,15 +30,14 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         'bg-white text-slate-600 dark:bg-slate-900 dark:text-slate-400',
       )}
     >
-    <body
-      className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
-    <Providers session={session}>
-      <UserHeader
-        notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
-      />
-      {children}
-    </Providers>
-    </body>
+      <body className="min-h-screen bg-fixed dark:bg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] dark:from-slate-900 dark:via-purple-900 dark:to-slate-900">
+        <Providers session={session}>
+          <UserHeader
+            notifies={session?.user?.email && <NotifiesCount id={session.user.email} />}
+          />
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

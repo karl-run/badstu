@@ -6,5 +6,5 @@ export const createEmptyDropinDay = (dropinSlots: string[]): AvailabilityMap =>
   R.pipe(
     dropinSlots,
     R.map((it): [string, number] => [it, 0]),
-    (it) => R.fromPairs(it),
+    (it) => R.fromEntries(it),
   );

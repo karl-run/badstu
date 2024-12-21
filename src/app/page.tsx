@@ -14,7 +14,7 @@ export default async function Home() {
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
           locationNames,
-          R.map.indexed((location: Location, index) => (
+          R.map((location: Location, index) => (
             <Link
               key={location}
               href={`/${location}`}

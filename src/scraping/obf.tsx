@@ -29,7 +29,7 @@ export async function scrapeTimes(name: Location): Promise<void> {
           decimalTimeToStringTime(slot.time),
           slot.available - slot.booked + slot.cancelled,
         ]),
-        (it) => R.fromPairs(it),
+        (it) => R.fromEntries(it),
         (it) => R.merge(createEmptyDropinDay(locations[name].dropinSlots), it),
       ),
     }),
@@ -45,7 +45,7 @@ export async function scrapeTimes(name: Location): Promise<void> {
           slot.available - slot.booked,
         ]),
         R.filter(([, available]) => available > 0),
-        (it) => R.fromPairs(it),
+        (it) => R.fromEntries(it),
       ),
     }),
   );

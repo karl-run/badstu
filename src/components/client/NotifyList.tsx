@@ -23,8 +23,8 @@ interface Props {
 
 function NotifyList({ todays, notifies }: Props): ReactElement {
   const popover = usePopoverStore();
-  const grouped = R.groupBy(notifies, R.prop('location'));
-  const todayGrouped = R.groupBy(todays, R.prop('location'));
+  const grouped = R.groupBy(notifies, (it) => it.location);
+  const todayGrouped = R.groupBy(todays, (it) => it.location);
 
   return (
     <>
@@ -67,12 +67,12 @@ function Groups({
   groups,
   closePopover,
 }: {
-  groups: Record<Location, NotifyClean[]>;
+  groups: Partial<Record<Location, NotifyClean[]>>;
   closePopover: () => void;
 }) {
   return (
     <div>
-      {R.toPairs(groups).map(([location, notifies]) => (
+      {R.entries(groups).map(([location, notifies]) => (
         <div key={location} className="mt-2">
           <div className="font-bold uppercase">{locationToTitle(location as Location)}</div>
           <div key={location} className="flex flex-col">

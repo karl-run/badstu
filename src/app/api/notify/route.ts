@@ -18,10 +18,10 @@ export async function POST() {
     users,
     R.flatMap(R.prop('notifies')),
     R.map(R.prop('location')),
-    R.uniq(),
+    R.unique(),
     R.map(getLocation),
     async (it) => await Promise.all(it),
-    async (it) => R.compact(await it),
+    async (it) => R.filter(await it, R.isTruthy),
   );
 
   console.log(`Found ${users.length} users and ${locationsInQuestion.length} relevant locations`);

@@ -48,7 +48,7 @@ export async function getDropins(name: Location): Promise<LocationResult> {
   return {
     timestamp: R.pipe(
       [location.dropins_polled_at, location.private_polled_at],
-      R.compact,
+      R.filter(R.isTruthy),
       min,
       formatISO,
     ),
@@ -64,12 +64,12 @@ export async function getDropins(name: Location): Promise<LocationResult> {
           date,
           R.pipe(
             times,
-            (it) => R.toPairs(it),
+            (it) => R.entries(it),
             R.map(([time, available]): [string, Availability] => [
               time,
               { available, isFullyBookable: isBookable(date, time) },
             ]),
-            (it) => R.fromPairs(it),
+            (it) => R.fromEntries(it),
           ),
         ],
       ),
@@ -86,15 +86,15 @@ function addEmptyDays(daysToAdd: number, emptyDay: AvailabilityMap, daysToFill?:
       R.filter(([date]) =>
         daysToFill == null ? true : daysToFill.includes(getDayCorrect(parseISO(date))),
       ),
-      (it) => R.fromPairs(it),
+      (it) => R.fromEntries(it),
     );
 
     return R.pipe(
       days,
       R.map((it): DateTimesTuple => [it.date, it.times]),
-      (it) => R.fromPairs(it),
+      (it) => R.fromEntries(it),
       (it) => R.merge(emptyDays, it),
-      R.toPairs,
+      R.entries(),
     );
   };
 }
