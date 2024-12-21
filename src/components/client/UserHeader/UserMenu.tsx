@@ -15,14 +15,12 @@ import { DefaultSession } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-import WarningIcon from '@/components/icons/WarningIcon';
-
 interface Props {
   user: DefaultSession['user'];
 }
 
 export default function UserMenu({ user }: Props) {
-  const menu = useMenuStore({ gutter: 8, placement: 'bottom-end' });
+  const menu = useMenuStore({ placement: 'bottom-end' });
 
   return (
     <>
@@ -36,22 +34,20 @@ export default function UserMenu({ user }: Props) {
         )}
         <MenuButtonArrow />
       </MenuButton>
-      <Menu store={menu} className="rounded border bg-white dark:bg-slate-900">
+      <Menu store={menu} gutter={8} className="rounded border bg-white dark:bg-slate-900">
         <MenuHeading className="menu-heading p-2 pb-0">{user?.name ?? 'Ukjent bruker'}</MenuHeading>
         <MenuDescription className="px-2 text-xs">{user?.email}</MenuDescription>
         <MenuSeparator className="mt-2" />
         <MenuItem
           className="block cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
-          as={Link}
-          href="/profile"
+          render={<Link href="/profile" />}
         >
           Min profil
         </MenuItem>
         {(user as any).isAdmin && (
           <MenuItem
             className="block cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
-            as={Link}
-            href="/admin"
+            render={<Link href="/admin" />}
           >
             Admin
           </MenuItem>

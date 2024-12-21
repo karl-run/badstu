@@ -14,7 +14,7 @@
     "upgrade-interactive": "bunx npm-check-updates --format group -i"
   },
   "dependencies": {
-    "@ariakit/react": "^0.1.8",
+    "@ariakit/react": "^0.4.15",
     "@libsql/client": "^0.6.0",
     "caniuse-lite": "^1.0.30001690",
     "clsx": "^2.1.1",
