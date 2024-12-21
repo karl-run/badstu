@@ -2,6 +2,7 @@
 
 import { getServerSession } from 'next-auth';
 import { parseISO } from 'date-fns';
+import { revalidatePath } from 'next/cache';
 
 import { validateLocation } from '@/scraping/metadata';
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
@@ -34,6 +35,9 @@ export async function toggleNotifySlot({
       slot: slot,
       location: validatedLocation,
     });
+
+    revalidatePath(`/${validatedLocation}`);
+
     return 'added';
   } else {
     await removeNotify({
@@ -42,6 +46,9 @@ export async function toggleNotifySlot({
       slot: slot,
       location: validatedLocation,
     });
+
+    revalidatePath(`/${validatedLocation}`);
+
     return 'removed';
   }
 }

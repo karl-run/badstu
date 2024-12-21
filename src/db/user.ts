@@ -54,12 +54,13 @@ export async function getNotifies(id: string) {
   return (
     await db.query.notifies.findMany({
       // where: { userId: id, date: { gte: subDays(new Date(), 1) }, notified: false },
-      where: (notifies, { eq, and }) =>
-        and(
+      where: (notifies, { eq, and, gte }) => {
+        return and(
           eq(notifies.userId, id),
-          eq(notifies.date, subDays(new Date(), 1)),
+          gte(notifies.date, startOfDay(subDays(new Date(), 2))),
           eq(notifies.notified, false),
-        ),
+        );
+      },
       orderBy: (notifies, { desc }) => desc(notifies.date),
     })
   ).filter((it) =>
