@@ -1,4 +1,4 @@
-import { addMinutes, isAfter, startOfDay, subDays } from 'date-fns';
+import { addMinutes, endOfDay, isAfter, startOfDay, subDays } from 'date-fns';
 import { and, count, eq } from 'drizzle-orm';
 
 import db from '@/db/db';
@@ -71,11 +71,12 @@ export async function getNotifies(id: string) {
 export async function getTodaysNotified(id: string) {
   return (
     await db.query.notifies.findMany({
-      where: (notifies, { eq, and }) =>
+      where: (notifies, { eq, and, lte, gte }) =>
         and(
           eq(notifies.userId, id),
           eq(notifies.notified, true),
-          eq(notifies.notified_at, startOfDay(new Date())),
+          gte(notifies.notified_at, startOfDay(new Date())),
+          lte(notifies.notified_at, endOfDay(new Date())),
         ),
       orderBy: (notifies, { asc }) => asc(notifies.notified_at),
     })
