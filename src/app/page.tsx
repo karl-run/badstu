@@ -11,6 +11,9 @@ import { images } from '@/images/images';
 export default async function Home() {
   return (
     <Container>
+      <div className="mb-4 text-right">
+        Badstu nå? <Link href="/i-dag" className="underline">Sjekk ledig dropin i dag</Link>
+      </div>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
           locationNames,

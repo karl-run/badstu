@@ -23,9 +23,10 @@ interface BadstuDayProps {
   date: string;
   times: AvailabilityResult;
   notifies: NotifyClean[];
+  noHeader?: boolean;
 }
 
-export const BadstuDay = ({ locationName, location, date, times, notifies }: BadstuDayProps) => {
+export const BadstuDay = ({ locationName, location, date, times, notifies, noHeader }: BadstuDayProps) => {
   const session = useSession();
   const timesList = R.entries(times);
   const anythingAvailable = timesList.some(
@@ -41,7 +42,7 @@ export const BadstuDay = ({ locationName, location, date, times, notifies }: Bad
         'dark:highlight-white rounded-lg border dark:border-none dark:bg-slate-800/70 dark:shadow-highlight-white',
       )}
     >
-      <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
+      {!noHeader && <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
         <span>{toReadableDateWithWeekdayName(date)}</span>
         {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
         {session.status === 'authenticated' && (
@@ -54,7 +55,7 @@ export const BadstuDay = ({ locationName, location, date, times, notifies }: Bad
             <EditIcon />
           </button>
         )}
-      </h2>
+      </h2>}
       <ul className="grid grid-cols-1 divide-y dark:divide-white/10">
         {timesList.map(([time, availability]) => (
           <BookingListItem
