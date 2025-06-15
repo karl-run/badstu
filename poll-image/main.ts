@@ -2,13 +2,13 @@ import { Cron } from './deps.ts';
 
 logWithTimestamp('Setting up scrape cron job');
 
-const job = new Cron('*/2 * * * *', async () => {
+const job = new Cron('*/3 * * * *', async () => {
   await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia', 'jurten'].map(scrape));
 });
 
 logWithTimestamp('Setting up notify cron job');
 
-const notifyJob = new Cron('*/2 * * * *', async () => {
+const notifyJob = new Cron('*/3 * * * *', async () => {
   logWithTimestamp(`Notify: Time to start notify job`);
 
   let response: Response;
