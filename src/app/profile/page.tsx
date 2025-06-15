@@ -1,18 +1,18 @@
-import React, { Suspense, ReactElement } from 'react';
-import { getServerSession, Session } from 'next-auth';
-import Image from 'next/image';
+import React, { Suspense, ReactElement } from 'react'
+import { getServerSession, Session } from 'next-auth'
+import Image from 'next/image'
 
-import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user';
-import DeleteMeButton from '@/components/client/DeleteMeButton';
-import Container from '@/components/common/Container';
-import BackToRoot from '@/components/common/BackToRoot';
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { getAllTimeNotifyCount, getUserPhoneNumber } from '@/db/user'
+import DeleteMeButton from '@/components/client/DeleteMeButton'
+import Container from '@/components/common/Container'
+import BackToRoot from '@/components/common/BackToRoot'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
 async function Page(): Promise<ReactElement> {
-  const session = await getServerSession(authOptions);
-  const notifies = await getAllTimeNotifyCount(session?.user?.email ?? '');
+  const session = await getServerSession(authOptions)
+  const notifies = await getAllTimeNotifyCount(session?.user?.email ?? '')
 
   return (
     <Container className="pb-8">
@@ -31,22 +31,16 @@ async function Page(): Promise<ReactElement> {
         />
       )}
     </Container>
-  );
+  )
 }
 
 interface UserMetadata {
-  allTimeNotifies: number;
-  notified: number;
-  phone: string | null;
+  allTimeNotifies: number
+  notified: number
+  phone: string | null
 }
 
-function LoggedInUser({
-  user,
-  metadata,
-}: {
-  user: NonNullable<Session['user']>;
-  metadata: UserMetadata;
-}) {
+function LoggedInUser({ user, metadata }: { user: NonNullable<Session['user']>; metadata: UserMetadata }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="rounded border p-4 dark:bg-slate-800/70">
@@ -60,16 +54,14 @@ function LoggedInUser({
         </div>
         <div className="mt-4">
           <p className="max-w-prose">
-            Du har bedt om å blitt varslet på{' '}
-            <span className="font-bold">{metadata.allTimeNotifies}</span> tidspunkter, hvor du har
-            blitt fortalt om ledige plasser på{' '}
-            <span className="font-bold">{metadata.notified}</span>.
+            Du har bedt om å blitt varslet på <span className="font-bold">{metadata.allTimeNotifies}</span> tidspunkter,
+            hvor du har blitt fortalt om ledige plasser på <span className="font-bold">{metadata.notified}</span>.
           </p>
         </div>
       </div>
       <DeleteMe userId={user.email ?? 'unknown-email'} />
     </div>
-  );
+  )
 }
 
 function DeleteMe({ userId }: { userId: string }) {
@@ -77,8 +69,7 @@ function DeleteMe({ userId }: { userId: string }) {
     <div className="rounded border p-4 dark:bg-slate-800/70">
       <h2 className="mb-4 text-lg font-bold">Slett meg</h2>
       <p className="mt-4 max-w-prose">
-        Alt vi har lagret om deg, inkludert varslinger vil bli slettet øyeblikkelig dersom du velger
-        å gjøre det.
+        Alt vi har lagret om deg, inkludert varslinger vil bli slettet øyeblikkelig dersom du velger å gjøre det.
       </p>
       <Suspense
         fallback={
@@ -88,7 +79,7 @@ function DeleteMe({ userId }: { userId: string }) {
         <DeleteMeButton userId={userId} />
       </Suspense>
     </div>
-  );
+  )
 }
 
-export default Page;
+export default Page

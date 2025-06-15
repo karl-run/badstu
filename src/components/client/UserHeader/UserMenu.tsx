@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import Image from 'next/image';
+import Image from 'next/image'
 import {
   Menu,
   MenuButton,
@@ -10,17 +10,17 @@ import {
   MenuItem,
   MenuSeparator,
   useMenuStore,
-} from '@ariakit/react';
-import { DefaultSession } from 'next-auth';
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
+} from '@ariakit/react'
+import { DefaultSession } from 'next-auth'
+import { signOut } from 'next-auth/react'
+import Link from 'next/link'
 
 interface Props {
-  user: DefaultSession['user'];
+  user: DefaultSession['user']
 }
 
 export default function UserMenu({ user }: Props) {
-  const menu = useMenuStore({ placement: 'bottom-end' });
+  const menu = useMenuStore({ placement: 'bottom-end' })
 
   return (
     <>
@@ -29,9 +29,7 @@ export default function UserMenu({ user }: Props) {
         className="flex items-center rounded border p-2 hover:bg-slate-100 dark:hover:bg-slate-800/70"
       >
         <div>{user?.name ?? 'Ukjent navn'}</div>
-        {user?.image && (
-          <Image width="28" height="28" className="mx-2 h-6 w-6" src={user.image} alt="" />
-        )}
+        {user?.image && <Image width="28" height="28" className="mx-2 h-6 w-6" src={user.image} alt="" />}
         <MenuButtonArrow />
       </MenuButton>
       <Menu store={menu} gutter={8} className="rounded border bg-white dark:bg-slate-900">
@@ -52,13 +50,10 @@ export default function UserMenu({ user }: Props) {
             Admin
           </MenuItem>
         )}
-        <MenuItem
-          className="cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800"
-          onClick={() => signOut()}
-        >
+        <MenuItem className="cursor-pointer p-2 hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => signOut()}>
           Logg ut
         </MenuItem>
       </Menu>
     </>
-  );
+  )
 }

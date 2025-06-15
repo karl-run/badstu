@@ -1,20 +1,17 @@
-import { TZDate } from '@date-fns/tz';
-import { addMinutes, endOfDay, isAfter, startOfDay, subDays } from 'date-fns';
-import { and, count, eq } from 'drizzle-orm';
+import { TZDate } from '@date-fns/tz'
+import { addMinutes, endOfDay, isAfter, startOfDay, subDays } from 'date-fns'
+import { and, count, eq } from 'drizzle-orm'
 
-import db from '@/db/db';
-import { Location } from '@/scraping/metadata';
-import { dateAndTimeToDate, toDateString } from '@/utils/date';
-import { notifies, users } from '@/db/schema';
+import db from '@/db/db'
+import { Location } from '@/scraping/metadata'
+import { dateAndTimeToDate, toDateString } from '@/utils/date'
+import { notifies, users } from '@/db/schema'
 
 export function insertUser(id: string) {
-  return db
-    .insert(users)
-    .values({ id, number: null, created_at: new Date() })
-    .onConflictDoNothing();
+  return db.insert(users).values({ id, number: null, created_at: new Date() }).onConflictDoNothing()
 }
 
-type AddRemoveNotify = { id: string; location: Location; date: Date; slot: string };
+type AddRemoveNotify = { id: string; location: Location; date: Date; slot: string }
 export async function addNotify(newNotify: AddRemoveNotify) {
   return db.insert(notifies).values({
     date: newNotify.date,
@@ -23,7 +20,7 @@ export async function addNotify(newNotify: AddRemoveNotify) {
     userId: newNotify.id,
     notified: false,
     notified_at: null,
-  });
+  })
 }
 
 export async function removeNotify(deleteNotify: AddRemoveNotify) {
@@ -36,19 +33,16 @@ export async function removeNotify(deleteNotify: AddRemoveNotify) {
           eq(notifies.date, deleteNotify.date),
           eq(notifies.slot, deleteNotify.slot),
         ),
-    });
+    })
 
-    if (!itemToDelete) return;
+    if (!itemToDelete) return
 
-    await tx.delete(notifies).where(eq(notifies.id, itemToDelete.id));
-  });
+    await tx.delete(notifies).where(eq(notifies.id, itemToDelete.id))
+  })
 }
 
 export async function markNotifyNotified(id: number) {
-  await db
-    .update(notifies)
-    .set({ notified: true, notified_at: new Date() })
-    .where(eq(notifies.id, id));
+  await db.update(notifies).set({ notified: true, notified_at: new Date() }).where(eq(notifies.id, id))
 }
 
 export async function getNotifies(id: string) {
@@ -59,16 +53,13 @@ export async function getNotifies(id: string) {
           eq(notifies.userId, id),
           gte(notifies.date, startOfDay(subDays(new Date(), 1))),
           eq(notifies.notified, false),
-        );
+        )
       },
       orderBy: (notifies, { desc }) => desc(notifies.date),
     })
   ).filter((it) =>
-    isAfter(
-      addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60),
-      new TZDate(new Date(), 'Europe/Oslo'),
-    ),
-  );
+    isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new TZDate(new Date(), 'Europe/Oslo')),
+  )
 }
 
 export async function getTodaysNotified(id: string) {
@@ -83,9 +74,7 @@ export async function getTodaysNotified(id: string) {
         ),
       orderBy: (notifies, { asc }) => asc(notifies.notified_at),
     })
-  ).filter((it) =>
-    isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()),
-  );
+  ).filter((it) => isAfter(addMinutes(dateAndTimeToDate(toDateString(it.date), it.slot), 60), new Date()))
 }
 
 export async function getAllTimeNotifyCount(id: string) {
@@ -101,26 +90,26 @@ export async function getAllTimeNotifyCount(id: string) {
         .from(notifies)
         .where(and(eq(notifies.userId, id), eq(notifies.notified, true)))
         .then((it) => it[0].count),
-    ]);
+    ])
 
-    return { allTime, notified };
-  });
+    return { allTime, notified }
+  })
 }
 
 export async function deleteMe(id: string) {
-  await db.delete(users).where(eq(users.id, id));
+  await db.delete(users).where(eq(users.id, id))
 }
 
 export async function updatePhoneNumber(id: string, phoneNumber: string) {
-  await db.update(users).set({ number: phoneNumber }).where(eq(users.id, id));
+  await db.update(users).set({ number: phoneNumber }).where(eq(users.id, id))
 }
 
 export async function getUserPhoneNumber(id: string) {
   const user = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.id, id),
-  });
+  })
 
-  return user?.number ?? null;
+  return user?.number ?? null
 }
 
 export async function getValidUsers() {
@@ -132,5 +121,5 @@ export async function getValidUsers() {
           and(eq(notifies.notified, false), gte(notifies.date, subDays(new Date(), 1))),
       },
     },
-  });
+  })
 }

@@ -1,19 +1,19 @@
-import * as R from 'remeda';
-import { NextResponse } from 'next/server';
+import * as R from 'remeda'
+import { NextResponse } from 'next/server'
 
-import { Notify, User } from '@/db/schema';
-import { getValidUsers, markNotifyNotified } from '@/db/user';
-import { getLocation } from '@/db/location';
-import { ExtractedDay } from '@/scraping/types';
-import { dateAndTimeToDate, toDateString } from '@/utils/date';
-import { emailUser } from '@/notifications/resend';
-import { images } from '@/images/images';
-import { Location } from '@/scraping/metadata';
+import { Notify, User } from '@/db/schema'
+import { getValidUsers, markNotifyNotified } from '@/db/user'
+import { getLocation } from '@/db/location'
+import { ExtractedDay } from '@/scraping/types'
+import { dateAndTimeToDate, toDateString } from '@/utils/date'
+import { emailUser } from '@/notifications/resend'
+import { images } from '@/images/images'
+import { Location } from '@/scraping/metadata'
 
 export async function POST() {
-  console.log('Starting notify job');
+  console.log('Starting notify job')
 
-  const users = await getValidUsers();
+  const users = await getValidUsers()
   const locationsInQuestion = await R.pipe(
     users,
     R.flatMap(R.prop('notifies')),
@@ -22,21 +22,21 @@ export async function POST() {
     R.map(getLocation),
     async (it) => await Promise.all(it),
     async (it) => R.filter(await it, R.isTruthy),
-  );
+  )
 
-  console.log(`Found ${users.length} users and ${locationsInQuestion.length} relevant locations`);
+  console.log(`Found ${users.length} users and ${locationsInQuestion.length} relevant locations`)
 
   const locationToDaysTuple = R.pipe(
     locationsInQuestion,
     R.map((it) => [it.name, it.dropins] as [string, ExtractedDay[]]),
-  );
+  )
 
   try {
-    await findAndNotify(users, locationToDaysTuple);
-    return NextResponse.json({ ok: 'ok' });
+    await findAndNotify(users, locationToDaysTuple)
+    return NextResponse.json({ ok: 'ok' })
   } catch (e) {
-    console.error(e);
-    return NextResponse.json({ error: 'Something went wrong.' });
+    console.error(e)
+    return NextResponse.json({ error: 'Something went wrong.' })
   }
 }
 
@@ -47,55 +47,49 @@ async function findAndNotify(
   for (const user of users) {
     const filtersToNotify = user.notifies.filter((notify) =>
       locationToDaysTuple.find(([location, days]) => doesNotifyHasAvailability(notify, days)),
-    );
+    )
 
     for (const toNotify of filtersToNotify) {
       if (user.number == null) {
-        throw new Error(
-          `User ${user.id} has no phone number. This should not happen. Is the prisma query broken?`,
-        );
+        throw new Error(`User ${user.id} has no phone number. This should not happen. Is the prisma query broken?`)
       }
 
       try {
-        console.log('Sending notification to user');
-        const result = await emailUser(user.id, createNotifyEmail(toNotify));
+        console.log('Sending notification to user')
+        const result = await emailUser(user.id, createNotifyEmail(toNotify))
 
         if (result.error == null) {
-          console.log('Marking the notify as notified');
-          await markNotifyNotified(toNotify.id);
+          console.log('Marking the notify as notified')
+          await markNotifyNotified(toNotify.id)
         } else {
-          console.error('Failed to send email', result.error);
+          console.error('Failed to send email', result.error)
         }
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     }
   }
 }
 
 function doesNotifyHasAvailability(notify: Notify, location: ExtractedDay[]) {
-  const notifyDateString = toDateString(notify.date);
-  const notifyDateTime = dateAndTimeToDate(toDateString(notify.date), notify.slot);
+  const notifyDateString = toDateString(notify.date)
+  const notifyDateTime = dateAndTimeToDate(toDateString(notify.date), notify.slot)
 
   return location.find((it) => {
-    if (it.date !== notifyDateString) return false;
+    if (it.date !== notifyDateString) return false
 
-    return it.times[notify.slot] > 0;
-  });
+    return it.times[notify.slot] > 0
+  })
 }
 
 function createNotifyMessage(toNotify: Notify) {
   return `Det har dukket opp ledige plasser på ${toNotify.location} ${toDateString(
     toNotify.date,
-  )} kl. ${toNotify.slot}!\n\nhttps://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(
-    toNotify.date,
-  )}`;
+  )} kl. ${toNotify.slot}!\n\nhttps://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(toNotify.date)}`
 }
 
 function createNotifyEmail(toNotify: Notify): { title: string; body: string } {
-  const callbackUrl = `https://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(
-    toNotify.date,
-  )}`;
+  const callbackUrl = `https://badstu.karl.run/${toNotify.location}?scrollTo=${toDateString(toNotify.date)}`
 
   return {
     title: `Det har dukket opp ledige plasser på ${toNotify.location} ${toDateString(
@@ -111,5 +105,5 @@ function createNotifyEmail(toNotify: Notify): { title: string; body: string } {
           <br/>
           <br/>
           <a href="${callbackUrl}">${callbackUrl}</a>`,
-  };
+  }
 }

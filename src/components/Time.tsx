@@ -1,7 +1,7 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react'
 
 function Time({ children }: PropsWithChildren): ReactElement {
-  return <div className="w-14">{children}</div>;
+  return <div className="w-14">{children}</div>
 }
 
-export default Time;
+export default Time

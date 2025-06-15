@@ -1,22 +1,22 @@
-import React, { ReactElement } from 'react';
-import { getServerSession } from 'next-auth';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import React, { ReactElement } from 'react'
+import { getServerSession } from 'next-auth'
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
-import { getAdminStats } from '@/db/admin';
-import Container from '@/components/common/Container';
-import BackToRoot from '@/components/common/BackToRoot';
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { getAdminStats } from '@/db/admin'
+import Container from '@/components/common/Container'
+import BackToRoot from '@/components/common/BackToRoot'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
 async function Page(): Promise<ReactElement> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions)
   if (session?.user?.email !== process.env.ADMIN_EMAIL) {
-    notFound();
+    notFound()
   }
 
-  const [userCount, totalNotify, activeNotify, sentNotifications] = await getAdminStats();
+  const [userCount, totalNotify, activeNotify, sentNotifications] = await getAdminStats()
 
   return (
     <Container>
@@ -33,7 +33,7 @@ async function Page(): Promise<ReactElement> {
         <dd>{sentNotifications}</dd>
       </dl>
     </Container>
-  );
+  )
 }
 
-export default Page;
+export default Page

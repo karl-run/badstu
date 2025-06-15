@@ -1,38 +1,36 @@
-'use client';
+'use client'
 
-import * as R from 'remeda';
-import { addMinutes, isAfter, isSameDay, parseISO } from 'date-fns';
-import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import * as R from 'remeda'
+import { addMinutes, isAfter, isSameDay, parseISO } from 'date-fns'
+import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 
-import { Availability, AvailabilityResult } from '@/scraping/types';
-import { cn } from '@/utils/cn';
-import { createClickableBookingLink } from '@/utils/planyo-utils';
-import Time from '@/components/Time';
-import HouseIcon from '@/components/icons/HouseIcon';
-import { Location, LocationDetails } from '@/scraping/metadata';
-import { dateAndTimeToDate, toReadableDateWithWeekdayName } from '@/utils/date';
-import NotifySlot from '@/components/NotifySlot';
-import EditIcon from '@/components/icons/EditIcon';
-import CrossIcon from '@/components/icons/CrossIcon';
-import { NotifyClean } from '@/utils/notify';
+import { Availability, AvailabilityResult } from '@/scraping/types'
+import { cn } from '@/utils/cn'
+import { createClickableBookingLink } from '@/utils/planyo-utils'
+import Time from '@/components/Time'
+import HouseIcon from '@/components/icons/HouseIcon'
+import { Location, LocationDetails } from '@/scraping/metadata'
+import { dateAndTimeToDate, toReadableDateWithWeekdayName } from '@/utils/date'
+import NotifySlot from '@/components/NotifySlot'
+import EditIcon from '@/components/icons/EditIcon'
+import CrossIcon from '@/components/icons/CrossIcon'
+import { NotifyClean } from '@/utils/notify'
 
 interface BadstuDayProps {
-  locationName: Location;
-  location: LocationDetails;
-  date: string;
-  times: AvailabilityResult;
-  notifies: NotifyClean[];
-  noHeader?: boolean;
+  locationName: Location
+  location: LocationDetails
+  date: string
+  times: AvailabilityResult
+  notifies: NotifyClean[]
+  noHeader?: boolean
 }
 
 export const BadstuDay = ({ locationName, location, date, times, notifies, noHeader }: BadstuDayProps) => {
-  const session = useSession();
-  const timesList = R.entries(times);
-  const anythingAvailable = timesList.some(
-    ([, { available, isFullyBookable }]) => isFullyBookable || available > 0,
-  );
-  const [isToggleMode, setToggleMode] = useState(false);
+  const session = useSession()
+  const timesList = R.entries(times)
+  const anythingAvailable = timesList.some(([, { available, isFullyBookable }]) => isFullyBookable || available > 0)
+  const [isToggleMode, setToggleMode] = useState(false)
 
   return (
     <div
@@ -42,20 +40,22 @@ export const BadstuDay = ({ locationName, location, date, times, notifies, noHea
         'dark:highlight-white rounded-lg border dark:border-none dark:bg-slate-800/70 dark:shadow-highlight-white',
       )}
     >
-      {!noHeader && <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
-        <span>{toReadableDateWithWeekdayName(date)}</span>
-        {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
-        {session.status === 'authenticated' && (
-          <button
-            onClick={() => setToggleMode((b) => !b)}
-            className={cn('h-8 w-8 transition-transform', {
-              'rotate-180': isToggleMode,
-            })}
-          >
-            <EditIcon />
-          </button>
-        )}
-      </h2>}
+      {!noHeader && (
+        <h2 className="text-md mx-4 my-2 flex justify-between font-bold">
+          <span>{toReadableDateWithWeekdayName(date)}</span>
+          {!anythingAvailable && <span className="md:hidden">Ingenting ledig</span>}
+          {session.status === 'authenticated' && (
+            <button
+              onClick={() => setToggleMode((b) => !b)}
+              className={cn('h-8 w-8 transition-transform', {
+                'rotate-180': isToggleMode,
+              })}
+            >
+              <EditIcon />
+            </button>
+          )}
+        </h2>
+      )}
       <ul className="grid grid-cols-1 divide-y dark:divide-white/10">
         {timesList.map(([time, availability]) => (
           <BookingListItem
@@ -71,17 +71,17 @@ export const BadstuDay = ({ locationName, location, date, times, notifies, noHea
         ))}
       </ul>
     </div>
-  );
-};
+  )
+}
 
 interface BookingListItemProps {
-  location: Location;
-  locationId: string;
-  time: string;
-  availability: Availability;
-  date: string;
-  isToggleMode: boolean;
-  notifies: NotifyClean[];
+  location: Location
+  locationId: string
+  time: string
+  availability: Availability
+  date: string
+  isToggleMode: boolean
+  notifies: NotifyClean[]
 }
 
 function BookingListItem({
@@ -93,15 +93,15 @@ function BookingListItem({
   availability: { available, isFullyBookable },
   notifies,
 }: BookingListItemProps) {
-  const hasAvailableSlots = available > 0;
-  const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(date, time), 60));
+  const hasAvailableSlots = available > 0
+  const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(date, time), 60))
   const hasNotify =
     notifies.find(
       (notify) =>
         isSameDay(parseISO(notify.date), dateAndTimeToDate(date, time)) &&
         notify.location === location &&
         notify.slot === time,
-    ) != null;
+    ) != null
 
   return (
     <li
@@ -112,13 +112,7 @@ function BookingListItem({
       })}
     >
       {isToggleMode && !hasAvailableSlots && !isTooLate && (
-        <NotifySlot
-          location={location}
-          className=""
-          slot={time}
-          date={date}
-          hasNotify={hasNotify}
-        />
+        <NotifySlot location={location} className="" slot={time} date={date} hasNotify={hasNotify} />
       )}
       {hasAvailableSlots ? (
         <a
@@ -148,5 +142,5 @@ function BookingListItem({
         </div>
       )}
     </li>
-  );
+  )
 }

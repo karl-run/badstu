@@ -1,5 +1,5 @@
-import db from '@/db/db';
-import { scrapeLocks } from '@/db/schema';
+import db from '@/db/db'
+import { scrapeLocks } from '@/db/schema'
 
 export async function openLock(location: string) {
   await db
@@ -15,7 +15,7 @@ export async function openLock(location: string) {
         locked_at: null,
         locked_by: null,
       },
-    });
+    })
 }
 
 export async function lock(location: string, whoami: string) {
@@ -32,11 +32,11 @@ export async function lock(location: string, whoami: string) {
         locked_at: new Date(),
         locked_by: whoami,
       },
-    });
+    })
 }
 
 export async function getLock(location: string) {
   return db.query.scrapeLocks.findFirst({
     where: (scrapeLocks, { eq }) => eq(scrapeLocks.location, location),
-  });
+  })
 }

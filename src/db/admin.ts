@@ -1,9 +1,9 @@
-import { subDays } from 'date-fns';
-import { count, eq, gte } from 'drizzle-orm';
+import { subDays } from 'date-fns'
+import { count, eq, gte } from 'drizzle-orm'
 
-import { notifies, users } from './schema';
+import { notifies, users } from './schema'
 
-import db from '@/db/db';
+import db from '@/db/db'
 
 export async function getAdminStats() {
   return await db.transaction(async (tx) => {
@@ -26,6 +26,6 @@ export async function getAdminStats() {
         .from(notifies)
         .where(eq(notifies.notified, true))
         .then((it) => it[0].count),
-    ]);
-  });
+    ])
+  })
 }

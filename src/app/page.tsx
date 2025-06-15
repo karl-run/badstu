@@ -1,18 +1,21 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import * as R from 'remeda';
-import React from 'react';
+import Link from 'next/link'
+import Image from 'next/image'
+import * as R from 'remeda'
+import React from 'react'
 
-import { Location, locationNames, locationToTitle } from '@/scraping/metadata';
-import { cn } from '@/utils/cn';
-import Container from '@/components/common/Container';
-import { images } from '@/images/images';
+import { Location, locationNames, locationToTitle } from '@/scraping/metadata'
+import { cn } from '@/utils/cn'
+import Container from '@/components/common/Container'
+import { images } from '@/images/images'
 
 export default async function Home() {
   return (
     <Container>
       <div className="mb-4 text-right">
-        Badstu nå? <Link href="/i-dag" className="underline">Sjekk ledig dropin i dag</Link>
+        Badstu nå?{' '}
+        <Link href="/i-dag" className="underline">
+          Sjekk ledig dropin i dag
+        </Link>
       </div>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
         {R.pipe(
@@ -37,5 +40,5 @@ export default async function Home() {
         )}
       </div>
     </Container>
-  );
+  )
 }

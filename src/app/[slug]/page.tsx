@@ -1,33 +1,33 @@
-import { notFound } from 'next/navigation';
-import { getServerSession } from 'next-auth';
+import { notFound } from 'next/navigation'
+import { getServerSession } from 'next-auth'
 
-import { getDropins } from '@/service/booking-service';
-import { BadstuDay } from '@/components/BadstuDay';
-import { locations, Location, validateLocation, locationToTitle } from '@/scraping/metadata';
-import ScrollToHash from '@/components/client/ScrollToHash';
-import { getNotifies } from '@/db/user';
-import { toCleanNotify } from '@/utils/notify';
-import Container from '@/components/common/Container';
-import BackToRoot from '@/components/common/BackToRoot';
-import { LastUpdatedLazy } from '@/components/LastUpdatedLazy';
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { getDropins } from '@/service/booking-service'
+import { BadstuDay } from '@/components/BadstuDay'
+import { locations, Location, validateLocation, locationToTitle } from '@/scraping/metadata'
+import ScrollToHash from '@/components/client/ScrollToHash'
+import { getNotifies } from '@/db/user'
+import { toCleanNotify } from '@/utils/notify'
+import Container from '@/components/common/Container'
+import BackToRoot from '@/components/common/BackToRoot'
+import { LastUpdatedLazy } from '@/components/LastUpdatedLazy'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
-type LocationPageMetadata = { slug: Location };
+type LocationPageMetadata = { slug: Location }
 
 export default async function LocationPage(props: { params: Promise<LocationPageMetadata> }) {
-  const params = await props.params;
+  const params = await props.params
   try {
-    validateLocation(params.slug);
+    validateLocation(params.slug)
   } catch (e) {
-    console.error(`Someone tried to load ${params.slug} hmmm`);
-    notFound();
+    console.error(`Someone tried to load ${params.slug} hmmm`)
+    notFound()
   }
 
-  const session = await getServerSession(authOptions);
-  const { result, timestamp } = await getDropins(params.slug);
-  const notifies = session?.user?.email ? await getNotifies(session.user.email) : [];
+  const session = await getServerSession(authOptions)
+  const { result, timestamp } = await getDropins(params.slug)
+  const notifies = session?.user?.email ? await getNotifies(session.user.email) : []
 
   return (
     <Container>
@@ -49,11 +49,9 @@ export default async function LocationPage(props: { params: Promise<LocationPage
             notifies={notifies.map(toCleanNotify)}
           />
         ))}
-        {result.length === 0 && (
-          <div>Fant ingen tider. Virker som noe er ødelagt! Kom tilbake senere.</div>
-        )}
+        {result.length === 0 && <div>Fant ingen tider. Virker som noe er ødelagt! Kom tilbake senere.</div>}
       </div>
       <ScrollToHash />
     </Container>
-  );
+  )
 }

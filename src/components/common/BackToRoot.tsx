@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import Link from 'next/link';
+import React, { ReactElement } from 'react'
+import Link from 'next/link'
 
 function BackToRoot(): ReactElement {
   return (
@@ -8,7 +8,7 @@ function BackToRoot(): ReactElement {
         <span>‹</span> Tilbake til hovedsiden
       </Link>
     </div>
-  );
+  )
 }
 
-export default BackToRoot;
+export default BackToRoot
