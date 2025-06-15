@@ -1,9 +1,6 @@
-import * as R from 'remeda'
-
 import db from '@/db/db'
-import { AvailabilityMap, ExtractedDay } from '@/scraping/types'
-import { Location, validateLocation } from '@/scraping/metadata'
-import { unsafeFirst } from '@/utils/R'
+import { ExtractedDay } from '@/scraping/types'
+import { Location } from '@/scraping/metadata'
 import { locations } from '@/db/schema'
 
 export async function upsertLocation(
