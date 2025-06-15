@@ -1,0 +1,19 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@hexagon/croner@9": "9.0.0"
+  },
+  "jsr": {
+    "@hexagon/croner@9.0.0": {
+      "integrity": "15713563b07001cdb8a2096d9e2bc866382848f8d29fdc15d7b16dc95d17b620"
+    }
+  },
+  "remote": {
+    "https://deno.land/x/croner@6.0.3/dist/croner.js": "a28ce3562d41922dd3060542001ded2e8546528e495b554e42ecdf0b1db5c382"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@hexagon/croner@9"
+    ]
+  }
+}

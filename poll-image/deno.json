@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@hexagon/croner": "jsr:@hexagon/croner@^9.0.0"
+  }
+}

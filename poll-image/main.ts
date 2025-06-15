@@ -1,4 +1,4 @@
-import { Cron } from './deps.ts';
+import { Cron } from '@hexagon/croner';
 
 logWithTimestamp('Setting up scrape cron job');
 
