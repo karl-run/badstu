@@ -1,3 +1,1 @@
-## badstu
-
-badstu.karl.run
+# badstu-v2

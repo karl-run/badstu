@@ -1,0 +1,20 @@
+{
+  "name": "@badstu/job",
+  "private": true,
+  "packageManager": "yarn@4.9.2",
+  "dependencies": {
+    "@badstu/db": "workspace:*",
+    "@hexagon/croner": "jsr:^9.1.0"
+  },
+  "scripts": {
+    "dev": "bun run --watch ./src/job.ts",
+    "dev:scrape": "bun run --watch ./src/scrape.ts",
+    "build": "bun build ./src/job.ts --compile --outfile dist/job"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.18"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
