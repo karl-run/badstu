@@ -1,0 +1,16 @@
+{
+  "name": "@badstu/db",
+  "packageManager": "yarn@4.9.2",
+  "dependencies": {
+    "@libsql/client": "^0.15.9",
+    "drizzle-orm": "^0.44.2"
+  },
+  "exports": {
+    "./client": {
+      "import": "./src/db.ts"
+    },
+    "./lock": {
+      "import": "./src/lock.ts"
+    }
+  }
+}

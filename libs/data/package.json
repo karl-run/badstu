@@ -1,0 +1,13 @@
+{
+  "name": "badstu-data",
+  "packageManager": "yarn@4.9.2",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "firebase": "^11.10.0"
+  }
+}
