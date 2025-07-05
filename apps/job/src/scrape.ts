@@ -1,8 +1,9 @@
 import { lock, getLock, openLock } from '@badstu/db/lock'
+import {} from '@badstu/data'
 
 import { logWithTimestamp } from './logging.ts'
 
-export async function scrape(location: string) {
+export async function scrapeWithLock(location: string) {
   logWithTimestamp(`Scrape: Time to poll location ${location}`)
 
   logWithTimestamp('Dummy scrape! Can we connect to DB?')
@@ -21,6 +22,6 @@ export async function scrape(location: string) {
   logWithTimestamp(`Rows: ${JSON.stringify(currentLock)}`)
 }
 
-if (Bun.argv?.[1]?.endsWith('scrape.ts')) {
-  await scrape('kroloftet')
+if (Deno.mainModule.endsWith('scrape.ts')) {
+  await scrapeWithLock('kroloftet')
 }

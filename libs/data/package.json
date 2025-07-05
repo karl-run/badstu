@@ -1,5 +1,5 @@
 {
-  "name": "badstu-data",
+  "name": "@badstu/data",
   "packageManager": "yarn@4.9.2",
   "exports": {
     ".": {

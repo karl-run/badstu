@@ -1,10 +1,10 @@
 import { Cron } from '@hexagon/croner'
 import { logWithTimestamp } from './logging.ts'
-import { scrape } from './scrape.ts'
+import { scrapeWithLock } from './scrape.ts'
 
 logWithTimestamp('Setting up scrape cron job')
 const job = new Cron('*/3 * * * *', async () => {
-  await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia', 'jurten'].map(scrape))
+  await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia', 'jurten'].map(scrapeWithLock))
 })
 
 logWithTimestamp('Setting up notify cron job')

@@ -15,6 +15,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@badstu/data@workspace:*, @badstu/data@workspace:libs/data":
+  version: 0.0.0-use.local
+  resolution: "@badstu/data@workspace:libs/data"
+  dependencies:
+    date-fns: "npm:^4.1.0"
+    firebase: "npm:^11.10.0"
+  languageName: unknown
+  linkType: soft
+
 "@badstu/db@workspace:*, @badstu/db@workspace:libs/db":
   version: 0.0.0-use.local
   resolution: "@badstu/db@workspace:libs/db"
@@ -28,9 +37,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@badstu/job@workspace:apps/job"
   dependencies:
+    "@badstu/data": "workspace:*"
     "@badstu/db": "workspace:*"
     "@hexagon/croner": "jsr:^9.1.0"
-    "@types/bun": "npm:^1.2.18"
+    "@types/deno": "npm:^2.3.0"
   peerDependencies:
     typescript: ^5
   languageName: unknown
@@ -1909,19 +1919,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bun@npm:^1.2.18":
-  version: 1.2.18
-  resolution: "@types/bun@npm:1.2.18"
-  dependencies:
-    bun-types: "npm:1.2.18"
-  checksum: 10c0/8c088d44a0592f71f42fc11099ae0e897c80a7b335292bc831616ae1b4f1ec11005d85dabbd2075d1c191a0f4d7853fd9a1c07f1934c0e61ef79c006f87d4156
-  languageName: node
-  linkType: hard
-
 "@types/cookie@npm:^0.6.0":
   version: 0.6.0
   resolution: "@types/cookie@npm:0.6.0"
   checksum: 10c0/5b326bd0188120fb32c0be086b141b1481fec9941b76ad537f9110e10d61ee2636beac145463319c71e4be67a17e85b81ca9e13ceb6e3bb63b93d16824d6c149
+  languageName: node
+  linkType: hard
+
+"@types/deno@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@types/deno@npm:2.3.0"
+  checksum: 10c0/7b4c9a2f905f1e737dcafffc8475575bd1647cbc3da140d71965f9a3289e34b6f3f2dc71c1e28f664aba6e999c0e9499d522329f734822bc4b11dd2c4f6342bc
   languageName: node
   linkType: hard
 
@@ -2235,15 +2243,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"badstu-data@workspace:libs/data":
-  version: 0.0.0-use.local
-  resolution: "badstu-data@workspace:libs/data"
-  dependencies:
-    date-fns: "npm:^4.1.0"
-    firebase: "npm:^11.10.0"
-  languageName: unknown
-  linkType: soft
-
 "badstu-root@workspace:.":
   version: 0.0.0-use.local
   resolution: "badstu-root@workspace:."
@@ -2305,17 +2304,6 @@ __metadata:
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
   checksum: 10c0/124fff9d66d691a86d3b062eff4663fe437a9d9ee4b47b1b9e97f5a5d14f6d5399345db80f796827be7c95e70a8e765dd404b7c3ff3b3324f98e9b0c8826cc34
-  languageName: node
-  linkType: hard
-
-"bun-types@npm:1.2.18":
-  version: 1.2.18
-  resolution: "bun-types@npm:1.2.18"
-  dependencies:
-    "@types/node": "npm:*"
-  peerDependencies:
-    "@types/react": ^19
-  checksum: 10c0/2706db655a18d8cda59b62b0596a0fb0b0a001f9f80a540737beaca89c0d077443cdae4a8fc05c8380c38b5df47453a084f93aa287c56813ae6faa33fc5e5ee8
   languageName: node
   linkType: hard
 
