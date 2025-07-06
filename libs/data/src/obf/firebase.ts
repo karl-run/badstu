@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app'
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { addWeeks, format } from 'date-fns'
 
-export interface FirescraperDocument {
-  slots: Slot[]
+export interface FirebaseDocument {
+  slots: FirebaseSlot[]
   date: string
 }
 
-export interface Slot {
+export interface FirebaseSlot {
   length: number
   available: number
   onlyMembers: boolean
@@ -26,7 +26,7 @@ const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG ?? '{}')
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-export async function getFirebaseDocuments(locationId: string): Promise<FirescraperDocument[]> {
+export async function getFirebaseDocuments(locationId: string): Promise<FirebaseDocument[]> {
   const querySnapshot = await getDocs(
     query(
       collection(db, 'dateSlots', '1cKim9HkbQPgrbXOr8ad', 'manifests', locationId, 'slots'),
@@ -36,7 +36,7 @@ export async function getFirebaseDocuments(locationId: string): Promise<Firescra
   )
 
   // Seems impossible to type >:( Should probably zod it
-  return querySnapshot.docs.map((doc) => doc.data()) as FirescraperDocument[]
+  return querySnapshot.docs.map((doc) => doc.data()) as FirebaseDocument[]
 }
 
 // console.log(await getFirebaseDocuments("XfIruVrKjcN2Alt2DFDY"));
