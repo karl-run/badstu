@@ -2,7 +2,9 @@
   "name": "@badstu/db",
   "packageManager": "yarn@4.9.2",
   "dependencies": {
+    "@badstu/data": "workspace:*",
     "@libsql/client": "^0.15.9",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.2"
   },
   "exports": {
@@ -11,6 +13,9 @@
     },
     "./lock": {
       "import": "./src/lock.ts"
+    },
+    "./day": {
+      "import": "./src/day.ts"
     }
   }
 }

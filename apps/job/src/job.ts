@@ -1,25 +1,30 @@
 import { Cron } from '@hexagon/croner'
-import { logWithTimestamp } from './logging.ts'
-import { scrapeWithLock } from './scrape.ts'
+import logger from '@badstu/logger'
+import { obfJobs } from './jobs/jobs-list.ts'
 
-logWithTimestamp('Setting up scrape cron job')
-const job = new Cron('*/3 * * * *', async () => {
-  await Promise.all(['kroloftet', 'sukkerbiten', 'langkaia', 'jurten'].map(scrapeWithLock))
+logger.info('Setting up scrape cron job')
+const obfCron = new Cron('*/3 * * * *', async () => {
+  // Do work synchronously as to not hammer their API
+  for (const obfJob of obfJobs) {
+    await obfJob.doWorkWithLock()
+  }
 })
 
-logWithTimestamp('Setting up notify cron job')
+logger.info('Setting up notify cron job')
 const notifyJob = new Cron('*/3 * * * *', async () => {
-  logWithTimestamp(`Notify: Time to start notify job`)
+  logger.info(`Notify: Time to start notify job`)
 
-  logWithTimestamp('Dummy notify! Can we connect to DB?')
+  logger.info('Dummy notify! Can we connect to DB?')
 })
 
-logWithTimestamp(`Scrape: Started... job will run ${job.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`)
-logWithTimestamp(`Notify: Started... job will run ${notifyJob.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`)
+logger.info(`OBF Job: Started... job will run ${obfCron.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`)
+logger.info(`Notify: Started... job will run ${notifyJob.nextRun()?.toLocaleTimeString() ?? 'never somehow?'}`)
 
 process.on('SIGINT', () => {
-  logWithTimestamp('SIGINT received, exiting...')
-  job.stop()
+  logger.info('SIGINT received, exiting...')
+  obfCron.stop()
   notifyJob.stop()
   process.exit(0)
 })
+
+obfCron.trigger()

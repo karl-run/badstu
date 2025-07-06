@@ -1,9 +1,11 @@
-export type DropinLocation = {
+export type ObfDropinLocation = {
+  key: string
   dropin: string
 }
 
-export const locations = {
+export const obfLocations = {
   kroloftet: {
+    key: 'kroloftet-svarttrosten',
     dropin: 'XfIruVrKjcN2Alt2DFDY',
     privat: '49RAU3tqnDgHaxB3RnGi',
   },
@@ -18,13 +20,16 @@ export const locations = {
   },
   sagene: {
     'badstu/bad u/ nakenhet': {
+      key: 'sagene-basseng',
       dropin: '5g1XRrzmR9bM0CiukRFx',
-    } satisfies DropinLocation,
+    } satisfies ObfDropinLocation,
     'badstu/bad m/ nakenhet': {
+      key: 'sagene-basseng-naken',
       dropin: 'AWAImiJ8LY6S4gCWwf9j',
-    } satisfies DropinLocation,
+    } satisfies ObfDropinLocation,
     'badstu m/ nakenhet': {
+      key: 'sagene-badstu-naken',
       dropin: 'brM4BEZAI02QIJoidd7N',
-    } satisfies DropinLocation,
+    } satisfies ObfDropinLocation,
   },
 }
