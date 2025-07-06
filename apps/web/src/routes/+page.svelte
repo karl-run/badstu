@@ -1,9 +1,15 @@
 <script lang="ts">
   import type { PageProps } from './$types'
+  import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
 
   let { data }: PageProps = $props()
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-<div>{JSON.stringify(data.rows)}</div>
+<div class="container p-4">
+  <h1>Ledig nå i dag</h1>
+  <div>{JSON.stringify(data.rows)}</div>
+</div>
+
+<div>
+  <BadstuMap />
+</div>

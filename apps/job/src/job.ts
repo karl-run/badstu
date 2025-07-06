@@ -27,4 +27,5 @@ process.on('SIGINT', () => {
   process.exit(0)
 })
 
+// Immediately trigger the cron job when app starts
 obfCron.trigger()
