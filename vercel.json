@@ -1,8 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
-    "deploymentEnabled": {
-      "v2": false
-    }
-  }
+    "deploymentEnabled": { "v2": false }
+  },
+  "framework": "sveltekit"
 }
