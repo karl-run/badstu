@@ -1,6 +1,7 @@
 {
   "name": "badstu-root",
   "packageManager": "yarn@4.9.2",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "libs/**",
