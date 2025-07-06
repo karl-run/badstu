@@ -1,4 +1,4 @@
-name: Publish Poll Image
+name: Publish Job Image
 
 env:
   REGISTRY: ghcr.io
@@ -7,7 +7,10 @@ env:
 on:
   push:
     paths:
+      - '.github/workflows/job-image.yaml'
       - 'apps/job/**'
+      - 'libs/data/**'
+      - 'libs/logger/**'
 
 jobs:
   build-and-push-image:
@@ -23,7 +26,7 @@ jobs:
         with:
           node-version: '22'
           cache: yarn
-      - uses: oven-sh/setup-bun@v2
+      - uses: denoland/setup-deno@v2
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build the project
