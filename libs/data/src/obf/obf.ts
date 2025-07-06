@@ -14,7 +14,7 @@ function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot {
   }
 }
 
-async function getFirebaseLocationById(id: string): Promise<BadstuDay[]> {
+async function getFirebaseLocationById(locationKey: string, id: string): Promise<BadstuDay[]> {
   const documents = await getFirebaseDocuments(id)
   const byDay = R.groupBy(documents, R.prop('date'))
 
@@ -30,6 +30,7 @@ async function getFirebaseLocationById(id: string): Promise<BadstuDay[]> {
     R.entries(),
     R.map(
       ([key, day]): BadstuDay => ({
+        locationKey,
         date: key,
         slots: day,
         name: 'wat',
@@ -38,6 +39,6 @@ async function getFirebaseLocationById(id: string): Promise<BadstuDay[]> {
   )
 }
 
-export async function getDropin(location: { dropin: string }): Promise<BadstuDay[]> {
-  return await getFirebaseLocationById(location.dropin)
+export async function getDropin(location: { key: string; dropin: string }): Promise<BadstuDay[]> {
+  return await getFirebaseLocationById(location.key, location.dropin)
 }

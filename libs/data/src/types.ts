@@ -1,4 +1,5 @@
 export type BadstuDay = {
+  locationKey: string
   name: string
   details?: string
   date: string

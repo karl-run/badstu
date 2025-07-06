@@ -1,6 +1,6 @@
 import { db, scrapeLocks } from './drizzle'
 
-export async function openLock(location: string) {
+export async function releaseLock(location: string) {
   await db
     .insert(scrapeLocks)
     .values({

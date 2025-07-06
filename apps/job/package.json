@@ -6,14 +6,13 @@
     "@badstu/data": "workspace:*",
     "@badstu/db": "workspace:*",
     "@hexagon/croner": "jsr:^9.1.0",
+    "date-fns": "^4.1.0",
     "remeda": "^2.24.0"
   },
   "scripts": {
     "dev": "yarn deno:run ./src/job.ts",
-    "dev:scrape": "yarn deno:run ./src/scrape.ts",
-    "dev:location": "yarn deno:run ./src/location.ts",
     "build": "deno compile --no-check --allow-net --allow-env --unstable-sloppy-imports --output=./dist/job ./src/job.ts",
-    "deno:run": "deno run --watch --allow-net --allow-env --allow-write --env-file=.env.local --unstable-sloppy-imports"
+    "deno:run": "deno run --watch --allow-net --allow-env --allow-sys --allow-write --env-file=.env.local --unstable-sloppy-imports"
   },
   "peerDependencies": {
     "typescript": "^5"
