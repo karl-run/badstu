@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types'
-import { getLock } from '@badstu/db/lock'
+import { getAllAvailabilityToday } from '@badstu/db/slots'
 
 export const load: PageServerLoad = async () => {
-  const rows = await getLock('kroloftet')
+  const rows = await getAllAvailabilityToday()
 
   return {
     serverMessage: 'hello from server load function',

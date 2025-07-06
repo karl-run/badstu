@@ -16,6 +16,9 @@
     },
     "./day": {
       "import": "./src/day.ts"
+    },
+    "./slots": {
+      "import": "./src/slots.ts"
     }
   }
 }
