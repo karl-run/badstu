@@ -7,12 +7,12 @@ import logger from '@badstu/logger'
 
 function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot {
   return {
-    available: slot.available,
+    available: slot.available - slot.booked + slot.cancelled,
     length: slot.length,
     decimalTime: slot.time,
     time: decimalTimeToStringTime(slot.time),
     timeEnd: decimalTimeToStringTime(slot.time + slot.length),
-    size: -1,
+    size: slot.available,
   }
 }
 

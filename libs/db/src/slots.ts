@@ -2,9 +2,12 @@ import { db } from './db'
 import { availability } from './drizzle/schema'
 import { eq } from 'drizzle-orm'
 import { formatISO } from 'date-fns'
+import logger from '@badstu/logger'
 
 export async function getAllAvailabilityToday() {
   const today = formatISO(new Date(), { representation: 'date' })
+
+  logger.info(`Getting all availability for today: ${today}`)
 
   const results = await db.select().from(availability).where(eq(availability.date_string, today))
 
