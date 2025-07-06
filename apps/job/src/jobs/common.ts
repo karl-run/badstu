@@ -17,7 +17,7 @@ export class ObfJob {
   }
 
   async doWorkWithLock(): Promise<void> {
-    logger.info(`OBF Job, updating ${name}`)
+    logger.info(`OBF Job: ${this.name}`)
 
     try {
       const currentLock = await getLock(this.key)
@@ -38,8 +38,6 @@ export class ObfJob {
       await lock(this.key, 'scraper')
       await this.updateLocation()
       await releaseLock(this.key)
-
-      logger.info(`Rows: ${JSON.stringify(currentLock)}`)
     } catch (e) {
       logger.error(e)
       logger.info('Tryng to open lock after failure...')
