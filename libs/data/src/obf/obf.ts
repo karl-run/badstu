@@ -2,6 +2,8 @@ import * as R from 'remeda'
 import { type FirebaseSlot, getFirebaseDocuments } from './firebase'
 import type { BadstuDay, BadstuSlot } from '../types'
 import { decimalTimeToStringTime } from './utils'
+import type { ObfDropinLocation } from './locations'
+import logger from '@badstu/logger'
 
 function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot {
   return {
@@ -14,12 +16,12 @@ function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot {
   }
 }
 
-async function getFirebaseLocationById(locationKey: string, id: string): Promise<BadstuDay[]> {
-  const documents = await getFirebaseDocuments(id)
+async function getFirebaseLocationById(location: ObfDropinLocation): Promise<BadstuDay[]> {
+  const documents = await getFirebaseDocuments(location.dropin)
   const byDay = R.groupBy(documents, R.prop('date'))
 
   if (R.entries(byDay).some(([, docs]) => docs.length > 1)) {
-    console.warn(`Multiple documents found for the same date in ${id}. This may cause issues:`, byDay)
+    logger.warn(`Multiple documents found for the same date in ${location.dropin}. This may cause issues:`, byDay)
   }
 
   return R.pipe(
@@ -29,9 +31,10 @@ async function getFirebaseLocationById(locationKey: string, id: string): Promise
     R.mapValues(R.map(firebaseSlotToBadstuSlot)),
     R.entries(),
     R.map(
-      ([key, day]): BadstuDay => ({
-        locationKey,
-        date: key,
+      ([date, day]): BadstuDay => ({
+        locationKey: location.key,
+        locationName: location.name,
+        date: date,
         slots: day,
         name: 'wat',
       }),
@@ -39,6 +42,6 @@ async function getFirebaseLocationById(locationKey: string, id: string): Promise
   )
 }
 
-export async function getDropin(location: { key: string; dropin: string }): Promise<BadstuDay[]> {
-  return await getFirebaseLocationById(location.key, location.dropin)
+export async function getDropin(location: ObfDropinLocation): Promise<BadstuDay[]> {
+  return await getFirebaseLocationById(location)
 }

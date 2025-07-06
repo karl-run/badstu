@@ -13,6 +13,7 @@ export const availability = sqliteTable(
   {
     id: integer('id').primaryKey().unique(),
     location_key: text('location_key').notNull(),
+    location_name: text('location_name').notNull(),
     date_string: text('date_string').notNull(),
     date: integer('date', { mode: 'timestamp_ms' }).notNull(),
     last_polled_at: integer('last_polled_at', { mode: 'timestamp_ms' }),

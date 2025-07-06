@@ -7,6 +7,7 @@ export async function saveDay(day: BadstuDay): Promise<void> {
     .insert(availability)
     .values({
       location_key: day.locationKey,
+      location_name: day.locationName,
       date_string: day.date,
       date: setHours(parseISO(day.date), 12),
       last_polled_at: new Date(),
