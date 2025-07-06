@@ -22,10 +22,10 @@ export class ObfJob {
     try {
       const currentLock = await getLock(this.key)
       if (currentLock != null && currentLock.locked_at) {
-        const timeSinceLock = differenceInSeconds(currentLock.locked_at, new Date())
+        const timeSinceLock = differenceInSeconds(new Date(), currentLock.locked_at)
 
-        if (timeSinceLock > 60) {
-          logger.info(`${name} was locked by ${currentLock.locked_by} ${timeSinceLock} seconds ago, skipping job`)
+        if (timeSinceLock < 60) {
+          logger.info(`${this.name} was locked by ${currentLock.locked_by} ${timeSinceLock} seconds ago, skipping job`)
           return
         } else {
           logger.warn(
@@ -57,7 +57,7 @@ export class ObfJob {
       try {
         await saveDay(day)
       } catch (e) {
-        logger.error(new Error(`Unable to update day ${day.date} for ${this.location}`, { cause: e }))
+        logger.error(new Error(`Unable to update day ${day.date} for ${this.location.key}`, { cause: e }))
         failed++
       }
     }
