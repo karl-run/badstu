@@ -9,14 +9,18 @@ export const obfLocations = {
     key: 'kroloftet-svarttrosten',
     name: 'Kroloftet',
     dropin: 'XfIruVrKjcN2Alt2DFDY',
-    privat: '49RAU3tqnDgHaxB3RnGi',
-  },
+    // privat: '49RAU3tqnDgHaxB3RnGi',
+  } satisfies ObfDropinLocation,
   sukkerbiten: {
+    key: 'sukkerbiten',
+    name: 'Sukkerbiten',
     dropin: '1x8uVZQ9KLCRDl0lfTJa',
-  },
+  } satisfies ObfDropinLocation,
   langkaia: {
+    key: 'langkaia',
+    name: 'Langkaia',
     dropin: 'TSFPApgD7oKG8H1gcQQ2',
-  },
+  } satisfies ObfDropinLocation,
   jurten: {
     dropin: 'EAnCJl6ixIM7X8xoaojC',
   },
