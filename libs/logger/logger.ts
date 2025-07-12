@@ -2,9 +2,12 @@ import pino from 'pino'
 
 const logger = pino({
   name: 'badstu',
-  transport: {
-    target: 'pino-pretty',
-  },
+  transport:
+    process.env.NODE_ENV !== 'production'
+      ? {
+          target: 'pino-pretty',
+        }
+      : undefined,
 })
 
 export default logger
