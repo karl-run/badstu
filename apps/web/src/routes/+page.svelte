@@ -27,7 +27,7 @@
   <h1 class="mb-2 text-xl">Ledig i dag</h1>
   <div class="flex gap-3">
     {#each R.entries(data.locations) as [name, location]}
-      <div class="grow rounded-md bg-gray-200 p-2">
+      <div class="relative grow rounded-md bg-gray-200 p-2">
         <div class="mb-1 flex items-center gap-2">
           <button
             class="cursor-pointer hover:shadow-2xl"
@@ -59,6 +59,7 @@
         {:else}
           <div class="no-slots">Ingen ledige</div>
         {/if}
+        <a class="absolute right-2 bottom-1" href="/badstu/{name.replaceAll(' ', '-')}">Senere</a>
       </div>
     {/each}
   </div>
