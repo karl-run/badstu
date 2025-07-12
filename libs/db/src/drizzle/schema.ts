@@ -17,7 +17,7 @@ export const availability = sqliteTable(
     date_string: text('date_string').notNull(),
     date: integer('date', { mode: 'timestamp_ms' }).notNull(),
     last_polled_at: integer('last_polled_at', { mode: 'timestamp_ms' }),
-    slots: text('slots', { mode: 'json' }).$type<BadstuSlot[]>(),
+    slots: text('slots', { mode: 'json' }).$type<BadstuSlot[]>().notNull(),
   },
   (t) => [unique('location_date_unique_index').on(t.location_key, t.date)],
 )
