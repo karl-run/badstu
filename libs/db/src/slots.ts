@@ -4,7 +4,7 @@ import { availability } from './drizzle'
 import { eq } from 'drizzle-orm'
 import { formatISO, subDays } from 'date-fns'
 import logger from '@badstu/logger'
-import { AllLocationNames } from '@badstu/data/meta'
+import { type AllLocationNames } from '@badstu/data/meta'
 
 export async function getAllAvailabilityToday() {
   const today = formatISO(new Date(), { representation: 'date' })
