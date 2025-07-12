@@ -19,7 +19,12 @@
         {#if location.slots.length > 0}
           <div class="">
             {#each location.slots as slot}
-              <div class="">{formatSlot(slot)}</div>
+              <div>
+                <div class="">{formatSlot(slot)}</div>
+                {#if 'variation' in slot && location.variations > 1}
+                  <div class="-mt-1.5 ml-2 text-xs">{slot.variation}</div>
+                {/if}
+              </div>
             {/each}
           </div>
         {:else}
