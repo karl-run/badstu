@@ -1,29 +1,18 @@
 <script lang="ts">
-  import MapLibre from 'svelte-maplibre/MapLibre.svelte'
-  import DefaultMarker from 'svelte-maplibre/DefaultMarker.svelte'
-  import Popup from 'svelte-maplibre/Popup.svelte'
+  import type { Map } from 'svelte-maplibre'
+  import { MapLibre, DefaultMarker, Popup } from 'svelte-maplibre'
+
+  import { mapStore } from './map-store'
+  import { allBadstuLocations } from '@badstu/data/meta'
+
+  function onMapLoad(map: Map) {
+    mapStore.set(map)
+  }
 
   const markers: Array<{
     lngLat: [number, number]
     name: string
-  }> = [
-    {
-      lngLat: [10.7991902, 59.9050309],
-      name: 'Kruttverket',
-    },
-    {
-      lngLat: [10.756673, 59.9314066],
-      name: 'Sagene Folkebad',
-    },
-    {
-      lngLat: [10.746916, 59.9080349],
-      name: 'Langkaia',
-    },
-    {
-      lngLat: [10.7503388, 59.9045554],
-      name: 'Langkaia',
-    },
-  ]
+  }> = Object.entries(allBadstuLocations).map(([name, location]) => ({ lngLat: location.loc, name: name }))
 </script>
 
 <div class="relative h-[500px] w-full">
@@ -32,10 +21,9 @@
     standardControls
     zoom={11}
     center={[10.73, 59.92]}
+    onload={onMapLoad}
   >
     {#each markers as { lngLat, name }}
-      <!-- Unlike the custom marker example, default markers do not have mouse events,
-        and popups only support the default openOn="click" behavior -->
       <DefaultMarker {lngLat} draggable>
         <Popup offset={[0, -10]}>
           <div class="text-lg font-bold">{name}</div>

@@ -4,6 +4,7 @@ import { availability } from './drizzle'
 import { eq } from 'drizzle-orm'
 import { formatISO, subDays } from 'date-fns'
 import logger from '@badstu/logger'
+import { AllLocationNames } from '@badstu/data/meta'
 
 export async function getAllAvailabilityToday() {
   const today = formatISO(new Date(), { representation: 'date' })
@@ -21,7 +22,7 @@ export async function getAllAvailabilityToday() {
 
   const byPhysicalLocation = R.pipe(
     mapped,
-    R.groupBy(R.prop('name')),
+    R.groupBy((it) => it.name as AllLocationNames),
     R.mapValues((loc) => {
       if (loc.length === 1) return { ...loc[0], variations: 1 }
 
