@@ -2,7 +2,7 @@ import * as R from 'remeda'
 import { db } from './db'
 import { availability } from './drizzle'
 import { eq } from 'drizzle-orm'
-import { formatISO, subDays } from 'date-fns'
+import { formatISO } from 'date-fns'
 import logger from '@badstu/logger'
 import { type AllLocationNames } from '@badstu/data/meta'
 
