@@ -6,11 +6,28 @@ export type ObfDropinLocation = {
 
 export const obfLocations = {
   kroloftet: {
-    key: 'kroloftet-svarttrosten',
-    name: 'Kroloftet',
-    dropin: 'XfIruVrKjcN2Alt2DFDY',
-    // privat: '49RAU3tqnDgHaxB3RnGi',
-  } satisfies ObfDropinLocation,
+    svarttrosten: {
+      key: 'kroloftet-svarttrosten',
+      name: 'Kroloftet',
+      dropin: 'XfIruVrKjcN2Alt2DFDY',
+      // privat: '49RAU3tqnDgHaxB3RnGi',
+    } satisfies ObfDropinLocation,
+    'svarttrosten nakenbadstue': {
+      key: 'kroloftet-svarttrosten-naken',
+      name: 'Kroloftet',
+      dropin: '4tfMScE3EyG4pZyf4evv',
+    } satisfies ObfDropinLocation,
+    'svarttrosten nakenbadsue (kvinner)': {
+      key: 'kroloftet-svarttrosten-naken-kvinner',
+      name: 'Kroloftet',
+      dropin: 'XQbP0wJAVGSKsNASxzMg',
+    } satisfies ObfDropinLocation,
+    jurten: {
+      key: 'kroloftet-jurten',
+      name: 'Kroloftet',
+      dropin: 'EAnCJl6ixIM7X8xoaojC',
+    },
+  },
   sukkerbiten: {
     key: 'sukkerbiten',
     name: 'Sukkerbiten',
@@ -21,9 +38,6 @@ export const obfLocations = {
     name: 'Langkaia',
     dropin: 'TSFPApgD7oKG8H1gcQQ2',
   } satisfies ObfDropinLocation,
-  jurten: {
-    dropin: 'EAnCJl6ixIM7X8xoaojC',
-  },
   sagene: {
     'badstu/bad u/ nakenhet': {
       key: 'sagene-basseng',

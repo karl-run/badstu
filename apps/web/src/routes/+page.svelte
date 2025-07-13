@@ -59,8 +59,7 @@
                 <div class="flex h-12 flex-col justify-center p-2 hover:bg-gray-400">
                   {#if 'variation' in slot && location.variations > 1}
                     <div class="text-xs">{slot.variation}</div>
-                  {/if}
-                  {#if location.variation}
+                  {:else if location.variation}
                     <div class="text-xs">{location.variation}</div>
                   {/if}
                   <div class="">{formatSlot(slot)}</div>

@@ -53,4 +53,8 @@ export const variationTexts: Record<string, string> = {
   'sagene-basseng': 'Badstu og basseng',
   'sagene-basseng-naken': 'Badstu og basseng, valgfri nakenhet',
   'sagene-badstu-naken': 'Kun badstu, valgfri nakenhet',
+  'kroloftet-svarttrosten': 'Svarttrosten',
+  'kroloftet-svarttrosten-naken': 'Nakenbadstu',
+  'kroloftet-svarttrosten-naken-kvinner': 'Nakenbadstu (kvinner)',
+  'kroloftet-jurten': 'Jurten',
 }

@@ -5,7 +5,10 @@ import { decimalTimeToStringTime } from './utils'
 import type { ObfDropinLocation } from './locations'
 import logger from '@badstu/logger'
 
-function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot {
+function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot | null {
+  // Bookings with 0 available slots are not useful
+  if (slot.available == 0) return null
+
   return {
     available: slot.available - slot.booked + slot.cancelled,
     length: slot.length,
@@ -28,7 +31,7 @@ async function getFirebaseLocationById(location: ObfDropinLocation): Promise<Bad
     byDay,
     R.mapValues(R.first()),
     R.mapValues(R.prop('slots')),
-    R.mapValues(R.map(firebaseSlotToBadstuSlot)),
+    R.mapValues(R.piped(R.map(firebaseSlotToBadstuSlot), R.filter(R.isNonNull))),
     R.entries(),
     R.map(
       ([date, day]): BadstuDay => ({
