@@ -7,7 +7,7 @@
   import { mapStore } from '$lib/badstu-map/map-store'
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import { type Map } from 'svelte-maplibre'
-  import { allBadstuLocations } from '@badstu/data/meta'
+  import { allBadstuLocations, getLink } from '@badstu/data/meta'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
 
   function formatSlot(slot: any) {
@@ -46,14 +46,15 @@
           {#if location.slots.length > 0}
             <div class="divide-y divide-gray-400">
               {#each location.slots as slot}
-                <div class="flex h-12 flex-col justify-center p-2 hover:bg-gray-400">
-                  {#if 'variation' in slot && location.variations > 1}
-                    <div class="text-xs">{slot.variation}</div>
-                  {:else if location.variation}
-                    <div class="text-xs">{location.variation}</div>
+                <a
+                  class="flex h-12 flex-col justify-center p-2 hover:bg-gray-400"
+                  href={getLink(location.provider, slot.variation.key, location.date)}
+                >
+                  {#if location.variations > 1 || slot.variation != null}
+                    <div class="text-xs">{slot.variation.text}</div>
                   {/if}
                   <div class="">{formatSlot(slot)}</div>
-                </div>
+                </a>
               {/each}
             </div>
           {:else}

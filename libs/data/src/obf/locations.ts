@@ -5,28 +5,26 @@ export type ObfDropinLocation = {
 }
 
 export const obfLocations = {
-  kroloftet: {
-    svarttrosten: {
-      key: 'kroloftet-svarttrosten',
-      name: 'Kroloftet',
-      dropin: 'XfIruVrKjcN2Alt2DFDY',
-      // privat: '49RAU3tqnDgHaxB3RnGi',
-    } satisfies ObfDropinLocation,
-    'svarttrosten nakenbadstue': {
-      key: 'kroloftet-svarttrosten-naken',
-      name: 'Kroloftet',
-      dropin: '4tfMScE3EyG4pZyf4evv',
-    } satisfies ObfDropinLocation,
-    'svarttrosten nakenbadsue (kvinner)': {
-      key: 'kroloftet-svarttrosten-naken-kvinner',
-      name: 'Kroloftet',
-      dropin: 'XQbP0wJAVGSKsNASxzMg',
-    } satisfies ObfDropinLocation,
-    jurten: {
-      key: 'kroloftet-jurten',
-      name: 'Kroloftet',
-      dropin: 'EAnCJl6ixIM7X8xoaojC',
-    },
+  'kroloftet-svarttrosten': {
+    key: 'kroloftet-svarttrosten',
+    name: 'Kroloftet',
+    dropin: 'XfIruVrKjcN2Alt2DFDY',
+    // privat: '49RAU3tqnDgHaxB3RnGi',
+  } satisfies ObfDropinLocation,
+  'kroloftet-svarttrosten-naken': {
+    key: 'kroloftet-svarttrosten-naken',
+    name: 'Kroloftet',
+    dropin: '4tfMScE3EyG4pZyf4evv',
+  } satisfies ObfDropinLocation,
+  'kroloftet-svarttrosten-naken-kvinner': {
+    key: 'kroloftet-svarttrosten-naken-kvinner',
+    name: 'Kroloftet',
+    dropin: 'XQbP0wJAVGSKsNASxzMg',
+  } satisfies ObfDropinLocation,
+  'kroloftet-jurten': {
+    key: 'kroloftet-jurten',
+    name: 'Kroloftet',
+    dropin: 'EAnCJl6ixIM7X8xoaojC',
   },
   sukkerbiten: {
     key: 'sukkerbiten',
@@ -38,21 +36,21 @@ export const obfLocations = {
     name: 'Langkaia',
     dropin: 'TSFPApgD7oKG8H1gcQQ2',
   } satisfies ObfDropinLocation,
-  sagene: {
-    'badstu/bad u/ nakenhet': {
-      key: 'sagene-basseng',
-      name: 'Sagene Folkebad',
-      dropin: '5g1XRrzmR9bM0CiukRFx',
-    } satisfies ObfDropinLocation,
-    'badstu/bad m/ nakenhet': {
-      key: 'sagene-basseng-naken',
-      name: 'Sagene Folkebad',
-      dropin: 'AWAImiJ8LY6S4gCWwf9j',
-    } satisfies ObfDropinLocation,
-    'badstu m/ nakenhet': {
-      key: 'sagene-badstu-naken',
-      name: 'Sagene Folkebad',
-      dropin: 'brM4BEZAI02QIJoidd7N',
-    } satisfies ObfDropinLocation,
-  },
+  'sagene-basseng': {
+    key: 'sagene-basseng',
+    name: 'Sagene Folkebad',
+    dropin: '5g1XRrzmR9bM0CiukRFx',
+  } satisfies ObfDropinLocation,
+  'sagene-basseng-naken': {
+    key: 'sagene-basseng-naken',
+    name: 'Sagene Folkebad',
+    dropin: 'AWAImiJ8LY6S4gCWwf9j',
+  } satisfies ObfDropinLocation,
+  'sagene-badstu-naken': {
+    key: 'sagene-badstu-naken',
+    name: 'Sagene Folkebad',
+    dropin: 'brM4BEZAI02QIJoidd7N',
+  } satisfies ObfDropinLocation,
 }
+
+export type ObfLocations = keyof typeof obfLocations
