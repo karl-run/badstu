@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
-import { getBadstuLocation } from '@badstu/data/meta'
+import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
+import { getAllAvailabilityForLocation } from '@badstu/db/slots'
 
 export const load: PageServerLoad = async ({ params }) => {
   const unslug = params.location.replaceAll('-', ' ')
@@ -8,5 +9,11 @@ export const load: PageServerLoad = async ({ params }) => {
 
   if (location == null) {
     error(404, 'Not found')
+  }
+
+  const availability = await getAllAvailabilityForLocation(unslug as AllLocationNames)
+
+  return {
+    availability,
   }
 }

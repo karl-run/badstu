@@ -26,10 +26,10 @@ export const allBadstuLocations = {
 
 export type AllLocationNames = keyof typeof allBadstuLocations
 
-export function getBadstuLocation(name: string): BadstuLocation | null {
-  const location = allBadstuLocations[name as keyof typeof allBadstuLocations]
+export function getBadstuLocation(name: string): (BadstuLocation & { name: AllLocationNames }) | null {
+  const location = allBadstuLocations[name as AllLocationNames]
 
   if (!location) return null
 
-  return location
+  return { ...location, name: name as AllLocationNames }
 }
