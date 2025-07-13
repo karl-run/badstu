@@ -21,5 +21,3 @@ export async function saveDay(day: BadstuDay): Promise<void> {
       },
     })
 }
-
-export async function saveDays(days: BadstuDay[]): Promise<void> {}
