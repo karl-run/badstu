@@ -10,18 +10,18 @@
   const [imageSrc, offset] = $derived.by(() => {
     switch (props.location) {
       case 'Sagene Folkebad':
-        return [sagene, -100] as const
+        return [sagene, 61] as const
       case 'Langkaia':
-        return [langkaia, -177] as const
+        return [langkaia, 50] as const
       case 'Sukkerbiten':
-        return [sukkerbiten, -177] as const
+        return [sukkerbiten, 45] as const
       case 'Kroloftet':
-        return [kroloftet, -177] as const
+        return [kroloftet, 48] as const
     }
   })
 </script>
 
-<img class={['image', props.class]} src={imageSrc} alt="Image" style="--offset: {offset}px" />
+<img class={['image', props.class]} src={imageSrc} alt="Image" style="--offset: {offset}%" />
 
 <style>
   .image {

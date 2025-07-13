@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
-import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
+import { allBadstuLocations, type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
 import { getAllAvailabilityForLocation } from '@badstu/db/slots'
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -14,6 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
   const availability = await getAllAvailabilityForLocation(unslug as AllLocationNames)
 
   return {
+    name: location.name,
     availability,
   }
 }
