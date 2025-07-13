@@ -34,8 +34,9 @@
             <p>{location.ingress}</p>
           {/if}
           <div class="mt-2 flex justify-between gap-4">
-            <a class="text-base underline" href={`/badstu/${name.replaceAll(' ', '-')}`}>Se ledighet</a>
-            <a class="text-base underline" target="_blank" rel="nofollow noreferrer" href={location.maps}>Google maps</a
+            <a class="p-2 text-base underline" href={`/badstu/${name.replaceAll(' ', '-')}`}>Se ledighet</a>
+            <a class="p-2 text-base underline" target="_blank" rel="nofollow noreferrer" href={location.maps}
+              >Google maps</a
             >
           </div>
         </Popup>

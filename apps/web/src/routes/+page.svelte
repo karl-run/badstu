@@ -39,7 +39,7 @@
                 {name}
               </h2>
             </a>
-            <div class="overflow-y-scroll">
+            <div class="relative h-full overflow-y-scroll">
               {#if location.slots.length > 0}
                 <div class="divide-y divide-gray-400">
                   {#each location.slots as slot}
@@ -49,6 +49,7 @@
               {:else}
                 <div class="no-slots">Ingen ledige</div>
               {/if}
+              <div class="sticky bottom-0 left-0 h-4 w-full bg-gradient-to-b from-transparent to-gray-200"></div>
             </div>
             <div class="grow"></div>
             <div class="flex justify-between">
