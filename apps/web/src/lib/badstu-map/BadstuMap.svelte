@@ -13,15 +13,17 @@
     lngLat: [number, number]
     name: string
   }> = Object.entries(allBadstuLocations).map(([name, location]) => ({ lngLat: location.loc, name: name }))
+
+  const props: { class: string } = $props()
 </script>
 
-<div class="relative h-[500px] w-full">
+<div class={['relative', props.class]}>
   <MapLibre
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-    standardControls
     zoom={11}
     center={[10.73, 59.92]}
     onload={onMapLoad}
+    attributionControl={{ compact: true }}
   >
     {#each markers as { lngLat, name }}
       <DefaultMarker {lngLat} draggable>
