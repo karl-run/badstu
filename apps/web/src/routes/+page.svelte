@@ -8,6 +8,7 @@
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import { type Map } from 'svelte-maplibre'
   import { allBadstuLocations } from '@badstu/data/meta'
+  import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
 
   function formatSlot(slot: any) {
     return `${slot.time}–${slot.timeEnd} (${slot.available})`
@@ -27,38 +28,46 @@
   <h1 class="mb-2 text-xl">Ledig i dag</h1>
   <div class="flex gap-3">
     {#each R.entries(data.locations) as [name, location]}
-      <div class="relative grow rounded-md bg-gray-200 p-2">
-        <div class="mb-1 flex items-center gap-2">
-          <button
-            class="cursor-pointer hover:shadow-2xl"
-            onclick={() => {
-              const location = allBadstuLocations[name]
-              if (!location || !location.loc) {
-                console.error(`No location found for ${name}`)
-                return
-              }
+      <div class="relative w-64 grow overflow-hidden rounded-md bg-gray-200">
+        <div class="relative z-10 mb-1 h-18 bg-black">
+          <div class="z-10 flex h-full w-full items-center gap-1 text-white">
+            <button
+              class="m-2 cursor-pointer rounded-full p-2 hover:shadow-2xl hover:outline-1"
+              onclick={() => {
+                const location = allBadstuLocations[name]
+                if (!location || !location.loc) {
+                  console.error(`No location found for ${name}`)
+                  return
+                }
 
-              return map?.flyTo({ center: location.loc, zoom: 15 })
-            }}
-          >
-            <LocateFixed aria-label="zoom to location" class="h-4 w-4" />
-          </button>
-          <h2 class="font-bold">{name}</h2>
-        </div>
-        {#if location.slots.length > 0}
-          <div class="">
-            {#each location.slots as slot}
-              <div>
-                <div class="">{formatSlot(slot)}</div>
-                {#if 'variation' in slot && location.variations > 1}
-                  <div class="-mt-1.5 ml-2 text-xs">{slot.variation}</div>
-                {/if}
-              </div>
-            {/each}
+                return map?.flyTo({ center: location.loc, zoom: 15 })
+              }}
+            >
+              <LocateFixed aria-label="zoom to location" class="h-6 w-6" />
+            </button>
+            <h2 class="text-xl font-bold drop-shadow-md drop-shadow-black">{name}</h2>
           </div>
-        {:else}
-          <div class="no-slots">Ingen ledige</div>
-        {/if}
+          <BadstuCovers
+            location={name}
+            class="pointer-events-none absolute inset-0 top-0 left-0 -z-1 h-full w-full opacity-70"
+          />
+        </div>
+        <div class="p-2">
+          {#if location.slots.length > 0}
+            <div class="">
+              {#each location.slots as slot}
+                <div>
+                  <div class="">{formatSlot(slot)}</div>
+                  {#if 'variation' in slot && location.variations > 1}
+                    <div class="-mt-1.5 ml-2 text-xs">{slot.variation}</div>
+                  {/if}
+                </div>
+              {/each}
+            </div>
+          {:else}
+            <div class="no-slots">Ingen ledige</div>
+          {/if}
+        </div>
         <a class="absolute right-2 bottom-1" href="/badstu/{name.replaceAll(' ', '-')}">Senere</a>
       </div>
     {/each}
