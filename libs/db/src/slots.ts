@@ -1,52 +1,76 @@
 import * as R from 'remeda'
 import { db } from './db'
 import { availability } from './drizzle'
-import { eq } from 'drizzle-orm'
+import { gte, and, eq } from 'drizzle-orm'
 import { formatISO } from 'date-fns'
 import logger from '@badstu/logger'
 import { type AllLocationNames } from '@badstu/data/meta'
+
+function mapAvailabilityRow(row: typeof availability.$inferSelect) {
+  return {
+    key: row.location_key,
+    variation: variationTexts[row.location_key] ?? null,
+    name: row.location_name,
+    date: row.date_string,
+    updated: row.last_polled_at,
+    slots: row.slots,
+  }
+}
+
+const mapVariations = (location: ReturnType<typeof mapAvailabilityRow>[]) => {
+  if (location.length === 1) return { ...location[0], variations: 1 }
+
+  const first = location[0]
+  const slotsWithVariations = R.pipe(
+    location,
+    R.map((it) => it.slots.map((slot) => [slot, it.key] as const)),
+    R.flat(),
+    R.sortBy([([slot]) => slot.time, 'asc']),
+    R.map(([slot, key]) => ({ ...slot, variation: variationTexts[key] ?? key })),
+  )
+
+  const uniqueVariations = R.uniqueBy(slotsWithVariations, (slot) => slot.variation)
+
+  return {
+    ...first,
+    slots: slotsWithVariations,
+    variations: uniqueVariations.length,
+  }
+}
 
 export async function getAllAvailabilityToday() {
   const today = formatISO(new Date(), { representation: 'date' })
 
   logger.info(`Getting all availability for today: ${today}`)
 
-  const results = await db.select().from(availability).where(eq(availability.date_string, today))
-  const mapped = results.map((it) => ({
-    key: it.location_key,
-    variation: variationTexts[it.location_key] ?? null,
-    name: it.location_name,
-    date: it.date_string,
-    updated: it.last_polled_at,
-    slots: it.slots,
-  }))
+  const availabilityRows = await db.select().from(availability).where(eq(availability.date_string, today))
 
-  const byPhysicalLocation = R.pipe(
-    mapped,
+  return R.pipe(
+    availabilityRows,
+    R.map(mapAvailabilityRow),
     R.groupBy((it) => it.name as AllLocationNames),
-    R.mapValues((loc) => {
-      if (loc.length === 1) return { ...loc[0], variations: 1 }
+    R.mapValues(mapVariations),
+  )
+}
 
-      const first = loc[0]
-      const slotsWithVariations = R.pipe(
-        loc,
-        R.map((it) => it.slots.map((slot) => [slot, it.key] as const)),
-        R.flat(),
-        R.sortBy([([slot]) => slot.time, 'asc']),
-        R.map(([slot, key]) => ({ ...slot, variation: variationTexts[key] ?? key })),
-      )
+export async function getAllAvailabilityForLocation(locationName: AllLocationNames) {
+  const today = formatISO(new Date(), { representation: 'date' })
 
-      const uniqueVariations = R.uniqueBy(slotsWithVariations, (slot) => slot.variation)
+  logger.info(`Getting all availability for ${locationName} today: ${today}`)
 
-      return {
-        ...first,
-        slots: slotsWithVariations,
-        variations: uniqueVariations.length,
-      }
-    }),
+  const availabilityRows = await db
+    .select()
+    .from(availability)
+    .where(and(eq(availability.location_name, locationName), gte(availability.date_string, today)))
+
+  const byDate = R.pipe(
+    availabilityRows,
+    R.map(mapAvailabilityRow),
+    R.groupBy((it) => it.date),
+    R.mapValues(mapVariations),
   )
 
-  return byPhysicalLocation
+  return byDate
 }
 
 export const variationTexts: Record<string, string> = {
