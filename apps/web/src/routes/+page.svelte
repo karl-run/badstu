@@ -22,7 +22,7 @@
 </script>
 
 <div class="container p-4">
-  <h1 class="mb-2 text-xl">Ledig i dag</h1>
+  <h2 class="mb-3 ml-4 text-xl">Badstuer i dag</h2>
   <div class="flex gap-3 overflow-hidden">
     {#each R.entries(data.locations) as [name, location]}
       <div
