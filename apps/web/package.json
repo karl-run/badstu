@@ -16,6 +16,7 @@
   "dependencies": {
     "@badstu/db": "workspace:*",
     "@lucide/svelte": "^0.525.0",
+    "date-fns": "^4.1.0",
     "svelte-maplibre": "^1.2.0"
   },
   "devDependencies": {
