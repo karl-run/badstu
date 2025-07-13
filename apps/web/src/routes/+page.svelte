@@ -26,9 +26,9 @@
 
 <div class="container p-4">
   <h1 class="mb-2 text-xl">Ledig i dag</h1>
-  <div class="flex gap-3">
+  <div class="flex gap-3 overflow-hidden">
     {#each R.entries(data.locations) as [name, location]}
-      <div class="relative w-64 grow overflow-hidden rounded-md bg-gray-200">
+      <div class="relative w-[calc(100vw-100px)] grow overflow-hidden rounded-2xl bg-gray-200 md:w-64 md:grow">
         <div class="relative z-10 mb-1 h-18 bg-black">
           <div class="z-10 flex h-full w-full items-center gap-1 text-white">
             <button
@@ -52,15 +52,18 @@
             class="pointer-events-none absolute inset-0 top-0 left-0 -z-1 h-full w-full opacity-70"
           />
         </div>
-        <div class="p-2">
+        <div>
           {#if location.slots.length > 0}
-            <div class="">
+            <div class="divide-y divide-gray-400">
               {#each location.slots as slot}
-                <div>
-                  <div class="">{formatSlot(slot)}</div>
+                <div class="flex h-12 flex-col justify-center p-2 hover:bg-gray-400">
                   {#if 'variation' in slot && location.variations > 1}
-                    <div class="-mt-1.5 ml-2 text-xs">{slot.variation}</div>
+                    <div class="text-xs">{slot.variation}</div>
                   {/if}
+                  {#if location.variation}
+                    <div class="text-xs">{location.variation}</div>
+                  {/if}
+                  <div class="">{formatSlot(slot)}</div>
                 </div>
               {/each}
             </div>
@@ -74,6 +77,4 @@
   </div>
 </div>
 
-<div>
-  <BadstuMap />
-</div>
+<BadstuMap />

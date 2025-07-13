@@ -14,6 +14,7 @@ export async function getAllAvailabilityToday() {
   const results = await db.select().from(availability).where(eq(availability.date_string, today))
   const mapped = results.map((it) => ({
     key: it.location_key,
+    variation: variationTexts[it.location_key] ?? null,
     name: it.location_name,
     date: it.date_string,
     updated: it.last_polled_at,
