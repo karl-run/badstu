@@ -1,3 +1,5 @@
+import { toObfLink } from './obf/link-utils'
+
 type LngLatTuple = [number, number]
 
 type BadstuLocation = {
@@ -32,4 +34,11 @@ export function getBadstuLocation(name: string): (BadstuLocation & { name: AllLo
   if (!location) return null
 
   return { ...location, name: name as AllLocationNames }
+}
+
+export function getLink(provider: 'obf', locationKey: string, date: string): string {
+  switch (provider) {
+    case 'obf':
+      return toObfLink(locationKey, date)
+  }
 }
