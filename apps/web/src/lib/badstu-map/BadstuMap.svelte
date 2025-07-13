@@ -9,10 +9,11 @@
     mapStore.set(map)
   }
 
-  const markers: Array<{
-    lngLat: [number, number]
-    name: string
-  }> = Object.entries(allBadstuLocations).map(([name, location]) => ({ lngLat: location.loc, name: name }))
+  const markers = Object.entries(allBadstuLocations).map(([name, location]) => ({
+    lngLat: location.loc,
+    name,
+    location,
+  }))
 
   const props: { class: string } = $props()
 </script>
@@ -21,14 +22,22 @@
   <MapLibre
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     zoom={11}
-    center={[10.73, 59.92]}
+    center={[10.78, 59.92]}
     onload={onMapLoad}
     attributionControl={{ compact: true }}
   >
-    {#each markers as { lngLat, name }}
+    {#each markers as { lngLat, name, location }}
       <DefaultMarker {lngLat} draggable>
-        <Popup offset={[0, -10]}>
+        <Popup offset={[0, -10]} popupClass="max-w-64">
           <div class="text-lg font-bold">{name}</div>
+          {#if location.ingress}
+            <p>{location.ingress}</p>
+          {/if}
+          <div class="mt-2 flex justify-between gap-4">
+            <a class="text-base underline" href={`/badstu/${name.replaceAll(' ', '-')}`}>Se ledighet</a>
+            <a class="text-base underline" target="_blank" rel="nofollow noreferrer" href={location.maps}>Google maps</a
+            >
+          </div>
         </Popup>
       </DefaultMarker>
     {/each}

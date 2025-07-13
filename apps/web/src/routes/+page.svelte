@@ -11,7 +11,7 @@
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import RowLink from '$lib/slots/RowLink.svelte'
 
-  let map: Map | null = null
+  let map: Map | null = $state(null)
   const unsubscribe = mapStore.subscribe((m) => {
     map = m
   })
@@ -61,7 +61,7 @@
                     return
                   }
 
-                  return map?.flyTo({ center: location.loc, zoom: 15 })
+                  map?.flyTo({ center: location.loc, zoom: 15 })
                 }}
               >
                 <LocateFixed aria-label="zoom to location" class="h-5 w-5" />
