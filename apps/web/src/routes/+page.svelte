@@ -9,10 +9,7 @@
   import { type Map } from 'svelte-maplibre'
   import { allBadstuLocations, getLink } from '@badstu/data/meta'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
-
-  function formatSlot(slot: any) {
-    return `${slot.time}–${slot.timeEnd} (${slot.available})`
-  }
+  import RowLink from '$lib/slots/RowLink.svelte'
 
   let map: Map | null = null
   const unsubscribe = mapStore.subscribe((m) => {
@@ -31,7 +28,7 @@
       <div
         class="relative flex w-[calc(100vw-100px)] grow flex-col overflow-hidden rounded-2xl bg-gray-200 md:w-64 md:grow"
       >
-        <a class="relative mb-1 h-18 bg-black hover:bg-blue-100" href="/badstu/{name.replaceAll(' ', '-')}">
+        <a class="relative h-18 bg-black hover:bg-blue-100" href="/badstu/{name.replaceAll(' ', '-')}">
           <BadstuCovers
             location={name}
             class="pointer-events-none absolute inset-0 top-0 left-0  h-full w-full opacity-70"
@@ -46,15 +43,7 @@
           {#if location.slots.length > 0}
             <div class="divide-y divide-gray-400">
               {#each location.slots as slot}
-                <a
-                  class="flex h-12 flex-col justify-center p-2 hover:bg-gray-400"
-                  href={getLink(location.provider, slot.variation.key, location.date)}
-                >
-                  {#if location.variations > 1 || slot.variation != null}
-                    <div class="text-xs">{slot.variation.text}</div>
-                  {/if}
-                  <div class="">{formatSlot(slot)}</div>
-                </a>
+                <RowLink {location} {slot} />
               {/each}
             </div>
           {:else}

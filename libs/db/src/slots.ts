@@ -27,14 +27,7 @@ const mapVariations = (location: ReturnType<typeof mapAvailabilityRow>[]) => {
   if (location.length === 1) return { ...location[0], variations: 1 }
 
   const first = location[0]
-  const slotsByVariation = R.pipe(
-    location,
-    R.map((it) => it.slots.map((slot) => [slot, it.key] as const)),
-    R.flat(),
-    R.sortBy([([slot]) => slot.time, 'asc']),
-    R.map(R.first()),
-  )
-
+  const slotsByVariation = R.pipe(location, R.flatMap(R.prop('slots')), R.sortBy([(slot) => slot.time, 'asc']))
   const uniqueVariations = R.uniqueBy(slotsByVariation, (slot) => slot.variation)
 
   return {
