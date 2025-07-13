@@ -6,7 +6,7 @@
     return `${slot.time}–${slot.timeEnd} (${slot.available})`
   }
 
-  const { location, slot }: { location: any; slot: any } = $props()
+  const { location, slot }: { location: { provider: 'obf'; date: string; variations: number }; slot: any } = $props()
 </script>
 
 <a
