@@ -6,6 +6,8 @@
 
   const { location, slot }: { location: { provider: 'obf'; date: string; variations: number }; slot: any } = $props()
   const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(location.date, slot.time), 60))
+
+  console.log(location.variations > 1 || slot.variation != null)
 </script>
 
 <a
@@ -20,8 +22,10 @@
     <div>
       {slot.time} til {slot.timeEnd} ({slot.length}t)
     </div>
-    {#if location.variations > 1 || slot.variation != null}
+    {#if location.variations > 1 && slot.variation != null}
       <div class="text-xs">{slot.variation.text}</div>
+    {:else}
+      <div class="text-xs">Fellesbadstue</div>
     {/if}
   </div>
   <div class="mr-2 flex flex-col items-center justify-center">
