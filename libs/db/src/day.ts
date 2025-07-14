@@ -1,6 +1,7 @@
 import type { BadstuDay } from '@badstu/data'
 import { availability, db } from './drizzle'
 import { parseISO, setHours } from 'date-fns'
+import logger from '@badstu/logger'
 
 export async function saveDay(day: BadstuDay): Promise<void> {
   await db
