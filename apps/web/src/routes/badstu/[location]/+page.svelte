@@ -10,6 +10,11 @@
   let { data }: PageProps = $props()
 </script>
 
+<svelte:head>
+  <title>{data.name} | Ledige tider</title>
+  <meta name="description" content={`Ledige tider for badstu og basseng på ${data.name} de neste dagene`} />
+</svelte:head>
+
 <header class="relative h-64 p-4">
   <BadstuCovers class="absolute top-0 left-0 -z-10 h-full w-full" location={data.name} />
   <h2

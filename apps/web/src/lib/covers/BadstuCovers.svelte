@@ -21,7 +21,7 @@
   })
 </script>
 
-<enhanced:img class={['image', props.class]} src={imageSrc} alt="" style="--offset: {offset}%" />
+<enhanced:img class={['image', props.class]} src={imageSrc} alt="" style="--offset: {offset}%" fetchpriority="high" />
 
 <style>
   .image {
