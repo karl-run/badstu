@@ -9,18 +9,20 @@
 </script>
 
 <a
-  class={['group flex h-14 justify-between p-2 transition-colors hover:bg-gray-400', isTooLate && 'opacity-50']}
+  class={['group flex h-14 justify-between transition-colors hover:bg-gray-400', isTooLate && 'opacity-50']}
   href={getLink(location.provider, slot.variation.key, location.date)}
 >
-  <div class="flex flex-col justify-center">
-    {#if location.variations > 1 || slot.variation != null}
-      <div class="-mb-1 text-xs">{slot.variation.text}</div>
-    {/if}
-    <div class="flex gap-2">
-      <div class="">{slot.time}</div>
-      <div>{slot.available} ledige</div>
+  <div class="flex size-14 flex-col items-center justify-center">
+    <div class="-mt-1 -mb-1.5 text-xl">{slot.available}</div>
+    <div class="text-xs">av {slot.size}</div>
+  </div>
+  <div class="flex grow flex-col justify-center">
+    <div>
+      {slot.time} til {slot.timeEnd} ({slot.length}t)
     </div>
-    <div class="-mt-1 text-xs">Til {slot.timeEnd} ({slot.length}t), totalt {slot.size} plasser</div>
+    {#if location.variations > 1 || slot.variation != null}
+      <div class="text-xs">{slot.variation.text}</div>
+    {/if}
   </div>
   <div class="mr-2 flex flex-col items-center justify-center">
     <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1.5" />
