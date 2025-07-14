@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as R from 'remeda'
   import { onDestroy } from 'svelte'
-  import { ArrowRight, LocateFixed } from '@lucide/svelte'
+  import { ArrowRight, LocateFixed, CircleDashed } from '@lucide/svelte'
 
   import type { PageProps } from './$types'
   import { mapStore } from '$lib/badstu-map/map-store'
@@ -47,7 +47,10 @@
                   {/each}
                 </div>
               {:else}
-                <div class="no-slots">Ingen ledige</div>
+                <div class="flex h-2/3 flex-col items-center justify-center gap-2 p-4 opacity-70">
+                  <CircleDashed class="ml-2 h-12 w-12 text-gray-500" />
+                  <div>Ingen bookinger denne dagen</div>
+                </div>
               {/if}
               <div class="sticky bottom-0 left-0 h-4 w-full bg-gradient-to-b from-transparent to-gray-200"></div>
             </div>
