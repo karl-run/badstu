@@ -39,6 +39,7 @@ async function getFirebaseLocationById(location: ObfDropinLocation): Promise<Bad
         locationName: location.name,
         date: date,
         slots: day,
+        provider: 'obf',
       }),
     ),
   )
