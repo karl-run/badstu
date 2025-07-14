@@ -1,8 +1,8 @@
 <script lang="ts">
-  import kroloftet from '$lib/assets/kroloftet.jpeg'
-  import langkaia from '$lib/assets/langkaia.jpeg'
-  import sukkerbiten from '$lib/assets/sukkerbiten.jpg'
-  import sagene from '$lib/assets/sagene.jpg'
+  import kroloftet from '$lib/assets/kroloftet.jpeg?enhanced'
+  import langkaia from '$lib/assets/langkaia.jpeg?enhanced'
+  import sukkerbiten from '$lib/assets/sukkerbiten.jpg?enhanced'
+  import sagene from '$lib/assets/sagene.jpg?enhanced'
 
   import { type AllLocationNames } from '@badstu/data/meta'
 
@@ -21,7 +21,7 @@
   })
 </script>
 
-<img class={['image', props.class]} src={imageSrc} alt="" style="--offset: {offset}%" />
+<enhanced:img class={['image', props.class]} src={imageSrc} alt="" style="--offset: {offset}%" />
 
 <style>
   .image {
