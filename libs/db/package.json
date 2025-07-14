@@ -1,6 +1,9 @@
 {
   "name": "@badstu/db",
   "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "check": "tsc --noEmit"
+  },
   "dependencies": {
     "@badstu/data": "workspace:*",
     "@libsql/client": "^0.15.9",

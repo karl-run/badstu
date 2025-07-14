@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
-import { allBadstuLocations, type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
+import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
 import { getAllAvailabilityForLocation } from '@badstu/db/slots'
 import logger from '@badstu/logger'
 

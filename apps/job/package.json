@@ -10,6 +10,7 @@
     "remeda": "^2.25.0"
   },
   "scripts": {
+    "check": "deno check --unstable-sloppy-imports",
     "dev": "yarn deno:run ./src/job.ts",
     "build": "deno compile --allow-sys --no-check --allow-net --allow-env --unstable-sloppy-imports --output=./dist/job ./src/job.ts",
     "deno:run": "deno run --watch --allow-net --allow-env --allow-sys --allow-write --env-file=.env.local --unstable-sloppy-imports"
