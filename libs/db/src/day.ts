@@ -1,7 +1,6 @@
 import type { BadstuDay } from '@badstu/data'
 import { availability, db } from './drizzle'
 import { parseISO, setHours } from 'date-fns'
-import logger from '@badstu/logger'
 
 export async function saveDay(day: BadstuDay): Promise<void> {
   await db
@@ -13,6 +12,7 @@ export async function saveDay(day: BadstuDay): Promise<void> {
       date: setHours(parseISO(day.date), 12),
       last_polled_at: new Date(),
       slots: day.slots,
+      provider: day.provider,
     })
     .onConflictDoUpdate({
       target: [availability.location_key, availability.date],

@@ -4,6 +4,7 @@ export type BadstuDay = {
   details?: string
   date: string
   slots: BadstuSlot[]
+  provider: 'obf'
 }
 
 export type BadstuSlot = {
