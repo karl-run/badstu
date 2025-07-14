@@ -5,6 +5,7 @@
   import * as R from 'remeda'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
   import RowLink from '$lib/slots/RowLink.svelte'
+  import { differenceInMinutes } from 'date-fns'
 
   let { data }: PageProps = $props()
 </script>
@@ -48,9 +49,17 @@
     {:then avails}
       {#each R.entries(avails) as [date, availability]}
         <div class="grow flex-wrap rounded-xl bg-gray-200">
-          <h3 class="flex w-full items-center justify-center p-2 text-xl font-bold text-gray-700">
-            {toReadableDateWithWeekdayName(date)}
-          </h3>
+          <div class="flex">
+            <h3 class="flex w-full items-center justify-center p-2 text-xl font-bold text-gray-700">
+              {toReadableDateWithWeekdayName(date)}
+            </h3>
+            {#if availability.updated != null}
+              <div class="mt-2 mr-2 flex flex-col items-center text-xs leading-3" title="Sist oppdatert">
+                <div>{differenceInMinutes(new Date(), availability.updated, { roundingMethod: 'round' })}</div>
+                <div>min</div>
+              </div>
+            {/if}
+          </div>
           {#if availability.slots.length > 0}
             <div class="divide-y divide-gray-400">
               {#each availability.slots as slot}
