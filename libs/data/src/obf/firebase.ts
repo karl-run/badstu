@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { addWeeks, format } from 'date-fns'
+import logger from '@badstu/logger'
 
 export interface FirebaseDocument {
   slots: FirebaseSlot[]
@@ -20,6 +21,8 @@ export interface FirebaseSlot {
   booked: number
   customMessage: string
 }
+
+logger.info('Am i firebasing for some reason?')
 
 const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG ?? '{}')
 

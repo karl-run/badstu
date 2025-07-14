@@ -21,7 +21,7 @@
   })
 </script>
 
-<img class={['image', props.class]} src={imageSrc} alt="Image" style="--offset: {offset}%" />
+<img class={['image', props.class]} src={imageSrc} alt="" style="--offset: {offset}%" />
 
 <style>
   .image {
