@@ -1,6 +1,6 @@
 import * as R from 'remeda'
 import { format, parseISO } from 'date-fns/fp'
-import { ObfLocations, obfLocations } from './locations'
+import { type ObfLocations, obfLocations } from './locations'
 
 const BOOKING_ROOT = 'https://minside.periode.no/booking/1cKim9HkbQPgrbXOr8ad'
 

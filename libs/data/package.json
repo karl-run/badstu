@@ -1,6 +1,9 @@
 {
   "name": "@badstu/data",
   "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "check": "tsc --noEmit"
+  },
   "exports": {
     ".": {
       "import": "./src/index.ts"
