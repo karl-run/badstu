@@ -10,6 +10,7 @@
   import { allBadstuLocations, getLink } from '@badstu/data/meta'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import RowLink from '$lib/slots/RowLink.svelte'
+  import { differenceInMinutes } from 'date-fns'
 
   let map: Map | null = $state(null)
   const unsubscribe = mapStore.subscribe((m) => {
@@ -52,6 +53,14 @@
                 >
                   {name}
                 </h2>
+                {#if location.updated != null}
+                  <div
+                    class="absolute right-0 bottom-2 mt-2 mr-2 flex flex-col items-center text-xs leading-3 font-bold text-white drop-shadow-md drop-shadow-black"
+                    title="Sist oppdatert"
+                  >
+                    {differenceInMinutes(new Date(), location.updated, { roundingMethod: 'round' })} min
+                  </div>
+                {/if}
               </a>
               <div class="relative h-full overflow-y-scroll">
                 {#if location.slots.length > 0}
