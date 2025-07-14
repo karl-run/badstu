@@ -1,3 +1,4 @@
+import type { Config } from '@sveltejs/adapter-vercel'
 import type { PageServerLoad } from './$types'
 import { getAllAvailabilityToday } from '@badstu/db/slots'
 import logger from '@badstu/logger'
@@ -15,4 +16,10 @@ export const load: PageServerLoad = async () => {
   return {
     locations,
   }
+}
+
+export const config: Config = {
+  isr: {
+    expiration: 60,
+  },
 }

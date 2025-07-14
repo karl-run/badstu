@@ -1,5 +1,6 @@
-import { error } from '@sveltejs/kit'
+import type { Config } from '@sveltejs/adapter-vercel'
 import type { PageServerLoad } from './$types'
+import { error } from '@sveltejs/kit'
 import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
 import { getAllAvailabilityForLocation } from '@badstu/db/slots'
 import logger from '@badstu/logger'
@@ -27,4 +28,10 @@ export const load: PageServerLoad = async ({ params }) => {
     name: location.name,
     availability,
   }
+}
+
+export const config: Config = {
+  isr: {
+    expiration: 60,
+  },
 }
