@@ -6,12 +6,11 @@ export const load: PageServerLoad = async () => {
   const startTime = Date.now()
 
   logger.info("Landing page, generating today's availability")
-  const locations = await getAllAvailabilityToday()
-
-  const endTime = Date.now()
-  logger.info(
-    `Today's availability generated for ${Object.keys(locations).length} locations, took ${endTime - startTime}ms`,
-  )
+  const locations = getAllAvailabilityToday().then((it) => {
+    const endTime = Date.now()
+    logger.info(`Today's availability generated for ${Object.keys(it).length} locations, took ${endTime - startTime}ms`)
+    return it
+  })
 
   return {
     locations,
