@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageProps } from './$types'
-  import { CircleDashed } from '@lucide/svelte'
+  import { CircleDashed, LoaderCircle, Bomb } from '@lucide/svelte'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import * as R from 'remeda'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
@@ -20,24 +20,62 @@
 
 <div class="container mx-auto p-4">
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-    {#each R.entries(data.availability) as [date, availability]}
-      <div class="grow flex-wrap rounded-xl bg-gray-200">
-        <h3 class="flex w-full items-center justify-center p-2 text-xl font-bold text-gray-700">
-          {toReadableDateWithWeekdayName(date)}
-        </h3>
-        {#if availability.slots.length > 0}
-          <div class="divide-y divide-gray-400">
-            {#each availability.slots as slot}
-              <RowLink {slot} location={availability} />
-            {/each}
-          </div>
-        {:else}
-          <div class="flex h-2/3 flex-col items-center justify-center gap-2 p-4 opacity-70">
-            <CircleDashed class="ml-2 h-12 w-12 text-gray-500" />
-            <div>Ingen bookinger denne dagen</div>
-          </div>
-        {/if}
+    {#await data.availability}
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-    {/each}
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+        <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
+      </div>
+    {:then avails}
+      {#each R.entries(avails) as [date, availability]}
+        <div class="grow flex-wrap rounded-xl bg-gray-200">
+          <h3 class="flex w-full items-center justify-center p-2 text-xl font-bold text-gray-700">
+            {toReadableDateWithWeekdayName(date)}
+          </h3>
+          {#if availability.slots.length > 0}
+            <div class="divide-y divide-gray-400">
+              {#each availability.slots as slot}
+                <RowLink {slot} location={availability} />
+              {/each}
+            </div>
+          {:else}
+            <div class="flex h-2/3 flex-col items-center justify-center gap-2 p-4 opacity-70">
+              <CircleDashed class="ml-2 h-12 w-12 text-gray-500" />
+              <div>Ingen bookinger denne dagen</div>
+            </div>
+          {/if}
+        </div>
+      {/each}
+    {:catch error}
+      <div class="flex grow flex-col flex-wrap items-center justify-center gap-4 rounded-xl bg-gray-200 p-8">
+        <div class="flex gap-3">
+          <Bomb class="ml-2 size-12 animate-bounce text-gray-500" />
+          <Bomb class="ml-2 size-12 animate-bounce text-gray-500" />
+          <Bomb class="ml-2 size-12 animate-bounce text-gray-500" />
+        </div>
+        <div>Kunne ikke laste inn bookinger for {data.name} :(</div>
+        <pre class="rounded-md bg-white p-1 px-2">{error.message}</pre>
+        <div>Prøv igjen senere!</div>
+      </div>
+    {/await}
   </div>
 </div>
