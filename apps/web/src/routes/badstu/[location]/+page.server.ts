@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit'
 import type { PageServerLoad } from './$types'
 import { allBadstuLocations, type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
 import { getAllAvailabilityForLocation } from '@badstu/db/slots'
+import logger from '@badstu/logger'
 
 export const load: PageServerLoad = async ({ params }) => {
   const unslug = params.location.replaceAll('-', ' ')
@@ -11,7 +12,15 @@ export const load: PageServerLoad = async ({ params }) => {
     error(404, 'Not found')
   }
 
+  const startTime = Date.now()
+  logger.info(`Loading availability for location: ${location.name} (${unslug})`)
+
   const availability = await getAllAvailabilityForLocation(unslug as AllLocationNames)
+
+  const endTime = Date.now()
+  logger.info(
+    `Availability for ${location.name} (${unslug}) loaded, found ${Object.keys(availability).length} days, took ${endTime - startTime}ms`,
+  )
 
   return {
     name: location.name,
