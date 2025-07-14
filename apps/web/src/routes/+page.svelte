@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as R from 'remeda'
   import { onDestroy } from 'svelte'
+
   import { ArrowRight, LocateFixed, CircleDashed, Bomb } from '@lucide/svelte'
 
   import type { PageProps } from './$types'

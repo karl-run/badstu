@@ -3,7 +3,9 @@ import type { PageServerLoad } from './$types'
 import { getAllAvailabilityToday } from '@badstu/db/slots'
 import logger from '@badstu/logger'
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ depends }) => {
+  depends('badstu:today')
+
   const startTime = Date.now()
 
   logger.info("Landing page, generating today's availability")

@@ -5,13 +5,15 @@ import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'
 import { getAllAvailabilityForLocation } from '@badstu/db/slots'
 import logger from '@badstu/logger'
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, depends }) => {
   const unslug = params.location.replaceAll('-', ' ')
   const location = getBadstuLocation(unslug)
 
   if (location == null) {
     error(404, 'Not found')
   }
+
+  depends(`badstu:${params.location}`)
 
   const startTime = Date.now()
   logger.info(`Loading availability for location: ${location.name} (${unslug})`)
