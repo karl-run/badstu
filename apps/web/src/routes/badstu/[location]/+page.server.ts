@@ -31,9 +31,3 @@ export const load: PageServerLoad = async ({ params, depends }) => {
     availability,
   }
 }
-
-export const config: Config = {
-  isr: {
-    expiration: 60,
-  },
-}
