@@ -1,18 +1,33 @@
-<script>
+<script lang="ts">
   import * as R from 'remeda'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date.js'
   import { addDays, formatISO } from 'date-fns'
 
   const today = new Date()
   const next21Days = R.range(1, 21).map((offset) => formatISO(addDays(today, offset), { representation: 'date' }))
+
+  const { activeDate }: { activeDate: string } = $props()
+
+  $effect(() => {
+    const activeNode = document.getElementById(`date-${activeDate}`)
+
+    if (activeNode) {
+      activeNode.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+    }
+  })
 </script>
 
 <div class="relative flex h-full overflow-hidden">
   <div class="absolute right-0 bottom-0 h-full w-4 shrink-0 bg-gradient-to-r from-transparent to-white"></div>
   <div class="flex h-full gap-1 overflow-scroll px-4 py-2">
     {#each next21Days as dateString}
-      <a href={`/dag/${dateString}`} class="flex h-full shrink-0 items-center rounded-md px-2 text-sm hover:bg-gray-200"
-        >{toReadableDateWithWeekdayName(dateString)}</a
+      <a
+        id={`date-${dateString}`}
+        href={`/dag/${dateString}`}
+        class={[
+          'flex h-full shrink-0 items-center rounded-md px-2 text-sm hover:bg-gray-200',
+          dateString === activeDate && 'border border-dashed border-blue-600 bg-blue-200',
+        ]}>{toReadableDateWithWeekdayName(dateString)}</a
       >
     {/each}
   </div>
