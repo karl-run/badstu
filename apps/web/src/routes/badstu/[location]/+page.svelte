@@ -28,28 +28,44 @@
 <div class="container mx-auto p-4">
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
     {#await data.availability}
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
-      <div class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200">
+      <div
+        class="flex min-h-[380px] grow animate-pulse flex-wrap items-center justify-center rounded-xl bg-gray-200 dark:bg-slate-800"
+      >
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
     {:then avails}
