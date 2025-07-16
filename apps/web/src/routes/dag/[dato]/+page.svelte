@@ -14,8 +14,11 @@
 </script>
 
 <svelte:head>
-  <title>Badstuer i Oslo</title>
-  <meta name="description" content={`Se hvilke badstuer i Oslo har ledig drop-in i dag og fremover i tid!`} />
+  <title>Badstuer i Oslo toReadableDateWithWeekdayName(data.date)</title>
+  <meta
+    name="description"
+    content={`Se hvilke badstuer i Oslo har ledig drop-in ${toReadableDateWithWeekdayName(data.date)}`}
+  />
 </svelte:head>
 
 <div class="grid h-[calc(100vh-5rem)] grid-cols-1 grid-rows-[auto_1fr]">
