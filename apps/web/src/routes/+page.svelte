@@ -8,11 +8,10 @@
   import { mapStore } from '$lib/badstu-map/map-store'
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import { type Map } from 'svelte-maplibre'
-  import { allBadstuLocations, getLink } from '@badstu/data/meta'
+  import { allBadstuLocations } from '@badstu/data/meta'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import RowLink from '$lib/slots/RowLink.svelte'
-  import { addDays, differenceInMinutes } from 'date-fns'
-  import { toReadableDateWithWeekdayName } from '$lib/utils/date'
+  import { differenceInMinutes } from 'date-fns'
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
 
   let map: Map | null = $state(null)

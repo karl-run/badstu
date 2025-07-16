@@ -8,10 +8,10 @@
   let { children } = $props()
 </script>
 
-<header class="flex h-16 items-center justify-between border-b border-b-gray-300 bg-gray-100">
+<header class="dark flex h-16 items-center justify-between border-b border-b-gray-300 bg-gray-100">
   <a href="/" class="group flex items-center gap-4">
     <div class="ml-4 h-10 w-10 shrink-0">
-      <enhanced:img src={logo} />
+      <enhanced:img src={logo} alt="" />
     </div>
     <h1 class="flex items-center gap-1 text-2xl text-gray-800">
       <ArrowLeft class={['transition-all group-hover:-translate-x-1', page.url.pathname === '/' && 'w-0']} />
