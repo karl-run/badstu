@@ -37,12 +37,12 @@ const mapVariations = (location: ReturnType<typeof mapAvailabilityRow>[]) => {
   }
 }
 
-export async function getAllAvailabilityToday() {
-  const today = formatISO(new Date(), { representation: 'date' })
+export async function getAllAvailabilityForDate(date: Date) {
+  const forDate = formatISO(date, { representation: 'date' })
 
-  logger.info(`Getting all availability for today: ${today}`)
+  logger.info(`Getting all availability for ${forDate}`)
 
-  const availabilityRows = await db.select().from(availability).where(eq(availability.date_string, today))
+  const availabilityRows = await db.select().from(availability).where(eq(availability.date_string, forDate))
 
   return R.pipe(
     availabilityRows,
@@ -55,7 +55,7 @@ export async function getAllAvailabilityToday() {
 export async function getAllAvailabilityForLocation(locationName: AllLocationNames) {
   const today = formatISO(new Date(), { representation: 'date' })
 
-  logger.info(`Getting all availability for ${locationName} today: ${today}`)
+  logger.info(`Getting all availability for ${locationName} from today: ${today}`)
 
   const availabilityRows = await db
     .select()

@@ -11,7 +11,9 @@
   import { allBadstuLocations, getLink } from '@badstu/data/meta'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import RowLink from '$lib/slots/RowLink.svelte'
-  import { differenceInMinutes } from 'date-fns'
+  import { addDays, differenceInMinutes } from 'date-fns'
+  import { toReadableDateWithWeekdayName } from '$lib/utils/date'
+  import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
 
   let map: Map | null = $state(null)
   const unsubscribe = mapStore.subscribe((m) => {
@@ -30,7 +32,10 @@
 
 <div class="grid h-[calc(100vh-4rem)] grid-cols-1 grid-rows-[calc(70vh-4rem)_30vh]">
   <div class="flex flex-col">
-    <h2 class="p-4 text-xl">Badstuer i dag</h2>
+    <div class="flex">
+      <h2 class="shrink-0 p-4 text-xl">Badstuer i dag</h2>
+      <OtherDayPicker />
+    </div>
     <div class="flex h-full max-w-screen gap-3 overflow-scroll px-3 pb-3 md:h-auto md:min-h-96">
       {#await data.locations}
         <div
