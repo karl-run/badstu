@@ -52,7 +52,7 @@
       {/if}
       {#if !fullHeight}
         <div
-          class="sticky bottom-0 left-0 h-4 w-full bg-gradient-to-b from-transparent to-gray-200 dark:to-slate-800"
+          class="pointer-events-none sticky bottom-0 left-0 h-4 w-full bg-gradient-to-b from-transparent to-gray-200 dark:to-slate-800"
         ></div>
       {/if}
     </div>
