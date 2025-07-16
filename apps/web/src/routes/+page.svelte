@@ -30,7 +30,7 @@
   <meta name="description" content={`Se hvilke badstuer i Oslo har ledig drop-in i dag og fremover i tid!`} />
 </svelte:head>
 
-<div class="grid h-[calc(100vh-4rem)] grid-cols-1 grid-rows-[calc(70vh-4rem)_30vh]">
+<div class="grid h-[calc(100svh-4rem)] grid-cols-1 grid-rows-[calc(70svh-4rem)_30svh]">
   <div class="flex flex-col">
     <div class="flex">
       <h2 class="shrink-0 p-4 text-xl">Badstuer i dag</h2>

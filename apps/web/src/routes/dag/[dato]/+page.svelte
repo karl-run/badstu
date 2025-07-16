@@ -21,7 +21,7 @@
   />
 </svelte:head>
 
-<div class="grid h-[calc(100vh-5rem)] grid-cols-1 grid-rows-[auto_1fr]">
+<div class="grid h-[calc(100svh-5rem)] grid-cols-1 grid-rows-[auto_1fr]">
   <div class="flex flex-col">
     <h2 class="shrink-0 p-4 pb-0 text-xl">Badstuer i Oslo {toReadableDateWithWeekdayName(data.date)}</h2>
     <div class="h-14">
