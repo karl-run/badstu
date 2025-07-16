@@ -11,7 +11,10 @@
 </script>
 
 <a
-  class={['group flex h-14 justify-between transition-colors hover:bg-gray-400', isTooLate && 'opacity-50']}
+  class={[
+    'group flex h-14 justify-between transition-colors hover:bg-gray-400 dark:hover:bg-blue-950',
+    isTooLate && 'opacity-50',
+  ]}
   href={getLink(location.provider, slot.variation.key, location.date)}
 >
   <div class="flex size-14 flex-col items-center justify-center">

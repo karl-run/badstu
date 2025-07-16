@@ -6,9 +6,11 @@
   const today = new Date()
   const next21Days = R.range(1, 21).map((offset) => formatISO(addDays(today, offset), { representation: 'date' }))
 
-  const { activeDate }: { activeDate: string } = $props()
+  const { activeDate }: { activeDate?: string } = $props()
 
   $effect(() => {
+    if (!activeDate) return
+
     const activeNode = document.getElementById(`date-${activeDate}`)
 
     if (activeNode) {
@@ -18,18 +20,23 @@
 </script>
 
 <div class="relative flex h-full overflow-hidden">
-  <div class="absolute right-0 bottom-0 h-full w-4 shrink-0 bg-gradient-to-r from-transparent to-white"></div>
+  <div
+    class="absolute right-0 bottom-0 h-full w-4 shrink-0 bg-gradient-to-r from-transparent to-white dark:to-slate-900"
+  ></div>
   <div class="flex h-full gap-1 overflow-scroll px-4 py-2">
     {#each next21Days as dateString}
       <a
         id={`date-${dateString}`}
         href={`/dag/${dateString}`}
         class={[
-          'flex h-full shrink-0 items-center rounded-md px-2 text-sm hover:bg-gray-200',
-          dateString === activeDate && 'border border-dashed border-blue-600 bg-blue-200',
+          'flex h-full shrink-0 items-center rounded-md px-2 text-sm hover:bg-gray-200 hover:dark:bg-blue-800',
+          dateString === activeDate &&
+            'border border-dashed border-blue-600 bg-blue-200 dark:border-slate-700 dark:bg-blue-950 dark:text-white',
         ]}>{toReadableDateWithWeekdayName(dateString)}</a
       >
     {/each}
   </div>
-  <div class="absolute bottom-0 left-0 h-full w-4 shrink-0 bg-gradient-to-l from-transparent to-white"></div>
+  <div
+    class="absolute bottom-0 left-0 h-full w-4 shrink-0 bg-gradient-to-l from-transparent to-white dark:to-slate-900"
+  ></div>
 </div>

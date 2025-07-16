@@ -6,6 +6,7 @@
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
   import RowLink from '$lib/slots/RowLink.svelte'
   import { differenceInMinutes } from 'date-fns'
+  import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
 
   let { data }: PageProps = $props()
 </script>
@@ -52,32 +53,14 @@
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
     {:then avails}
-      {#each R.entries(avails) as [date, availability]}
-        <div class="grow flex-wrap rounded-xl bg-gray-200">
-          <div class="flex">
-            <h3 class="flex w-full items-center justify-center p-2 text-xl font-bold text-gray-700">
-              {toReadableDateWithWeekdayName(date)}
-            </h3>
-            {#if availability.updated != null}
-              <div class="mt-2 mr-2 flex flex-col items-center text-xs leading-3" title="Sist oppdatert">
-                <div>{differenceInMinutes(new Date(), availability.updated, { roundingMethod: 'round' })}</div>
-                <div>min</div>
-              </div>
-            {/if}
-          </div>
-          {#if availability.slots.length > 0}
-            <div class="divide-y divide-gray-400">
-              {#each availability.slots as slot}
-                <RowLink {slot} location={availability} />
-              {/each}
-            </div>
-          {:else}
-            <div class="flex h-2/3 flex-col items-center justify-center gap-2 p-4 opacity-70">
-              <CircleDashed class="ml-2 h-12 w-12 text-gray-500" />
-              <div>Ingen bookinger denne dagen</div>
-            </div>
-          {/if}
-        </div>
+      {#each R.entries(avails) as [, availability]}
+        <BadstuDay
+          class="w-full max-w-none grow bg-red-500"
+          locationName={data.name}
+          location={availability}
+          fullHeight
+          compact
+        />
       {/each}
     {:catch error}
       <div class="flex grow flex-col flex-wrap items-center justify-center gap-4 rounded-xl bg-gray-200 p-8">

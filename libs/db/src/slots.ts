@@ -81,3 +81,5 @@ export const variationTexts: Record<string, string> = {
   'kroloftet-svarttrosten-naken-kvinner': 'Nakenbadstu (kvinner)',
   'kroloftet-jurten': 'Jurten',
 }
+
+export type BadstuAvailability = Awaited<ReturnType<typeof getAllAvailabilityForLocation>>[number]
