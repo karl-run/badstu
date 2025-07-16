@@ -70,13 +70,7 @@
       </div>
     {:then avails}
       {#each R.entries(avails) as [, availability]}
-        <BadstuDay
-          class="w-full max-w-none grow bg-red-500"
-          locationName={data.name}
-          location={availability}
-          fullHeight
-          compact
-        />
+        <BadstuDay class="w-full max-w-none" locationName={data.name} location={availability} fullHeight compact />
       {/each}
     {:catch error}
       <div class="flex grow flex-col flex-wrap items-center justify-center gap-4 rounded-xl bg-gray-200 p-8">
