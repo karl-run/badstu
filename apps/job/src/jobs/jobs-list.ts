@@ -11,4 +11,5 @@ export const obfJobs = [
   new ObfJob('Sagene med basseng', obfLocations['sagene-basseng']),
   new ObfJob('Sagene kun badstu (nakenhet)', obfLocations['sagene-badstu-naken']),
   new ObfJob('Sagene med basseng (nakenhet)', obfLocations['sagene-basseng-naken']),
+  new ObfJob('Sagene med basseng (familie)', obfLocations['sagene-basseng-familie']),
 ]

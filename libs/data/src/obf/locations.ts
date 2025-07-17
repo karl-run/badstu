@@ -46,6 +46,11 @@ export const obfLocations = {
     name: 'Sagene Folkebad',
     dropin: 'AWAImiJ8LY6S4gCWwf9j',
   } satisfies ObfDropinLocation,
+  'sagene-basseng-familie': {
+    key: 'sagene-basseng-familie',
+    name: 'Sagene Folkebad',
+    dropin: 'bTxYSaL39puqfnagM4o6',
+  } satisfies ObfDropinLocation,
   'sagene-badstu-naken': {
     key: 'sagene-badstu-naken',
     name: 'Sagene Folkebad',
