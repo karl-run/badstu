@@ -1,7 +1,7 @@
 <script lang="ts">
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import type { AllLocationNames } from '@badstu/data/meta'
-  import { differenceInMinutes } from 'date-fns'
+  import DiffSinceTimer from '$lib/badstu-day/DiffSinceTimer.svelte'
 
   const { name, lastUpdated }: { name: AllLocationNames; lastUpdated: Date | null } = $props()
 </script>
@@ -21,7 +21,7 @@
       class="absolute right-0 bottom-2 mt-2 mr-2 flex flex-col items-center text-xs leading-3 font-bold text-white drop-shadow-md drop-shadow-black"
       title="Sist oppdatert"
     >
-      {differenceInMinutes(new Date(), lastUpdated, { roundingMethod: 'round' })} min
+      <DiffSinceTimer {lastUpdated} /> min
     </div>
   {/if}
 </a>

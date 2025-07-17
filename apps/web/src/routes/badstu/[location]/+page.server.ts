@@ -28,5 +28,6 @@ export const load: PageServerLoad = async ({ params, depends }) => {
   return {
     name: location.name,
     availability,
+    slugLocation: params.location,
   }
 }

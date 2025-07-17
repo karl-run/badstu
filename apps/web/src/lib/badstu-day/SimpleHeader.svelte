@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { differenceInMinutes } from 'date-fns'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
+  import DiffSinceTimer from '$lib/badstu-day/DiffSinceTimer.svelte'
 
   const { date, lastUpdated }: { date: string; lastUpdated: Date | null } = $props()
 </script>
@@ -11,7 +11,7 @@
   </h3>
   {#if lastUpdated != null}
     <div class="mt-2 mr-2 flex flex-col items-center text-xs leading-3" title="Sist oppdatert">
-      <div>{differenceInMinutes(new Date(), lastUpdated, { roundingMethod: 'round' })}</div>
+      <div><DiffSinceTimer {lastUpdated} /></div>
       <div>min</div>
     </div>
   {/if}

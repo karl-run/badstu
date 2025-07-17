@@ -8,6 +8,7 @@
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
+  import RefetchButton from '$lib/RefetchButton.svelte'
 
   const { data }: PageProps = $props()
 </script>
@@ -38,6 +39,12 @@
           class="relative h-full w-full max-w-[calc(100vw-100px)] min-w-72 grow animate-pulse rounded-2xl bg-gray-200 md:w-64 md:grow dark:bg-slate-800"
         ></div>
       {:then locations}
+        <RefetchButton
+          timestamps={R.values(locations)
+            .flatMap((it) => it.updated)
+            .filter(R.isNonNull)}
+          tag="badstu:today"
+        />
         {#each R.entries(locations) as [name, location] (name)}
           <BadstuDay
             class="grow"

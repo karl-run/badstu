@@ -4,6 +4,7 @@
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import * as R from 'remeda'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
+  import RefetchButton from '$lib/RefetchButton.svelte'
 
   let { data }: PageProps = $props()
 </script>
@@ -66,6 +67,12 @@
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
     {:then avails}
+      <RefetchButton
+        timestamps={R.values(avails)
+          .flatMap((it) => it.updated)
+          .filter(R.isNonNull)}
+        tag={`badstu:${data.slugLocation}`}
+      />
       {#each R.entries(avails) as [date, availability] (date)}
         <BadstuDay
           class="w-full max-w-none md:w-auto"
