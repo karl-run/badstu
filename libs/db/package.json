@@ -6,9 +6,9 @@
   },
   "dependencies": {
     "@badstu/data": "workspace:*",
-    "@libsql/client": "^0.15.9",
+    "@libsql/client": "^0.15.10",
     "date-fns": "^4.1.0",
-    "drizzle-orm": "^0.44.2"
+    "drizzle-orm": "^0.44.3"
   },
   "exports": {
     "./client": {
