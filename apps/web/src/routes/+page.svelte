@@ -8,7 +8,7 @@
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
-  import RefetchButton from '$lib/RefetchButton.svelte'
+  import RefetchButton from '$lib/refetch-button/RefetchButton.svelte'
 
   const { data }: PageProps = $props()
 </script>

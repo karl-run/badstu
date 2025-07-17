@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { fly } from 'svelte/transition'
-  import { RefreshCw } from '@lucide/svelte'
   import { differenceInMinutes } from 'date-fns'
   import { invalidate } from '$app/navigation'
+  import RefetchSpinWhenClickedButton from '$lib/refetch-button/RefetchSpinWhenClickedButton.svelte'
 
   const { tag, timestamps }: { tag: string; timestamps: Date[] } = $props()
 
@@ -22,12 +22,11 @@
 </script>
 
 {#if hasAnyMoreThan3MinutesAgo}
-  <div class="fixed top-3 right-3" transition:fly={{ x: 100 }}>
-    <button
-      class="rounded-full border border-gray-700 bg-gray-200 p-2 shadow-md dark:bg-slate-600"
-      onclick={() => {
+  <div class="fixed top-3 right-3 z-10" transition:fly={{ x: 100 }}>
+    <RefetchSpinWhenClickedButton
+      onClick={() => {
         invalidate(tag)
-      }}><RefreshCw /></button
-    >
+      }}
+    />
   </div>
 {/if}

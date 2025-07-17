@@ -4,7 +4,7 @@
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import * as R from 'remeda'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
-  import RefetchButton from '$lib/RefetchButton.svelte'
+  import RefetchButton from '$lib/refetch-button/RefetchButton.svelte'
 
   let { data }: PageProps = $props()
 </script>

@@ -7,7 +7,7 @@
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
-  import RefetchButton from '$lib/RefetchButton.svelte'
+  import RefetchButton from '$lib/refetch-button/RefetchButton.svelte'
 
   let { data }: PageProps = $props()
 </script>
