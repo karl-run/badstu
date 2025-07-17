@@ -13,7 +13,7 @@
     const interval = setInterval(() => {
       const now = new Date()
       hasAnyMoreThan3MinutesAgo = timestamps.some((ts) => differenceInMinutes(now, ts) >= 4)
-    }, 1000)
+    }, 15_000)
 
     return () => {
       clearInterval(interval)
