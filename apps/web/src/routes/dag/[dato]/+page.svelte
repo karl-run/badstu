@@ -42,7 +42,7 @@
       ></div>
     {:then locations}
       {#each R.entries(locations) as [name, location] (name)}
-        <BadstuDay locationName={name} {location} />
+        <BadstuDay class="grow" locationName={name} {location} />
       {/each}
     {:catch error}
       <div class="flex grow flex-col flex-wrap items-center justify-center gap-4 rounded-xl bg-gray-200 p-8">

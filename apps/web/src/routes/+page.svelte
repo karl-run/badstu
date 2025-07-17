@@ -32,7 +32,7 @@
       <h2 class="shrink-0 p-4 text-xl">Badstuer i dag</h2>
       <OtherDayPicker />
     </div>
-    <div class="flex h-full max-w-screen gap-3 overflow-auto px-3 pb-3 md:h-auto md:min-h-96">
+    <div class="mt-2 flex h-full max-w-screen gap-3 overflow-auto px-3 pb-3 md:h-auto md:min-h-96">
       {#await data.locations}
         <div
           class="relative h-full w-full max-w-[calc(100vw-100px)] min-w-72 grow animate-pulse rounded-2xl bg-gray-200 md:w-64 md:grow dark:bg-slate-800"
@@ -49,6 +49,7 @@
       {:then locations}
         {#each R.entries(locations) as [name, location] (name)}
           <BadstuDay
+            class="grow"
             locationName={name}
             {location}
             onLocateClick={() => {
