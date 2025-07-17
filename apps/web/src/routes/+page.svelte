@@ -1,24 +1,15 @@
 <script lang="ts">
   import * as R from 'remeda'
-  import { onDestroy } from 'svelte'
-  import { type Map } from 'svelte-maplibre'
   import { Bomb } from '@lucide/svelte'
 
-  import { allBadstuLocations } from '@badstu/data/meta'
   import type { PageProps } from './$types'
-  import { mapStore } from '$lib/badstu-map/map-store'
+  import { allBadstuLocations } from '@badstu/data/meta'
+  import { mapState } from '$lib/badstu-map/map.svelte'
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
 
-  let map: Map | null = $state(null)
-  const unsubscribe = mapStore.subscribe((m) => {
-    map = m
-  })
-
-  onDestroy(unsubscribe)
-
-  let { data }: PageProps = $props()
+  const { data }: PageProps = $props()
 </script>
 
 <svelte:head>
@@ -59,7 +50,7 @@
                 return
               }
 
-              map?.flyTo({ center: location.loc, zoom: 15 })
+              mapState.map?.flyTo({ center: location.loc, zoom: 15 })
             }}
           />
         {/each}

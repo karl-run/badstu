@@ -1,13 +1,8 @@
 <script lang="ts">
-  import type { Map } from 'svelte-maplibre'
   import { MapLibre, DefaultMarker, Popup } from 'svelte-maplibre'
 
-  import { mapStore } from './map-store'
+  import { setMap } from './map.svelte'
   import { allBadstuLocations } from '@badstu/data/meta'
-
-  function onMapLoad(map: Map) {
-    mapStore.set(map)
-  }
 
   const markers = Object.entries(allBadstuLocations).map(([name, location]) => ({
     lngLat: location.loc,
@@ -23,7 +18,7 @@
     style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
     zoom={11}
     center={[10.78, 59.92]}
-    onload={onMapLoad}
+    onload={setMap}
     attributionControl={{ compact: true }}
   >
     {#each markers as { lngLat, name, location } (name)}
