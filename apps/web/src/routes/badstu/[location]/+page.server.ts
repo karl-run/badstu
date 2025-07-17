@@ -1,4 +1,3 @@
-import type { Config } from '@sveltejs/adapter-vercel'
 import type { PageServerLoad } from './$types'
 import { error } from '@sveltejs/kit'
 import { type AllLocationNames, getBadstuLocation } from '@badstu/data/meta'

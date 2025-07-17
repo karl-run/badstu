@@ -1,11 +1,8 @@
 <script lang="ts">
   import type { PageProps } from './$types'
-  import { CircleDashed, LoaderCircle, Bomb } from '@lucide/svelte'
+  import { LoaderCircle, Bomb } from '@lucide/svelte'
   import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
   import * as R from 'remeda'
-  import { toReadableDateWithWeekdayName } from '$lib/utils/date'
-  import RowLink from '$lib/slots/RowLink.svelte'
-  import { differenceInMinutes } from 'date-fns'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
 
   let { data }: PageProps = $props()
@@ -69,7 +66,7 @@
         <LoaderCircle class="size-12 animate-spin opacity-50" aria-hidden />
       </div>
     {:then avails}
-      {#each R.entries(avails) as [, availability]}
+      {#each R.entries(avails) as [date, availability] (date)}
         <BadstuDay
           class="w-full max-w-none md:w-auto"
           locationName={data.name}

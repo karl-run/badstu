@@ -24,7 +24,7 @@
     class="pointer-events-none absolute right-0 bottom-0 h-full w-4 shrink-0 bg-gradient-to-r from-transparent to-white dark:to-slate-900"
   ></div>
   <div class="flex h-full gap-1 overflow-auto px-4 py-2">
-    {#each next21Days as dateString}
+    {#each next21Days as dateString (dateString)}
       <a
         id={`date-${dateString}`}
         href={`/dag/${dateString}`}

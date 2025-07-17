@@ -26,7 +26,7 @@
     onload={onMapLoad}
     attributionControl={{ compact: true }}
   >
-    {#each markers as { lngLat, name, location }}
+    {#each markers as { lngLat, name, location } (name)}
       <DefaultMarker {lngLat} draggable>
         <Popup offset={[0, -10]} popupClass="max-w-64">
           <div class="text-lg font-bold">{name}</div>

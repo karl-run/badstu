@@ -3,8 +3,13 @@
   import { ArrowRight } from '@lucide/svelte'
   import { addMinutes, isAfter } from 'date-fns'
   import { dateAndTimeToDate } from '$lib/utils/date'
+  import type { BadstuAvailability } from '@badstu/db/slots'
 
-  const { location, slot }: { location: { provider: 'obf'; date: string; variations: number }; slot: any } = $props()
+  const {
+    location,
+    slot,
+  }: { location: { provider: 'obf'; date: string; variations: number }; slot: BadstuAvailability['slots'][number] } =
+    $props()
   const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(location.date, slot.time), 60))
 
   console.log(location.variations > 1 || slot.variation != null)

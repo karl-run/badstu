@@ -23,7 +23,7 @@
 
 <svelte:head>
   <title>Badstuer i Oslo</title>
-  <meta name="description" content={`Se hvilke badstuer i Oslo har ledig drop-in i dag og fremover i tid!`} />
+  <meta name="description" content="Se hvilke badstuer i Oslo har ledig drop-in i dag og fremover i tid!" />
 </svelte:head>
 
 <div class="grid h-[calc(100svh-4rem)] grid-cols-1 grid-rows-[calc(70svh-4rem)_30svh]">
@@ -47,7 +47,7 @@
           class="relative h-full w-full max-w-[calc(100vw-100px)] min-w-72 grow animate-pulse rounded-2xl bg-gray-200 md:w-64 md:grow dark:bg-slate-800"
         ></div>
       {:then locations}
-        {#each R.entries(locations) as [name, location]}
+        {#each R.entries(locations) as [name, location] (name)}
           <BadstuDay
             locationName={name}
             {location}

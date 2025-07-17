@@ -1,15 +1,11 @@
 <script lang="ts">
   import * as R from 'remeda'
 
-  import { ArrowRight, CircleDashed, Bomb } from '@lucide/svelte'
+  import { Bomb } from '@lucide/svelte'
 
   import type { PageProps } from './$types'
-  import BadstuCovers from '$lib/covers/BadstuCovers.svelte'
-  import RowLink from '$lib/slots/RowLink.svelte'
-  import { addDays, differenceInMinutes } from 'date-fns'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
-  import { allBadstuLocations } from '@badstu/data/meta'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
 
   let { data }: PageProps = $props()
@@ -45,7 +41,7 @@
         class="relative h-full w-full max-w-[calc(100vw-100px)] min-w-72 grow animate-pulse rounded-2xl bg-gray-200 md:w-64 md:grow dark:bg-slate-800"
       ></div>
     {:then locations}
-      {#each R.entries(locations) as [name, location]}
+      {#each R.entries(locations) as [name, location] (name)}
         <BadstuDay locationName={name} {location} />
       {/each}
     {:catch error}

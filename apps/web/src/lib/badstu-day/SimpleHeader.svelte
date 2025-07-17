@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { AllLocationNames } from '@badstu/data/meta'
   import { differenceInMinutes } from 'date-fns'
   import { toReadableDateWithWeekdayName } from '$lib/utils/date'
 

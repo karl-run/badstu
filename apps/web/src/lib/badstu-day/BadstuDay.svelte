@@ -40,7 +40,7 @@
     <div class={['relative h-full', fullHeight ? 'overflow-auto' : 'overflow-y-auto']}>
       {#if location.slots.length > 0}
         <div class="divide-y divide-gray-400">
-          {#each location.slots as slot}
+          {#each location.slots as slot (slot.variation + slot.time)}
             <RowLink {location} {slot} />
           {/each}
         </div>
