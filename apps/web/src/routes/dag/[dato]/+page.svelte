@@ -23,7 +23,7 @@
   <div class="flex flex-col">
     <h2 class="shrink-0 p-4 pb-0 text-xl">Badstuer i Oslo {toReadableDateWithWeekdayName(data.date)}</h2>
     <div class="h-14">
-      <OtherDayPicker activeDate={data.date} />
+      <OtherDayPicker activeDate={data.date} from={0} />
     </div>
   </div>
   <div class="mt-2 flex h-full max-w-screen gap-3 overflow-scroll px-3 pb-3 md:h-auto md:min-h-96">

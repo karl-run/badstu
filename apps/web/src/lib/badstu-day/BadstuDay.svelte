@@ -4,9 +4,10 @@
   import { type AllLocationNames } from '@badstu/data/meta'
   import { type BadstuAvailability } from '@badstu/db/slots'
 
-  import RowLink from '$lib/slots/RowLink.svelte'
   import CoverHeader from '$lib/badstu-day/CoverHeader.svelte'
   import SimpleHeader from '$lib/badstu-day/SimpleHeader.svelte'
+
+  import RowLink from './RowLink.svelte'
 
   const {
     locationName,

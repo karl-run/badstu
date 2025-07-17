@@ -3,10 +3,10 @@
   import { toReadableDateWithWeekdayName } from '$lib/utils/date.js'
   import { addDays, formatISO } from 'date-fns'
 
-  const today = new Date()
-  const next21Days = R.range(1, 21).map((offset) => formatISO(addDays(today, offset), { representation: 'date' }))
+  const { activeDate, from = 1 }: { activeDate?: string; from?: number } = $props()
 
-  const { activeDate }: { activeDate?: string } = $props()
+  const today = new Date()
+  const next21Days = R.range(from, 21).map((offset) => formatISO(addDays(today, offset), { representation: 'date' }))
 
   $effect(() => {
     if (!activeDate) return
