@@ -27,8 +27,8 @@
 
 <div
   class={[
+    'relative w-full max-w-[calc(100vw-100px)] min-w-72 rounded-2xl bg-gray-200 md:w-64 dark:bg-slate-800',
     rest.class,
-    'relative w-full max-w-[calc(100vw-100px)] min-w-72 grow rounded-2xl bg-gray-200 md:w-64 md:grow dark:bg-slate-800',
   ]}
 >
   <div class="flex h-full flex-col rounded-2xl">
@@ -47,7 +47,7 @@
       {:else}
         <div class="mt-4 flex h-2/3 flex-col items-center justify-center gap-2 p-4 opacity-70">
           <CircleDashed class="ml-2 h-12 w-12 shrink-0 text-gray-500" />
-          <div>Ingen bookinger denne dagen</div>
+          <div class="text-center">Ingen bookinger denne dagen</div>
         </div>
       {/if}
       {#if !fullHeight}

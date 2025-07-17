@@ -22,7 +22,7 @@
     <div class="text-xs">av {slot.size}</div>
   </div>
   <div class="flex grow flex-col justify-center">
-    <div>
+    <div class="leading-4">
       {slot.time} til {slot.timeEnd} ({slot.length}t)
     </div>
     {#if location.variations > 1 && slot.variation != null}
