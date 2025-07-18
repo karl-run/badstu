@@ -30,11 +30,13 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 export async function getFirebaseDocuments(locationId: string): Promise<FirebaseDocument[]> {
+  const today = new Date()
+
   const querySnapshot = await getDocs(
     query(
       collection(db, 'dateSlots', '1cKim9HkbQPgrbXOr8ad', 'manifests', locationId, 'slots'),
-      where('date', '>=', format(new Date(), 'yyyy-MM-dd')),
-      where('date', '<=', format(addWeeks(new Date(), 4), 'yyyy-MM-dd')),
+      where('date', '>=', format(today, 'yyyy-MM-dd')),
+      where('date', '<=', format(addWeeks(today, 4), 'yyyy-MM-dd')),
     ),
   )
 

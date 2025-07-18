@@ -44,7 +44,7 @@ __metadata:
     "@hexagon/croner": "jsr:^9.1.0"
     "@types/deno": "npm:^2.3.0"
     date-fns: "npm:^4.1.0"
-    remeda: "npm:^2.26.0"
+    remeda: "npm:^2.26.1"
   peerDependencies:
     typescript: ^5
   languageName: unknown
@@ -1986,9 +1986,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^2.25.0":
-  version: 2.25.0
-  resolution: "@sveltejs/kit@npm:2.25.0"
+"@sveltejs/kit@npm:^2.25.1":
+  version: 2.25.1
+  resolution: "@sveltejs/kit@npm:2.25.1"
   dependencies:
     "@sveltejs/acorn-typescript": "npm:^1.0.5"
     "@types/cookie": "npm:^0.6.0"
@@ -2008,7 +2008,7 @@ __metadata:
     vite: ^5.0.3 || ^6.0.0 || ^7.0.0-beta.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 10c0/e5f1644837af7ba4cc96008d751833ee32b4a29c1411109fb8f0edd8efb91c5c400bb98d828f5324acb7096dc4682a8590cea89aa2a02c42dea507f64f9975d1
+  checksum: 10c0/ed10c5b2e35cda82addb70a9305f494fac836e00028d1fb5252d2d2e084a7a787c97f9ac9291402ed9d4dcff92e2b4987d57d10556c552f80845df7195b3c643
   languageName: node
   linkType: hard
 
@@ -3344,14 +3344,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^10.1.5":
-  version: 10.1.5
-  resolution: "eslint-config-prettier@npm:10.1.5"
+"eslint-config-prettier@npm:^10.1.8":
+  version: 10.1.8
+  resolution: "eslint-config-prettier@npm:10.1.8"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 10c0/5486255428e4577e8064b40f27db299faf7312b8e43d7b4bc913a6426e6c0f5950cd519cad81ae24e9aecb4002c502bc665c02e3b52efde57af2debcf27dd6e0
+  checksum: 10c0/e1bcfadc9eccd526c240056b1e59c5cd26544fe59feb85f38f4f1f116caed96aea0b3b87868e68b3099e55caaac3f2e5b9f58110f85db893e83a332751192682
   languageName: node
   linkType: hard
 
@@ -5303,12 +5303,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remeda@npm:^2.26.0":
-  version: 2.26.0
-  resolution: "remeda@npm:2.26.0"
+"remeda@npm:^2.26.1":
+  version: 2.26.1
+  resolution: "remeda@npm:2.26.1"
   dependencies:
     type-fest: "npm:^4.41.0"
-  checksum: 10c0/86ebaf83153bb1065c0e52ea4c6f50eee44e16881642bef5adbc28fd5d951428908df9f34a05768c53d364597f639c9fafc7aa4429ce3478e7e3e4efa81900a9
+  checksum: 10c0/1ec7393e62326fad83e13a8c7f6823a8b85373763eefe9f2d9c365de53fbbc6d2a7fece148d66085f0877b01d28d9b417ce7004f261bd063d82668dc68a43d91
   languageName: node
   linkType: hard
 
@@ -5832,9 +5832,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte-check@npm:^4.2.2":
-  version: 4.2.2
-  resolution: "svelte-check@npm:4.2.2"
+"svelte-check@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "svelte-check@npm:4.3.0"
   dependencies:
     "@jridgewell/trace-mapping": "npm:^0.3.25"
     chokidar: "npm:^4.0.1"
@@ -5846,7 +5846,7 @@ __metadata:
     typescript: ">=5.0.0"
   bin:
     svelte-check: bin/svelte-check
-  checksum: 10c0/21903d3f1af42f98311e686571e4dced2849fc41e66112ef05c3a74e9355e1bcf5755e1d8cc3f03d8c4fbeeca44b002e6f5939a44ed639a20b52219ed36c8ba3
+  checksum: 10c0/1e422eb673f88692c0c034db443148fa150c87fc00d230ba20ac905c7daa66e4d5a744d5d792914b46889b629c1b25d4fcebc445a6ad836b24121597258809b1
   languageName: node
   linkType: hard
 
@@ -5903,9 +5903,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"svelte@npm:^5.36.7":
-  version: 5.36.7
-  resolution: "svelte@npm:5.36.7"
+"svelte@npm:^5.36.8":
+  version: 5.36.8
+  resolution: "svelte@npm:5.36.8"
   dependencies:
     "@ampproject/remapping": "npm:^2.3.0"
     "@jridgewell/sourcemap-codec": "npm:^1.5.0"
@@ -5921,7 +5921,7 @@ __metadata:
     locate-character: "npm:^3.0.0"
     magic-string: "npm:^0.30.11"
     zimmerframe: "npm:^1.1.2"
-  checksum: 10c0/8d37ef91a2158fc864b690c32bd3b9edd6588dc09dffad92b4296867d9059889b51aeb7bb5ada1085943f7f5043e5ea20c8865fb1cd57f4586d551dadc441104
+  checksum: 10c0/7da0f5a4f861e4c56b33befe5ab94d2b35c8c33ec7257ceb1a1b4880e495cfb121c558da16f5727991955ddeb07dbfa283b3a6eeafc8c92cfd6374391ade537e
   languageName: node
   linkType: hard
 
@@ -6243,19 +6243,19 @@ __metadata:
     "@lucide/svelte": "npm:^0.525.0"
     "@sveltejs/adapter-vercel": "npm:^5.8.0"
     "@sveltejs/enhanced-img": "npm:^0.7.0"
-    "@sveltejs/kit": "npm:^2.25.0"
+    "@sveltejs/kit": "npm:^2.25.1"
     "@sveltejs/vite-plugin-svelte": "npm:^6.1.0"
     "@tailwindcss/vite": "npm:^4.1.11"
     date-fns: "npm:^4.1.0"
     eslint: "npm:^9.31.0"
-    eslint-config-prettier: "npm:^10.1.5"
+    eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-svelte: "npm:^3.11.0"
     globals: "npm:^16.3.0"
     prettier: "npm:^3.6.2"
     prettier-plugin-svelte: "npm:^3.4.0"
     prettier-plugin-tailwindcss: "npm:^0.6.14"
-    svelte: "npm:^5.36.7"
-    svelte-check: "npm:^4.2.2"
+    svelte: "npm:^5.36.8"
+    svelte-check: "npm:^4.3.0"
     svelte-maplibre: "npm:^1.2.0"
     tailwindcss: "npm:^4.1.11"
     typescript: "npm:^5.8.3"

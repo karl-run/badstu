@@ -6,8 +6,9 @@ import { saveDay } from '@badstu/db/day'
 import { differenceInSeconds } from 'date-fns'
 
 export class ObfJob {
-  private readonly key: string
-  private readonly name: string
+  readonly key: string
+  readonly name: string
+
   private readonly location: ObfDropinLocation
 
   constructor(name: string, location: ObfDropinLocation) {
