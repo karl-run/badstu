@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { addWeeks, format } from 'date-fns'
-import logger from '@badstu/logger'
 
 export interface FirebaseDocument {
   slots: FirebaseSlot[]
@@ -41,5 +40,3 @@ export async function getFirebaseDocuments(locationId: string): Promise<Firebase
   // Seems impossible to type >:( Should probably zod it
   return querySnapshot.docs.map((doc) => doc.data()) as FirebaseDocument[]
 }
-
-// console.log(await getFirebaseDocuments("XfIruVrKjcN2Alt2DFDY"));
