@@ -22,8 +22,6 @@ export interface FirebaseSlot {
   customMessage: string
 }
 
-logger.info('Am i firebasing for some reason?')
-
 const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG ?? '{}')
 
 const app = initializeApp(firebaseConfig)
