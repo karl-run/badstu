@@ -9,8 +9,14 @@
   import BadstuMap from '$lib/badstu-map/BadstuMap.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
   import RefetchButton from '$lib/refetch-button/RefetchButton.svelte'
+  import { useWindowFocus } from '$lib/utils/on-focus'
+  import { invalidate } from '$app/navigation'
 
   const { data }: PageProps = $props()
+
+  useWindowFocus(() => {
+    invalidate('badstu:today')
+  })
 </script>
 
 <svelte:head>

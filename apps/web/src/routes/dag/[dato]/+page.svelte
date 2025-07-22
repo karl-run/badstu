@@ -8,8 +8,14 @@
   import OtherDayPicker from '$lib/other-day-picker/OtherDayPicker.svelte'
   import BadstuDay from '$lib/badstu-day/BadstuDay.svelte'
   import RefetchButton from '$lib/refetch-button/RefetchButton.svelte'
+  import { useWindowFocus } from '$lib/utils/on-focus'
+  import { invalidate } from '$app/navigation'
 
   let { data }: PageProps = $props()
+
+  useWindowFocus(() => {
+    invalidate(`badstu:${data.date}`)
+  })
 </script>
 
 <svelte:head>
