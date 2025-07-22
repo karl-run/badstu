@@ -2,7 +2,7 @@ import * as R from 'remeda'
 import { type FirebaseSlot, getFirebaseDocuments } from './firebase'
 import type { BadstuDay, BadstuSlot } from '../types'
 import { decimalTimeToStringTime } from './utils'
-import type { ObfDropinLocation } from './locations'
+import { ObfDropinLocation, obfLocations } from './locations'
 import logger from '@badstu/logger'
 
 function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot | null {
@@ -27,7 +27,9 @@ async function getFirebaseLocationById(location: ObfDropinLocation): Promise<Bad
     logger.warn(`Multiple documents found for the same date in ${location.dropin}. This may cause issues:`, byDay)
   }
 
-  console.log(`ByDay for ${location.key}: ${JSON.stringify(byDay, null, 2)}`)
+  if (location.key === obfLocations['sagene-basseng-naken'].key) {
+    console.log(`ByDay for ${location.key}: ${JSON.stringify(byDay, null, 2)}`)
+  }
 
   return R.pipe(
     byDay,
