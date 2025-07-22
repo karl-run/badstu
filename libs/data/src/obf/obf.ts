@@ -27,10 +27,6 @@ async function getFirebaseLocationById(location: ObfDropinLocation): Promise<Bad
     logger.warn(`Multiple documents found for the same date in ${location.dropin}. This may cause issues:`, byDay)
   }
 
-  if (location.key === obfLocations['sagene-basseng-naken'].key) {
-    console.log(`ByDay for ${location.key}: ${JSON.stringify(byDay, null, 2)}`)
-  }
-
   return R.pipe(
     byDay,
     R.mapValues(R.first()),
