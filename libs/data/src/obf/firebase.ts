@@ -22,12 +22,11 @@ export interface FirebaseSlot {
 }
 
 const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG ?? '{}')
-
 const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
 
 export async function getFirebaseDocuments(locationId: string): Promise<FirebaseDocument[]> {
   const today = new Date()
+  const db = getFirestore(app)
 
   const querySnapshot = await getDocsFromServer(
     query(
