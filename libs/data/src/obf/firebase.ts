@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { collection, getDocsFromServer, getFirestore, query, where } from 'firebase/firestore'
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore/lite'
 import { addWeeks, format } from 'date-fns'
 
 export interface FirebaseDocument {
@@ -23,12 +23,12 @@ export interface FirebaseSlot {
 
 const firebaseConfig = JSON.parse(process.env.FIREBASE_CONFIG ?? '{}')
 const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
 export async function getFirebaseDocuments(locationId: string): Promise<FirebaseDocument[]> {
   const today = new Date()
-  const db = getFirestore(app)
 
-  const querySnapshot = await getDocsFromServer(
+  const querySnapshot = await getDocs(
     query(
       collection(db, 'dateSlots', '1cKim9HkbQPgrbXOr8ad', 'manifests', locationId, 'slots'),
       where('date', '>=', format(today, 'yyyy-MM-dd')),
