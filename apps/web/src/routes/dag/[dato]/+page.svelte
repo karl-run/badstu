@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Badstuer i Oslo toReadableDateWithWeekdayName(data.date)</title>
+  <title>Badstuer i Oslo {toReadableDateWithWeekdayName(data.date)}</title>
   <meta
     name="description"
     content={`Se hvilke badstuer i Oslo har ledig drop-in ${toReadableDateWithWeekdayName(data.date)}`}
