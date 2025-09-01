@@ -19,10 +19,10 @@
     "drizzle-kit": "^0.31.4"
   },
   "devDependencies": {
-    "@karl-run/prettier-config": "^1.0.1",
-    "dotenv": "^17.2.0",
+    "@karl-run/prettier-config": "^1.1.0",
+    "dotenv": "^17.2.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.2",
+    "lint-staged": "^16.1.6",
     "prettier": "^3.6.2"
   },
   "prettier": "@karl-run/prettier-config"
