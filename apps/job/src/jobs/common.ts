@@ -1,7 +1,7 @@
-import type { ObfDropinLocation } from '../../../../libs/data/src/obf/locations'
 import logger from '@badstu/logger'
 import { getLock, lock, releaseLock } from '@badstu/db/lock'
-import { getDropin } from '@badstu/data'
+
+import { getDropin, type ObfDropinLocation } from '@badstu/data'
 import { saveDay } from '@badstu/db/day'
 import { differenceInSeconds } from 'date-fns'
 
