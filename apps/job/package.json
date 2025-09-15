@@ -7,7 +7,7 @@
     "@badstu/db": "workspace:*",
     "@hexagon/croner": "jsr:^9.1.0",
     "date-fns": "^4.1.0",
-    "remeda": "^2.30.0"
+    "remeda": "^2.31.1"
   },
   "scripts": {
     "check": "deno check --unstable-sloppy-imports",
