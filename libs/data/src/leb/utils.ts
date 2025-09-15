@@ -1,5 +1,6 @@
 export function stringTimeToDecimalTime(time: string): number {
   const [hour, minute] = time.split(':')
+  if (!hour || !minute) throw Error(`${time} is not a valid time format (HH:mm)`)
 
   return +hour + Math.floor(+minute / 60)
 }

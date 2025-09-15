@@ -2,7 +2,7 @@ import * as R from 'remeda'
 import { type FirebaseSlot, getFirebaseDocuments } from './firebase'
 import type { BadstuDay, BadstuSlot } from '../types'
 import { decimalTimeToStringTime } from './utils'
-import { ObfDropinLocation } from './locations'
+import { type ObfDropinLocation } from './locations'
 import logger from '@badstu/logger'
 
 function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot | null {

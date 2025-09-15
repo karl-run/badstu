@@ -8,8 +8,10 @@
   const {
     location,
     slot,
-  }: { location: { provider: 'obf'; date: string; variations: number }; slot: BadstuAvailability['slots'][number] } =
-    $props()
+  }: {
+    location: { provider: 'obf' | 'leb'; date: string; variations: number }
+    slot: BadstuAvailability['slots'][number]
+  } = $props()
   const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(location.date, slot.time), 60))
 </script>
 

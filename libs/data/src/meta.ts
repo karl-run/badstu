@@ -47,9 +47,11 @@ export function getBadstuLocation(name: string): (BadstuLocation & { name: AllLo
   return { ...location, name: name as AllLocationNames }
 }
 
-export function getLink(provider: 'obf', locationKey: string, date: string): string {
+export function getLink(provider: 'obf' | 'leb', locationKey: string, date: string): string {
   switch (provider) {
     case 'obf':
       return toObfLink(locationKey, date)
+    case 'leb':
+      return 'https://lilleborgelvebadstue.no/booking'
   }
 }
