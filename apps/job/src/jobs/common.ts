@@ -1,4 +1,4 @@
-import type { ObfDropinLocation } from '../../../../libs/data/src/obf/locations'
+import type { ObfDropinLocation } from '@badstu/data'
 import logger from '@badstu/logger'
 import { getLock, lock, releaseLock } from '@badstu/db/lock'
 import { getDropin } from '@badstu/data'

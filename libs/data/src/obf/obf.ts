@@ -2,7 +2,7 @@ import * as R from 'remeda'
 import { type FirebaseSlot, getFirebaseDocuments } from './firebase'
 import type { BadstuDay, BadstuSlot } from '../types'
 import { decimalTimeToStringTime } from './utils'
-import { ObfDropinLocation, obfLocations } from './locations'
+import { ObfDropinLocation } from './locations'
 import logger from '@badstu/logger'
 
 function firebaseSlotToBadstuSlot(slot: FirebaseSlot): BadstuSlot | null {
@@ -24,7 +24,9 @@ async function getFirebaseLocationById(location: ObfDropinLocation): Promise<Bad
   const byDay = R.groupBy(documents, R.prop('date'))
 
   if (R.entries(byDay).some(([, docs]) => docs.length > 1)) {
-    logger.warn(`Multiple documents found for the same date in ${location.dropin}. This may cause issues:`, byDay)
+    logger.warn(
+      `Multiple documents found for the same date in ${location.dropin}. This may cause issues: ${JSON.stringify(byDay, null, 2)}`,
+    )
   }
 
   return R.pipe(
