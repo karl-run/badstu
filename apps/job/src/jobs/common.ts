@@ -1,24 +1,22 @@
-import type { ObfDropinLocation } from '@badstu/data'
+import { type BadstuDay, getDropin, type ObfDropinLocation } from '@badstu/data'
 import logger from '@badstu/logger'
 import { getLock, lock, releaseLock } from '@badstu/db/lock'
-import { getDropin } from '@badstu/data'
-import { saveDay } from '@badstu/db/day'
 import { differenceInSeconds } from 'date-fns'
+import { saveDay } from '@badstu/db/day'
 
-export class ObfJob {
+export abstract class Job {
   readonly key: string
   readonly name: string
 
-  private readonly location: ObfDropinLocation
-
-  constructor(name: string, location: ObfDropinLocation) {
+  constructor(name: string, key: string) {
     this.name = name
-    this.location = location
-    this.key = `obf:${location.key}`
+    this.key = key
   }
 
+  public abstract getDaysForJob(): Promise<BadstuDay[]>
+
   async doWorkWithLock(): Promise<void> {
-    logger.info(`OBF Job: ${this.name}`)
+    logger.info(`Doing work for ${this.key}`)
 
     try {
       const currentLock = await getLock(this.key)
@@ -47,7 +45,7 @@ export class ObfJob {
   }
 
   private async updateLocation(): Promise<void> {
-    const days = await getDropin(this.location)
+    const days = await this.getDaysForJob()
     if (days == null) {
       logger.warn(`No dropin data found for ${this.key}`)
       return
@@ -58,7 +56,7 @@ export class ObfJob {
       try {
         await saveDay(day)
       } catch (e) {
-        logger.error(new Error(`Unable to update day ${day.date} for ${this.location.key}`, { cause: e }))
+        logger.error(Error(`Unable to update day ${day.date} for ${this.key}`, { cause: e }))
         failed++
       }
     }

@@ -1,11 +1,11 @@
 import { Cron } from '@hexagon/croner'
 import logger from '@badstu/logger'
-import { obfJobs } from './jobs/jobs-list.ts'
+import { jobs } from './jobs/jobs-list.ts'
 
 logger.info('Setting up scrape cron job')
 const obfCron = new Cron('*/3 * * * *', async () => {
   // Do work synchronously as to not hammer their API
-  for (const obfJob of obfJobs) {
+  for (const obfJob of jobs) {
     try {
       await obfJob.doWorkWithLock()
     } catch (e) {
