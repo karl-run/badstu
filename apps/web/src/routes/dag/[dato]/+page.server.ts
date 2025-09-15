@@ -14,9 +14,10 @@ export const load: PageServerLoad = async ({ params, depends }) => {
   logger.info(`Specific date page, generating ${params.dato}'s availability`)
 
   const startTime = Date.now()
-  const locations = getAllAvailabilityForDate(parseISO(params.dato)).then((it) => {
+  const locations = await getAllAvailabilityForDate(parseISO(params.dato)).then((it) => {
     const endTime = Date.now()
     logger.info(`Today's availability generated for ${Object.keys(it).length} locations, took ${endTime - startTime}ms`)
+
     return it
   })
 

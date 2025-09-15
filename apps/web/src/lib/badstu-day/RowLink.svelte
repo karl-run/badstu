@@ -11,8 +11,6 @@
   }: { location: { provider: 'obf'; date: string; variations: number }; slot: BadstuAvailability['slots'][number] } =
     $props()
   const isTooLate = isAfter(new Date(), addMinutes(dateAndTimeToDate(location.date, slot.time), 60))
-
-  console.log(location.variations > 1 || slot.variation != null)
 </script>
 
 <a

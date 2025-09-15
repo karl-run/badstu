@@ -17,11 +17,12 @@ export const load: PageServerLoad = async ({ params, depends }) => {
   const startTime = Date.now()
   logger.info(`Loading availability for location: ${location.name} (${unslug})`)
 
-  const availability = getAllAvailabilityForLocation(unslug as AllLocationNames).then((it) => {
+  const availability = await getAllAvailabilityForLocation(unslug as AllLocationNames).then((it) => {
     const endTime = Date.now()
     logger.info(
       `Availability for ${location.name} (${unslug}) loaded, found ${Object.keys(it).length} days, took ${endTime - startTime}ms`,
     )
+
     return it
   })
 
