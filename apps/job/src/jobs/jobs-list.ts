@@ -18,13 +18,13 @@ const obfJobs: Job[] = [
   new ObfJob('Sagene med basseng (familie)', obfLocations['sagene-basseng-familie']),
 ]
 
+// prettier-ignore
 const lebJobs: Job[] = [
   new LebJob(0, 3),
   new LebJob(3, 3),
   new LebJob(6, 3),
   new LebJob(9, 3),
-  new LebJob(12, 3),
-  new LebJob(15, 3),
+  new LebJob(12, 2),
 ]
 
 export const jobs: Job[] = R.zip(obfJobs, lebJobs).flat()
