@@ -59,7 +59,7 @@ async function getForDay(date: string): Promise<BadstuDay | null> {
             available: it.totalSpots - numberOfValidBookings,
           }
         }),
-      locationName: 'Lilleborg Elvebadstu',
+      locationName: 'Lilleborg Elvebadstue',
     }
   } catch (e) {
     logger.error(`Failed to parse LEB data for date ${date}, cause: ${e}`)

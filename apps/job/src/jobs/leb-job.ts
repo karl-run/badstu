@@ -6,7 +6,7 @@ export class LebJob extends Job {
   private readonly days: number
 
   constructor(offset: number = 0, days: number = 1) {
-    super('Lilleborg Elvebadstu', 'leb:lilleborg')
+    super('Lilleborg Elvebadstue', 'leb:lilleborg')
 
     this.offset = offset
     this.days = days

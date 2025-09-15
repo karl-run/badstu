@@ -3,6 +3,7 @@
   import langkaia from '$lib/assets/langkaia.jpeg?enhanced'
   import sukkerbiten from '$lib/assets/sukkerbiten.jpg?enhanced'
   import sagene from '$lib/assets/sagene.jpg?enhanced'
+  import lilleborg from '$lib/assets/lilleborg.webp?enhanced'
 
   import { type AllLocationNames } from '@badstu/data/meta'
 
@@ -17,6 +18,8 @@
         return [sukkerbiten, 45] as const
       case 'Kroloftet':
         return [kroloftet, 48] as const
+      case 'Lilleborg Elvebadstue':
+        return [lilleborg, 40] as const
     }
   })
 </script>

@@ -4,7 +4,7 @@ type LngLatTuple = [number, number]
 
 type BadstuLocation = {
   loc: LngLatTuple
-  provider: 'obf' | 'lilleborg'
+  provider: 'obf' | 'leb'
   maps: string
   ingress: string | null
 }
@@ -34,6 +34,12 @@ export const allBadstuLocations = {
     provider: 'obf',
     maps: 'https://maps.app.goo.gl/G9V8Y4AboBJ8exKY9',
     ingress: null,
+  } satisfies BadstuLocation,
+  'Lilleborg Elvebadstue': {
+    loc: [10.7605441, 59.9381311] satisfies LngLatTuple,
+    provider: 'leb',
+    maps: 'https://maps.app.goo.gl/U8Eqr5eBKVMYXzBa8',
+    ingress: 'Lokal badsute drevet av Lilleborg Boretslag',
   } satisfies BadstuLocation,
 }
 
