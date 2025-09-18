@@ -27,4 +27,4 @@ const lebJobs: Job[] = [
   new LebJob(12, 2),
 ]
 
-export const jobs: Job[] = R.zip(obfJobs, lebJobs).flat()
+export const jobs: Job[] = [...R.zip(obfJobs, lebJobs).flat(), ...obfJobs.slice(lebJobs.length)]
