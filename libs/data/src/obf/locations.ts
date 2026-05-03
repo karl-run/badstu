@@ -56,6 +56,11 @@ export const obfLocations = {
     name: 'Sagene Folkebad',
     dropin: 'brM4BEZAI02QIJoidd7N',
   } satisfies ObfDropinLocation,
+  'sagene-badstu': {
+    key: 'sagene-badstu',
+    name: 'Sagene Folkebad',
+    dropin: 'duJ3QPS5PQwiPAzmRxbm',
+  } satisfies ObfDropinLocation,
 }
 
 export type ObfLocations = keyof typeof obfLocations
