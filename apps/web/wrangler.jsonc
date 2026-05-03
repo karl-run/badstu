@@ -1,0 +1,16 @@
+{
+  "name": "badstu",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "compatibility_flags": ["nodejs_als"],
+  "compatibility_date": "2026-05-03",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".svelte-kit/cloudflare",
+  },
+  "routes": [
+    {
+      "pattern": "badstu.karl.run",
+      "custom_domain": true,
+    },
+  ],
+}
